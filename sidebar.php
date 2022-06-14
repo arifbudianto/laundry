@@ -83,13 +83,34 @@
                         </li>
                     </ul>
                 </li> -->
-                <li class="nav-item">
-                    <a href="laporan.php" class="nav-link">
-                        <i class="nav-icon fas fa-book"></i>
+                <li class="nav-item sub ">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon far fa-money-bill-alt"></i>
                         <p>
                             Laporan
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item" >
+                            <a href="laporan-transaksi-input.php" class="nav-link " >
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Laporan Transaksi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="laporan-pelanggan-input.php" class="nav-link ">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Laporan Customer</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="laporan-parfum-input.php" class="nav-link ">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Laporan Parfum</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>

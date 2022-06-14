@@ -41,16 +41,15 @@ require('sidebar.php');
             $id_transaksi = $_POST["id_transaksi"];}
 
         include "koneksi.php";
-        $sql = "SELECT pelanggan.id_member, pelanggan.nohp FROM pelanggan";
+        $sql = "SELECT pelanggan.nohp FROM pelanggan";
         $hasil = mysqli_query($kon,$sql);
         $data = mysqli_fetch_array($hasil);
         $nohp = $data['nohp'];
-        $id_member = $data['id_member'];
 
         $sql = "SELECT id_transaksi, tgl_masuk, tgl_keluar, pelanggan.nohp, pelanggan.nama,
                 paket.nama_paket, parfum.id_parfum, parfum.jenis_parfum, berat, total_bayar
                 FROM transaksi
-                JOIN pelanggan ON transaksi.id_member = pelanggan.id_member
+                JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
                 JOIN paket ON transaksi.id_paket = paket.id_paket
                 JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum where id_transaksi like '%".$id_transaksi."%'
                 ORDER BY id_transaksi DESC";

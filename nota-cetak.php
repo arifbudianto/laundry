@@ -42,7 +42,7 @@ $id_transaksi 		=  $_GET['id_transaksi'];
 	include "koneksi.php";
 	$sql = mysqli_query($kon, "SELECT id_transaksi, tgl_masuk, tgl_keluar, pelanggan.nohp, pelanggan.nama, paket.id_paket,
 					paket.nama_paket,paket.harga, parfum.id_parfum, parfum.jenis_parfum, berat, total_bayar FROM transaksi
-					JOIN pelanggan ON transaksi.id_member = pelanggan.id_member
+					JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
 					JOIN paket ON transaksi.id_paket = paket.id_paket
 					JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum where id_transaksi like '%".$id_transaksi."%'
 					ORDER BY id_transaksi DESC");
@@ -131,7 +131,7 @@ $id_transaksi 		=  $_GET['id_transaksi'];
         $sql = mysqli_query($kon, "SELECT id_transaksi, tgl_masuk, tgl_keluar, pelanggan.nohp, pelanggan.nama,
 		paket.nama_paket,paket.harga, parfum.id_parfum, parfum.jenis_parfum, berat, total_bayar
 		FROM transaksi
-		JOIN pelanggan ON transaksi.id_member = pelanggan.id_member
+		JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
 		JOIN paket ON transaksi.id_paket = paket.id_paket
 		JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum where id_transaksi like '%".$id_transaksi."%'
 		ORDER BY id_transaksi DESC");

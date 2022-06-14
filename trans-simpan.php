@@ -145,16 +145,18 @@ require('sidebar.php');
         $harga = $data['harga'];
 
         $total_bayar = 0;
-        $total_bayar = $harga * $berat;
+        if($id_paket=='K01' || $id_paket=='K02' || $id_paket=='K03' || $id_paket=='K04' || $id_paket=='S01' || $id_paket=='S02' || $id_paket=='CB4' || $id_paket=='CK4'){
+            $total_bayar = $harga * $berat;
+        }else{
+            $total_bayar = $harga;
+        }
+        
 
-        $sql2 = "SELECT id_member, nohp FROM pelanggan where nohp = '$nohp'";
+        $sql2 = "SELECT nohp FROM pelanggan where nohp = '$nohp'";
         $hasil2 = mysqli_query($kon,$sql2);
         $data2  = mysqli_fetch_array($hasil2);
 
         if ($data2 && $data2['nohp'] !== NULL){
-            
-            $id_member = $data2['id_member'];
-
             if ($simpan == "EDIT"){
                 if (empty($_POST['tgl_keluar'])){
                     $tgl_keluar = 'NULL';
@@ -163,7 +165,6 @@ require('sidebar.php');
                 }
                 $sql = "UPDATE transaksi set
                     nohp        = '$nohp',
-                    id_member   = $id_member,
                     tgl_masuk   = '$tgl_masuk',
                     tgl_keluar  = $tgl_keluar,
                     berat       = $berat,
@@ -179,9 +180,9 @@ require('sidebar.php');
                 $id_transaksi = $tglid . sprintf("%03s", $urutan);
 
                 $sql = "insert into transaksi
-                (id_transaksi, nohp, id_member, tgl_masuk, tgl_keluar, berat, id_paket, jenis_parfum, total_bayar)
+                (id_transaksi, nohp, tgl_masuk, tgl_keluar, berat, id_paket, jenis_parfum, total_bayar)
                     values
-                ('$id_transaksi','$nohp', $id_member, '$tgl_masuk', NULL ,$berat, '$id_paket', '$jenis_parfum', $total_bayar)";
+                ('$id_transaksi','$nohp',  '$tgl_masuk', NULL ,$berat, '$id_paket', '$jenis_parfum', $total_bayar)";
             }
             
             $hasil = mysqli_query($kon, $sql);

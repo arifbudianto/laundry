@@ -7,12 +7,12 @@ require('sidebar.php');
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
-        <h1 class="m-0">Prediksi Kebutuhan Parfum</h1>
+        <h1 class="m-0">Laporan Transaksi</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-            <li class="breadcrumb-item active">Prediksi Kebutuhan Parfum</li>
+            <li class="breadcrumb-item active">Laporan Transaksi</li>
         </ol>
         </div><!-- /.col -->
     </div><!-- /.row -->
@@ -40,47 +40,32 @@ require('sidebar.php');
                 <div class="card">
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action = "prediksi-proses.php" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <form action = "laporan-transaksi.php" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="tgl_awal" class="col-sm-4 col-form-label">Dari Tgl. <i class="text-danger">*</i></label>
                                 <div class="col-sm-8">
-                                    <div class="form-inline">
-                                        <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-5">
                                             <input type = "date" name = "tgl_awal" id="tgl_awal" class="form-control" required>
                                         </div>
-                                        <div class="form-group">
-                                            <label>&nbsp; s/d &nbsp;</label>
+                                        <div class="col-sm-2 text-center">s/d</div>
+                                        <div class="col-sm-5">
                                             <input type = "date" name = "tgl_akhir" id="tgl_akhir" class="form-control" required>
                                         </div>
                                     </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label for="jenis_parfum" class="col-sm-4 col-form-label">Jenis Parfum <i class="text-danger">*</i></label>
-                                <div class="col-sm-8">
-                                    <select name="jenis_parfum" class="form-control" required>
-                                        <option value = "">--Jenis Parfum--</option>    
-                                        <option value = "fresh">Fresh</option>
-                                        <option value = "aqua">Aqua</option>
-                                        <option value = "sakura">Sakura</option>        
-                                        <option value = "lili">Lili</option>  
-                                        <option value = "vanila">Vanila</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <input type = "submit" value="Prediksi" name = "prediksi" class="btn btn-info" />
+                            <input type = "submit" value="Tampilkan" name = "tampil" class="btn btn-info" />
                             <input type = "reset" value="Reset" name = "reset" class="btn btn-default" />
                         </div>
                         <!-- /.card-footer -->
                     </form>
                 </div>
             </div>
-        </div>
-        
+        </div>   
     </div>
 </div>
 <?php

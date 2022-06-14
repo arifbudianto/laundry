@@ -100,7 +100,7 @@ require('sidebar.php');
                             $sql = "SELECT tgl_masuk, tgl_keluar, pelanggan.nohp, pelanggan.nama,
                                     paket.nama_paket,paket.harga, parfum.id_parfum, parfum.jenis_parfum, berat, total_bayar
                                     FROM transaksi
-                                    JOIN pelanggan ON transaksi.id_member = pelanggan.id_member
+                                    JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
                                     JOIN paket ON transaksi.id_paket = paket.id_paket
                                     JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum 
                                     $filterData
