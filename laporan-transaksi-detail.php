@@ -7,12 +7,12 @@ require('sidebar.php');
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Laporan Parfum</h1>
+                <h1 class="m-0">Laporan Transaksi</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item"><a href="prediksi-form.php">Laporan Parfum</a></li>
+                    <li class="breadcrumb-item"><a href="prediksi-form.php">Laporan Transaksi</a></li>
                     <li class="breadcrumb-item active">Laporan</li>
                 </ol>
             </div><!-- /.col -->
@@ -60,18 +60,27 @@ require('sidebar.php');
                     echo $err_valid;       
                 ?>
             </div>
-            <a href="laporan-parfum-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-angle-left"></i> Kembali</a>
+            <a href="laporan-transaksi-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-angle-left"></i> Kembali</a>
         <?php
         exit;
         }
     ?>
-        <a href="laporan-parfum-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-edit"></i> LAPORAN PARFUM</a>
+        <a href="laporan-transaksi-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-edit"></i> Laporan Transaksi</a>
         <div class="card card-default">
             <!-- /.card-header -->
             <div class="card-body ">
             <center>
-                <h1>LAPORAN PARFUM ATHAYA LAUNDRY</h1>
+                <h1>LAPORAN TRANSAKSI ATHAYA LAUNDRY</h1>
             </center>
+            <?php
+            include "koneksi.php";
+            $no = 1;
+            $sql = "SELECT SUM(berat) AS TB, SUM(total_bayar) AS TP FROM transaksi WHERE tgl_masuk between '$tgl_awal' and '$tgl_akhir'";
+            $hasil = mysqli_query ($kon,$sql);
+            $data = mysqli_fetch_array($hasil);
+            $berat = $data['TB'];
+            $pend = $data['TP'];
+            ?>
             <table border = 0>
                 <tr>
                     <td>Periode Laporan </td>
@@ -80,39 +89,52 @@ require('sidebar.php');
                     <td class="col-sm-2 text-center"> s/d </td>
                     <td> <?php echo $tgl_akhir;?> </td>
                 </tr>
+                <tr>
+                    <td>Total Laundry Masuk </td>
+                    <td> : </td>
+                    <td> <?php echo $berat;?> </td>
+                </tr>
+                <tr>
+                    <td>Total Pendapatan </td>
+                    <td> : </td>
+                    <td> <?php echo "Rp.".$pend;?> </td>
+                </tr>
             </table>
                 <table class="table table-bordered">
                     <tr>
                         <th>No.</th>
-                        <th>ID PARFUM</th>
-                        <th>PARFUM</th>
-                        <th>JUMLAH PARFUM KELUAR</th>
-                        <th>JUMLAH PEMINAT PARFUM</th>
-                        <!-- <th>Total (Rp)</th> -->
-                        <!-- <th>Berat (Kg)</th> -->
+                        <th>ID Transaksi</th>
+                        <th>Tgl Masuk</th>
+                        <th>Tgl Selesai</th>
+                        <th>No. HP</th>
+                        <th>Nama</th>
+                        <th>Berat (Kg)</th>
                         <!-- <th>Paket</th>
                         <th>Jenis Parfum</th> -->
-                        <!-- <th>Total Bayar (Rp)</th> -->
+                        <th>Total Bayar (Rp)</th>
                     </tr>
                     <?php
                     include "koneksi.php";
                     $no = 1;
-                    $sql = "SELECT parfum.id_parfum,parfum.jenis_parfum, SUM(berat) AS JP, COUNT(parfum.jenis_parfum)
-                            AS PK FROM transaksi JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE
-                            tgl_masuk between '$tgl_awal' and '$tgl_akhir' GROUP BY jenis_parfum;";
+                    $sql = "SELECT id_transaksi, tgl_masuk, tgl_keluar, pelanggan.nohp, pelanggan.nama,
+                    paket.nama_paket, parfum.id_parfum, parfum.jenis_parfum, berat, total_bayar
+                    FROM transaksi
+                    JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
+                    JOIN paket ON transaksi.id_paket = paket.id_paket
+                    JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE tgl_masuk between '$tgl_awal' and '$tgl_akhir'";
                     $hasil = mysqli_query ($kon,$sql);
                     while ($row = mysqli_fetch_array($hasil)){
                         echo " <tr> ";
                         echo " <td> ".$no++."</td>";
-                        echo " <td> ".$row['id_parfum']."</td>";
-                        echo " <td> ".$row['jenis_parfum']."</td>";
-                        echo " <td> ".$row['JP']."</td>";
-                        echo " <td> ".$row['PK']."</td>";
-                        // echo " <td> ".$row['Jumlah']."</td>";
-                        // echo " <td> ".$row['berat']."</td>";
+                        echo " <td> ".$row['id_transaksi']."</td>";
+                        echo " <td> ".$row['tgl_masuk']."</td>";
+                        echo " <td> ".$row['tgl_keluar']."</td>";
+                        echo " <td> ".$row['nohp']."</td>";
+                        echo " <td> ".$row['nama']."</td>";
+                        echo " <td> ".$row['berat']."</td>";
                         // echo " <td> ".$row['nama_paket']."</td>";
                         // echo " <td> ".$row['jenis_parfum']."</td>";
-                        // echo " <td> ".$row['total_bayar']."</td>";
+                        echo " <td> ".$row['total_bayar']."</td>";
                         // echo " <td class='text-center'>";
                  } 
                 ?>

@@ -7,12 +7,12 @@ require('sidebar.php');
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Laporan Pelanggan</h1>
+                <h1 class="m-0">Laporan Parfum</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item"><a href="prediksi-form.php">Laporan Pelanggan</a></li>
+                    <li class="breadcrumb-item"><a href="prediksi-form.php">Laporan Parfum</a></li>
                     <li class="breadcrumb-item active">Laporan</li>
                 </ol>
             </div><!-- /.col -->
@@ -60,17 +60,17 @@ require('sidebar.php');
                     echo $err_valid;       
                 ?>
             </div>
-            <a href="laporan-transaksi-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-angle-left"></i> Kembali</a>
+            <a href="laporan-parfum-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-angle-left"></i> Kembali</a>
         <?php
         exit;
         }
     ?>
-        <a href="laporan-pelanggan-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-edit"></i> LAPORAN PELANGGAN</a>
+        <a href="laporan-parfum-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-edit"></i> LAPORAN PARFUM</a>
         <div class="card card-default">
             <!-- /.card-header -->
             <div class="card-body ">
             <center>
-                <h1>LAPORAN PER PELANGGAN DI ATHAYA LAUNDRY</h1>
+                <h1>LAPORAN PARFUM ATHAYA LAUNDRY</h1>
             </center>
             <table border = 0>
                 <tr>
@@ -84,11 +84,11 @@ require('sidebar.php');
                 <table class="table table-bordered">
                     <tr>
                         <th>No.</th>
-                        <th>No HP</th>
-                        <th>Nama</th>
-                        <th>Jumlah Laundry</th>
-                        <th>Jumlah Berat</th>
-                        <th>Total (Rp)</th>
+                        <th>ID PARFUM</th>
+                        <th>PARFUM</th>
+                        <th>JUMLAH PARFUM KELUAR</th>
+                        <th>JUMLAH PEMINAT PARFUM</th>
+                        <!-- <th>Total (Rp)</th> -->
                         <!-- <th>Berat (Kg)</th> -->
                         <!-- <th>Paket</th>
                         <th>Jenis Parfum</th> -->
@@ -97,18 +97,21 @@ require('sidebar.php');
                     <?php
                     include "koneksi.php";
                     $no = 1;
-                    $sql = "SELECT pelanggan.nohp, pelanggan.nama, COUNT(pelanggan.nama) AS JN, SUM(transaksi.berat) AS TB, 
-                    SUM(transaksi.total_bayar) AS Jumlah FROM transaksi JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
-                    WHERE tgl_masuk between '$tgl_awal' and '$tgl_akhir' GROUP BY nohp";
+                    $sql = "SELECT parfum.id_parfum,parfum.jenis_parfum, SUM(berat) AS JP, COUNT(parfum.jenis_parfum)
+                            AS PK FROM transaksi JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE
+                            tgl_masuk between '$tgl_awal' and '$tgl_akhir' GROUP BY jenis_parfum;";
                     $hasil = mysqli_query ($kon,$sql);
+                    $row = mysqli_fetch_array($hasil);
                     while ($row = mysqli_fetch_array($hasil)){
+                        $JP = $row['JP'];
+                        $Par = $JP / 25;
                         echo " <tr> ";
                         echo " <td> ".$no++."</td>";
-                        echo " <td> ".$row['nohp']."</td>";
-                        echo " <td> ".$row['nama']."</td>";
-                        echo " <td> ".$row['JN']."</td>";
-                        echo " <td> ".$row['TB']."</td>";
-                        echo " <td> ".$row['Jumlah']."</td>";
+                        echo " <td> ".$row['id_parfum']."</td>";
+                        echo " <td> ".$row['jenis_parfum']."</td>";
+                        echo " <td> ".$Par."</td>";
+                        echo " <td> ".$row['PK']."</td>";
+                        // echo " <td> ".$row['Jumlah']."</td>";
                         // echo " <td> ".$row['berat']."</td>";
                         // echo " <td> ".$row['nama_paket']."</td>";
                         // echo " <td> ".$row['jenis_parfum']."</td>";

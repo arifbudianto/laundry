@@ -80,6 +80,8 @@ require('sidebar.php');
             $data = mysqli_fetch_array($hasil);
             $berat = $data['TB'];
             $pend = $data['TP'];
+            $bulan = date('M', strtotime($tgl_awal));
+            echo $bulan;
             ?>
             <table border = 0>
                 <tr>
@@ -103,11 +105,7 @@ require('sidebar.php');
                 <table class="table table-bordered">
                     <tr>
                         <th>No.</th>
-                        <th>ID Transaksi</th>
-                        <th>Tgl Masuk</th>
-                        <th>Tgl Selesai</th>
-                        <th>No. HP</th>
-                        <th>Nama</th>
+                        <th>Bulan</th>
                         <th>Berat (Kg)</th>
                         <!-- <th>Paket</th>
                         <th>Jenis Parfum</th> -->
@@ -116,21 +114,16 @@ require('sidebar.php');
                     <?php
                     include "koneksi.php";
                     $no = 1;
-                    $sql = "SELECT id_transaksi, tgl_masuk, tgl_keluar, pelanggan.nohp, pelanggan.nama,
-                    paket.nama_paket, parfum.id_parfum, parfum.jenis_parfum, berat, total_bayar
-                    FROM transaksi
-                    JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
-                    JOIN paket ON transaksi.id_paket = paket.id_paket
-                    JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE tgl_masuk between '$tgl_awal' and '$tgl_akhir'";
+                    $sql = "SELECT month(tgl_masuk), SUM(berat) AS berat, SUM(total_bayar) AS total_bayar FROM transaksi WHERE tgl_masuk between '$tgl_awal' and '$tgl_akhir' group by month(tgl_masuk) = '$bulan'";
                     $hasil = mysqli_query ($kon,$sql);
                     while ($row = mysqli_fetch_array($hasil)){
                         echo " <tr> ";
                         echo " <td> ".$no++."</td>";
-                        echo " <td> ".$row['id_transaksi']."</td>";
-                        echo " <td> ".$row['tgl_masuk']."</td>";
-                        echo " <td> ".$row['tgl_keluar']."</td>";
-                        echo " <td> ".$row['nohp']."</td>";
-                        echo " <td> ".$row['nama']."</td>";
+                        echo " <td> ".$bulan."</td>";
+                        // echo " <td> ".$row['tgl_masuk']."</td>";
+                        // echo " <td> ".$row['tgl_keluar']."</td>";
+                        // echo " <td> ".$row['nohp']."</td>";
+                        // echo " <td> ".$row['nama']."</td>";
                         echo " <td> ".$row['berat']."</td>";
                         // echo " <td> ".$row['nama_paket']."</td>";
                         // echo " <td> ".$row['jenis_parfum']."</td>";
@@ -145,9 +138,9 @@ require('sidebar.php');
         
     </div>
 </div>
-<script>
+<!-- <script>
     window.print();
-</script>
+</script> -->
 <?php    
 require('footer.php');
 ?>
