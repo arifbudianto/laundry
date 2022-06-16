@@ -44,9 +44,9 @@
       .dataTable th, .dataTable td{
         white-space: nowrap;
       }
-      #printData{
+      /* #printData{
         display:none;
-      }
+      } */
     </style>
 </head>
 <!--
