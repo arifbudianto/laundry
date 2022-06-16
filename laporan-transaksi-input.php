@@ -1,27 +1,25 @@
 <?php
 require('header.php');
 require('sidebar.php');
+require('koneksi.php');
 ?>
 
-<!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
-    <div class="row mb-2">
-        <div class="col-sm-6">
-        <h1 class="m-0">Laporan Transaksi</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-            <li class="breadcrumb-item active">Laporan Transaksi</li>
-        </ol>
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Laporan Transaksi</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                    <li class="breadcrumb-item active">Laporan Transaksi</li>
+                </ol>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- /.content-header -->
 
-<!-- Main content -->
 <div class="content">
     <form action = "" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="container-fluid">  
@@ -33,9 +31,17 @@ require('sidebar.php');
                         </div>
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="tgl_awal" class="col-sm-4 col-form-label">Bulanan <i class="text-danger">*</i></label>
-                                <div class="col-sm-8">
-                                    <input type = "month" name ="tgl_awal" id="change_month" class="form-control" required>
+                                <label for="tgl_awal" class="col-sm-3 col-form-label">Dari Bulan <i class="text-danger">*</i></label>
+                                <div class="col-sm-9">
+                                    <div class="form-inline mb-3">
+                                        <div class="form-group">
+                                            <input type = "month" name ="tgl_awal" id="tgl_awal" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>&nbsp; s/d &nbsp;</label>
+                                            <input type="month" class="form-control" name="tgl_akhir" id="tgl_akhir">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +57,16 @@ require('sidebar.php');
         <?php
         if(isset($_POST['tampil']) && isset($_POST['tgl_awal'])){
             $tgl_awal = $_POST['tgl_awal'];
-            $tgl_concate = $tgl_awal."-00";
+            $tgl_concate_x = $tgl_awal."-00";
+
+            if($_POST['tgl_akhir'] != ''){
+                $tgl_akhir = $_POST['tgl_akhir'];
+                $tgl_concate_y = $tgl_akhir."-00";
+
+            }else{
+                $tgl_akhir = '';
+                $tgl_concate_y = '';
+            }
             
         ?>
             <div class="card card-default">
@@ -84,6 +99,9 @@ require('sidebar.php');
                             .text-right{
                                 text-align:right;
                             }
+                            .sub-judul{
+                                font-size:12px;
+                            }
                         }
                         table{
                             width:100%;
@@ -96,14 +114,21 @@ require('sidebar.php');
                         }
                     </style>
                     <?php
-                        include "koneksi.php";
-                        $no = 1;
-                        $sql = "SELECT COALESCE(SUM(berat),'') AS TB, COALESCE(SUM(total_bayar),'') AS TP FROM transaksi where DATE_FORMAT(tgl_masuk, '%m') =  DATE_FORMAT('$tgl_concate', '%m') and DATE_FORMAT(tgl_masuk, '%Y') =  DATE_FORMAT('$tgl_concate', '%Y')";
-                        $hasil = mysqli_query ($kon,$sql);
-                        $data = mysqli_fetch_array($hasil);
-                        $berat = $data['TB'];
-                        $pend = $data['TP'];
-                        $bulan = date('F Y', strtotime($tgl_awal));
+                        
+                        // $no = 1;
+                        // $sql = "SELECT COALESCE(SUM(berat),'') AS TB, COALESCE(SUM(total_bayar),'') AS TP FROM transaksi where DATE_FORMAT(tgl_masuk, '%m') =  DATE_FORMAT('$tgl_concate_x', '%m') and DATE_FORMAT(tgl_masuk, '%Y') =  DATE_FORMAT('$tgl_concate_x', '%Y')";
+                        // $hasil = mysqli_query ($kon,$sql);
+                        // $data = mysqli_fetch_array($hasil);
+                        // $berat = $data['TB'];
+                        // $pend = $data['TP'];
+                        $bulan_x = date('F Y', strtotime($tgl_awal));
+
+                        if($tgl_akhir != ''){
+                            $bulan_y = ' - '.date('F Y', strtotime($tgl_akhir));
+                        }else{
+                            $bulan_y ='';
+                        }
+
                     ?>
 
                     <table border=0>
@@ -111,7 +136,7 @@ require('sidebar.php');
                             <td class="text-center"><h3 class="mb-0">Laporan Transaksi Athaya Laundry</h3></td>
                         </tr>
                         <tr>
-                            <td class="text-center pb-1">Periode :  <b><?php echo $bulan;?></b></td>
+                            <td class="text-center pb-1 sub-judul">Periode :  <b><?php echo $bulan_x . $bulan_y;?> </b></td>
                         </tr>
                     </table>
                 
@@ -124,8 +149,14 @@ require('sidebar.php');
                             <th class="text-right">Total Bayar (Rp)</th>
                         </tr>
                         <?php
-                    
-                        $sql = "SELECT COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%m') =  DATE_FORMAT('$tgl_concate', '%m') and DATE_FORMAT(tgl_masuk, '%Y') =  DATE_FORMAT('$tgl_concate', '%Y')";
+
+                        if($_POST['tgl_akhir'] == ''){
+                            $sql = "SELECT COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%m') = DATE_FORMAT('$tgl_concate_x', '%m') and DATE_FORMAT(tgl_masuk, '%Y') = DATE_FORMAT('$tgl_concate_x', '%Y')";
+                        }else{
+                            $sql = "SELECT COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m')";
+                            
+                        }
+
                         $hasil = mysqli_query ($kon,$sql);
                         
                         $no = 1;
@@ -134,14 +165,14 @@ require('sidebar.php');
                             if( $row['berat'] && $row['total_bayar']){
                                 echo " <tr> ";
                                 echo " <td> ".$no++."</td>";
-                                echo " <td> ".$bulan."</td>";
+                                echo " <td> ".$bulan_x . $bulan_y."</td>";
                                 echo " <td class='text-right'> ".$row['berat']."</td>";
                                 echo " <td class='text-right'> ".number_format($row['total_bayar'],2,',','.')."</td>";
                             }else{
                                 echo "<tr><td colspan='4' class='text-center'>Tidak ada data</td></tr>";
                             }
                         } 
-                    ?>
+                        ?>
                     </table>
                 </div>
             </div>
@@ -172,4 +203,5 @@ require('footer.php');
     $('#btnPrint').on('click',function(){
         printData();
     });
+
 </script>
