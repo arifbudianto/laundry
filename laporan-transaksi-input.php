@@ -143,10 +143,9 @@ require('koneksi.php');
                     
                     <table class="table table-bordered" cellspacing=0 cellpadding=5>
                         <tr>
-                            <th>No.</th>
-                            <th>Bulan</th>
-                            <th class="text-right">Berat (Kg)</th>
-                            <th class="text-right">Total Bayar (Rp)</th>
+                            <th class="text-center">Periode Bulan</th>
+                            <th class="text-center">Total Berat (Kg)</th>
+                            <th class="text-center">Total Bayar (Rp)</th>
                         </tr>
                         <?php
 
@@ -158,13 +157,10 @@ require('koneksi.php');
                         }
 
                         $hasil = mysqli_query ($kon,$sql);
-                        
-                        $no = 1;
-                    
+
                         while ($row = mysqli_fetch_assoc($hasil)){
                             if( $row['berat'] && $row['total_bayar']){
                                 echo " <tr> ";
-                                echo " <td> ".$no++."</td>";
                                 echo " <td> ".$bulan_x . $bulan_y."</td>";
                                 echo " <td class='text-right'> ".$row['berat']."</td>";
                                 echo " <td class='text-right'> ".number_format($row['total_bayar'],2,',','.')."</td>";

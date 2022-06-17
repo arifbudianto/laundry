@@ -1,44 +1,57 @@
 <?php
 require('header.php');
 require('sidebar.php');
+require("koneksi.php");
 ?>
 
-<!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
-    <div class="row mb-2">
-        <div class="col-sm-6">
-        <h1 class="m-0">Dashboard</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- /.content-header -->
 
 <?php 
-require("koneksi.php");
 
 // total customer
-$sql ="select count(id_member) as id_member from pelanggan";
+$sql ="select count(nohp) as nohp from pelanggan";
 $data =mysqli_query($kon,$sql);
+
+if(!$data){
+    die(mysqli_error($kon));
+}
+
 $row =mysqli_fetch_assoc($data);
-$total_customer =$row['id_member'];
+$total_customer =$row['nohp'];
 
 // transaksi baru
 $sql2 ="select count(id_transaksi) as id_transaksi from transaksi where tgl_keluar is null";
 $data2 =mysqli_query($kon,$sql2);
+
+if(!$data2){
+    die(mysqli_error($kon));
+}
+
 $row2 =mysqli_fetch_assoc($data2);
 $data_transaksi_baru =$row2['id_transaksi'];
 
 // total transaksi
 $sql3 ="select count(id_transaksi) as id_transaksi from transaksi";
 $data3 =mysqli_query($kon,$sql3);
+
+if(!$data3){
+    die(mysqli_error($kon));
+}
+
 $row3 =mysqli_fetch_assoc($data3);
 $total_transaksi =$row3['id_transaksi'];
 
