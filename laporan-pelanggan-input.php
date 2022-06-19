@@ -13,7 +13,7 @@ require('koneksi.php');
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item active">Laporan Laporan Pelanggan</li>
+                    <li class="breadcrumb-item active">Laporan Transaksi</li>
                 </ol>
             </div>
         </div>
@@ -134,7 +134,7 @@ require('koneksi.php');
 
                     <table border=0>
                         <tr>
-                            <td class="text-center"><h3 class="mb-0">Laporan Pelanggan Athaya Laundry</h3></td>
+                            <td class="text-center"><h3 class="mb-0">Laporan Customer Athaya Laundry</h3></td>
                         </tr>
                         <tr>
                             <td class="text-center pb-1 sub-judul">Periode :  <b><?php echo $bulan_x . $bulan_y;?> </b></td>
@@ -144,29 +144,64 @@ require('koneksi.php');
                     
                     <table class="table table-bordered" cellspacing=0 cellpadding=5>
                         <tr>
+                            <th class="text-center">No.</th>
                             <th class="text-center">Periode Bulan</th>
-                            <th class="text-center">Jumlah Pelanggan</th>
+                            <th class="text-center">Total Customer (Orang)</th>
+                            <th class="text-center">Operasi</th>
                         </tr>
+            
                         <?php
 
                         if($_POST['tgl_akhir'] == ''){
-                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(COUNT(nohp),'') AS nama FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('2021-01-00', '%Y-%m') and DATE_FORMAT('2021-03-00', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
+                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(COUNT(nohp),'') AS nohp FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') =  DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_x', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
                         }else{
-                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(COUNT(nohp),'') AS nama FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('2021-01-00', '%Y-%m') and DATE_FORMAT('2021-03-00', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
-                            
+                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(COUNT(nohp),'') AS nohp FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
+                               
                         }
 
                         $hasil = mysqli_query ($kon,$sql);
 
-                        while ($row = mysqli_fetch_assoc($hasil)){
-                            if( $row['nama'] ){
+                        if(!$hasil){
+                            die(mysqli_error($kon));
+                        }
+
+                        $count = mysqli_num_rows($hasil);
+
+                        if($count > 0){
+                            $no=1;
+                            while ($row = mysqli_fetch_assoc($hasil)){
                                 echo " <tr> ";
-                                echo " <td> ".date('M', strtotime($row['tgl_masuk']))."</td>";
-                                echo " <td class='text-right'> ".$row['nama']."</td>";
-                            }else{
-                                echo "<tr><td colspan='4' class='text-center'>Tidak ada data</td></tr>";
+                                echo " <td> ".$no++."</td>";
+                                echo " <td> ".date('F', strtotime($row['tgl_masuk']))."</td>";
+                                echo " <td class='text-right'> ".$row['nohp']."</td>";
+                                echo " <td class='text-center'>";
+                                echo "<a href = 'laporan-transaksi-detail.php?tgl_masuk=".$row['tgl_masuk']."' title='View'><i class='fa fa-eye text-orange'></i></a>";
+                                echo "</td>";
+                                echo " </tr> ";
+                            } 
+                        }else{
+                            echo "<tr><td colspan='4' class='text-center'>Tidak ada data</td></tr>";
+                        
+                        }
+
+                        if($_POST['tgl_akhir'] != ''){
+                            $sql2 ="SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(COUNT(nohp),'') AS nohp FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m')";
+                            $hasil2 = mysqli_query($kon,$sql2);
+
+                            if(!$hasil2){
+                                die(mysqli_error($kon));
                             }
-                        } 
+
+                            $row2 = mysqli_fetch_assoc($hasil2);
+                            
+
+                            if( $row2['nohp'] ){
+                                echo "<tr>";
+                                echo "<th class='text-center' colspan='2'>Total</th>";
+                                echo "<th class='text-right'>".$row2['nohp']."</th>";
+                                echo "</tr>";
+                            }
+                        }
                         ?>
                     </table>
                 </div>

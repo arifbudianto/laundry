@@ -12,7 +12,6 @@ require('sidebar.php');
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item"><a href="prediksi-form.php">Laporan Transaksi</a></li>
                     <li class="breadcrumb-item active">Laporan</li>
                 </ol>
             </div><!-- /.col -->
@@ -22,49 +21,12 @@ require('sidebar.php');
 <!-- /.content-header -->
 
 <!-- Main content -->
+<?php
+$tgl_masuk =date('F Y', strtotime($_GET["tgl_masuk"]));
+$tgl_concate = $tgl_masuk."-00";
+?>
 <div class="content">
     <div class="container-fluid">
-    <?php
-    if(isset($_POST['tampil'])){
-        $tgl_awal = $_POST['tgl_awal'];
-        $tgl_akhir = $_POST['tgl_akhir'];
-        
-        $dataValid = "YA";
-
-        $err_tgl_awal='';
-        $err_tgl_akhir='';
-        $err_valid='';
-
-        if (strlen(trim($tgl_awal))==0){
-            $err_tgl_awal= "Tanggal Awal Harap di Isi !<br/>";
-            $dataValid ="TIDAK";
-        }
-        if (strlen(trim($tgl_akhir))==0){
-            $err_tgl_akhir= "Tanggal Masuk Harap di Isi !<br/>";
-            $dataValid ="TIDAK";
-        }
-        if ($dataValid=="TIDAK"){
-            $err_valid= "Masih ada kesalahan, silahkan perbaiki !<br/>";
-            
-        }
-    }
-
-        if(strlen(trim($tgl_awal))==0 || strlen(trim($tgl_akhir))==0 || $dataValid=="TIDAK"){
-
-            ?>
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <?php
-                    echo $err_tgl_awal;
-                    echo $err_tgl_akhir;
-                    echo $err_valid;       
-                ?>
-            </div>
-            <a href="laporan-transaksi-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-angle-left"></i> Kembali</a>
-        <?php
-        exit;
-        }
-    ?>
         <a href="laporan-transaksi-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-edit"></i> Laporan Transaksi</a>
         <div class="card card-default">
             <!-- /.card-header -->
@@ -75,19 +37,18 @@ require('sidebar.php');
             <?php
             include "koneksi.php";
             $no = 1;
-            $sql = "SELECT SUM(berat) AS TB, SUM(total_bayar) AS TP FROM transaksi WHERE tgl_masuk between '$tgl_awal' and '$tgl_akhir'";
+            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%M-%Y') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%M-%Y') = DATE_FORMAT('$tgl_concate', '%M-%Y') ;";
             $hasil = mysqli_query ($kon,$sql);
+            echo $sql;
             $data = mysqli_fetch_array($hasil);
-            $berat = $data['TB'];
-            $pend = $data['TP'];
+            $berat = $data['berat'];
+            $pend = $data['total_bayar'];
             ?>
             <table border = 0>
                 <tr>
-                    <td>Periode Laporan </td>
+                    <td>Bulan </td>
                     <td> : </td>
-                    <td> <?php echo $tgl_awal;?> </td>
-                    <td class="col-sm-2 text-center"> s/d </td>
-                    <td> <?php echo $tgl_akhir;?> </td>
+                    <td> <?php echo $tgl_masuk;?> </td>
                 </tr>
                 <tr>
                     <td>Total Laundry Masuk </td>
@@ -121,7 +82,7 @@ require('sidebar.php');
                     FROM transaksi
                     JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
                     JOIN paket ON transaksi.id_paket = paket.id_paket
-                    JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE tgl_masuk between '$tgl_awal' and '$tgl_akhir'";
+                    JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE tgl_masuk='$tgl_masuk'";
                     $hasil = mysqli_query ($kon,$sql);
                     while ($row = mysqli_fetch_array($hasil)){
                         echo " <tr> ";
@@ -145,9 +106,9 @@ require('sidebar.php');
         
     </div>
 </div>
-<script>
+<!-- <script>
     window.print();
-</script>
+</script> -->
 <?php    
 require('footer.php');
 ?>

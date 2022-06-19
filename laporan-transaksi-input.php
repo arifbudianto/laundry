@@ -148,6 +148,7 @@ require('koneksi.php');
                             <th class="text-center">Periode Bulan</th>
                             <th class="text-center">Total Berat (Kg)</th>
                             <th class="text-center">Total Bayar (Rp)</th>
+                            <th class="text-center">Operasi</th>
                         </tr>
             
                         <?php
@@ -173,8 +174,11 @@ require('koneksi.php');
                                 echo " <tr> ";
                                 echo " <td> ".$no++."</td>";
                                 echo " <td> ".date('F Y', strtotime($row['tgl_masuk']))."</td>";
-                                echo " <td class='text-right'> ".$row['berat']."</td>";
+                                echo " <td class='text-right'> ".round($row['berat'],3)."</td>";
                                 echo " <td class='text-right'> ".number_format($row['total_bayar'],2,',','.')."</td>";
+                                echo " <td class='text-center'>";
+                                echo "<a href = 'laporan-transaksi-detail.php?tgl_masuk=".$row['tgl_masuk']."' title='View'><i class='fa fa-eye text-blue'></i></a>";
+                                echo "</td>";
                                 echo " </tr> ";
                             } 
                         }else{
@@ -196,8 +200,8 @@ require('koneksi.php');
 
                             if( $row2['berat'] && $row2['total_bayar']){
                                 echo "<tr>";
-                                echo "<th class='text-center' colspan='2'></th>";
-                                echo "<th class='text-right'>".$row2['berat']."</th>";
+                                echo "<th class='text-center' colspan='2'>Total</th>";
+                                echo "<th class='text-right'>".round($row2['berat'],3)."</th>";
                                 echo "<th class='text-right'>".number_format($row2['total_bayar'],2,',','.')."</th>";
                                 echo "</tr>";
                             }
