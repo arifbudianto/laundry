@@ -144,6 +144,7 @@ require('koneksi.php');
                     
                     <table class="table table-bordered" cellspacing=0 cellpadding=5>
                         <tr>
+                            <th class="text-center">No.</th>
                             <th class="text-center">Periode Bulan</th>
                             <th class="text-center">Total Berat (Kg)</th>
                             <th class="text-center">Total Bayar (Rp)</th>
@@ -152,29 +153,56 @@ require('koneksi.php');
                         <?php
 
                         if($_POST['tgl_akhir'] == ''){
-                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$bulan_x', '%Y-%m') and DATE_FORMAT('$bulan_y', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
+                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') =  DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_x', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
                         }else{
-                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$bulan_x', '%Y-%m') and DATE_FORMAT('$bulan_y', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
-                            
+                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
+                               
                         }
 
                         $hasil = mysqli_query ($kon,$sql);
 
-                        while ($row = mysqli_fetch_assoc($hasil)){
-                            if( $row['berat'] && $row['total_bayar']){
+                        if(!$hasil){
+                            die(mysqli_error($kon));
+                        }
+
+                        $count = mysqli_num_rows($hasil);
+
+                        if($count > 0){
+                            $no=1;
+                            while ($row = mysqli_fetch_assoc($hasil)){
                                 echo " <tr> ";
-                                echo " <td> ".date('M', strtotime($row['tgl_masuk']))."</td>";
+                                echo " <td> ".$no++."</td>";
+                                echo " <td> ".date('F Y', strtotime($row['tgl_masuk']))."</td>";
                                 echo " <td class='text-right'> ".$row['berat']."</td>";
                                 echo " <td class='text-right'> ".number_format($row['total_bayar'],2,',','.')."</td>";
-                            }else{
-                                echo "<tr><td colspan='4' class='text-center'>Tidak ada data</td></tr>";
+                                echo " </tr> ";
+                            } 
+                        }else{
+                            echo "<tr><td colspan='4' class='text-center'>Tidak ada data</td></tr>";
+                        
+                        }
+
+                        if($_POST['tgl_akhir'] != ''){
+                            $sql2 ="SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m')";
+                            
+                            $hasil2 = mysqli_query($kon,$sql2);
+
+                            if(!$hasil2){
+                                die(mysqli_error($kon));
                             }
-                        } 
+
+                            $row2 = mysqli_fetch_assoc($hasil2);
+                            
+
+                            if( $row2['berat'] && $row2['total_bayar']){
+                                echo "<tr>";
+                                echo "<th class='text-center' colspan='2'></th>";
+                                echo "<th class='text-right'>".$row2['berat']."</th>";
+                                echo "<th class='text-right'>".number_format($row2['total_bayar'],2,',','.')."</th>";
+                                echo "</tr>";
+                            }
+                        }
                         ?>
-                        <tr>
-                            <th class="text-center">Total</th>
-                            <th>Tes</th>
-                        </tr>
                     </table>
                 </div>
             </div>
