@@ -72,6 +72,7 @@ require('koneksi.php');
             <div class="card card-default">
                 <div class="card-header">
                     <button class="btn btn-default btn-md btn-sm " id="btnPrint" ><i class="fa fa-print"></i> Print Data</button>
+                    <button class="btn btn-default btn-md btn-sm " id="btnGrafik" ><i class="fa fa-chart"></i> Grafik</button>
                 </div>
                 <div class="card-body " id="printData">
                     <style>
@@ -147,12 +148,13 @@ require('koneksi.php');
                             <th class="text-center">Total Berat (Kg)</th>
                             <th class="text-center">Total Bayar (Rp)</th>
                         </tr>
+            
                         <?php
 
                         if($_POST['tgl_akhir'] == ''){
-                            $sql = "SELECT COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%m') = DATE_FORMAT('$tgl_concate_x', '%m') and DATE_FORMAT(tgl_masuk, '%Y') = DATE_FORMAT('$tgl_concate_x', '%Y')";
+                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$bulan_x', '%Y-%m') and DATE_FORMAT('$bulan_y', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
                         }else{
-                            $sql = "SELECT COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m')";
+                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$bulan_x', '%Y-%m') and DATE_FORMAT('$bulan_y', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
                             
                         }
 
@@ -161,7 +163,7 @@ require('koneksi.php');
                         while ($row = mysqli_fetch_assoc($hasil)){
                             if( $row['berat'] && $row['total_bayar']){
                                 echo " <tr> ";
-                                echo " <td> ".$bulan_x . $bulan_y."</td>";
+                                echo " <td> ".date('M', strtotime($row['tgl_masuk']))."</td>";
                                 echo " <td class='text-right'> ".$row['berat']."</td>";
                                 echo " <td class='text-right'> ".number_format($row['total_bayar'],2,',','.')."</td>";
                             }else{
@@ -169,6 +171,10 @@ require('koneksi.php');
                             }
                         } 
                         ?>
+                        <tr>
+                            <th class="text-center">Total</th>
+                            <th>Tes</th>
+                        </tr>
                     </table>
                 </div>
             </div>

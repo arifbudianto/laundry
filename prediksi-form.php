@@ -43,7 +43,7 @@ require('sidebar.php');
                     <form action = "prediksi-proses.php" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="tgl_awal" class="col-sm-4 col-form-label">Dari Tgl. <i class="text-danger">*</i></label>
+                                <label for="tgl_awal" class="col-sm-4 col-form-label">Periode Tanggal dari <i class="text-danger">*</i></label>
                                 <div class="col-sm-8">
                                     <div class="form-inline">
                                         <div class="form-group">
