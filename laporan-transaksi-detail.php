@@ -22,7 +22,7 @@ require('sidebar.php');
 
 <!-- Main content -->
 <?php
-$tgl_masuk =date('F Y', strtotime($_GET["tgl_masuk"]));
+$tgl_masuk =date('Y-m', strtotime($_GET["tgl_masuk"]));
 $tgl_concate = $tgl_masuk."-00";
 ?>
 <div class="content">
@@ -37,7 +37,7 @@ $tgl_concate = $tgl_masuk."-00";
             <?php
             include "koneksi.php";
             $no = 1;
-            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%M-%Y') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%M-%Y') = DATE_FORMAT('$tgl_concate', '%M-%Y') ;";
+            $sql = "SELECT COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%M-%Y') = DATE_FORMAT('$tgl_concate', '%M-%Y')";
             $hasil = mysqli_query ($kon,$sql);
             echo $sql;
             $data = mysqli_fetch_array($hasil);
@@ -82,7 +82,7 @@ $tgl_concate = $tgl_masuk."-00";
                     FROM transaksi
                     JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
                     JOIN paket ON transaksi.id_paket = paket.id_paket
-                    JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE tgl_masuk='$tgl_masuk'";
+                    JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE DATE_FORMAT(tgl_masuk, '%M-%Y') = DATE_FORMAT('$tgl_concate', '%M-%Y') GROUP BY tgl_masuk";
                     $hasil = mysqli_query ($kon,$sql);
                     while ($row = mysqli_fetch_array($hasil)){
                         echo " <tr> ";
