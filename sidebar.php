@@ -110,6 +110,12 @@
                                 <p>Laporan Parfum</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="laporan-paket-input.php" class="nav-link ">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Laporan Paket</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

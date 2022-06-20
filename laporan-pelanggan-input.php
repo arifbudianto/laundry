@@ -146,7 +146,7 @@ require('koneksi.php');
                         <tr>
                             <th class="text-center">No.</th>
                             <th class="text-center">Periode Bulan</th>
-                            <th class="text-center">Total Customer (Orang)</th>
+                            <th class="text-center">Total Transaksi</th>
                             <th class="text-center">Operasi</th>
                         </tr>
             
@@ -175,7 +175,7 @@ require('koneksi.php');
                                 echo " <td> ".date('F', strtotime($row['tgl_masuk']))."</td>";
                                 echo " <td class='text-right'> ".$row['nohp']."</td>";
                                 echo " <td class='text-center'>";
-                                echo "<a href = 'laporan-transaksi-detail.php?tgl_masuk=".$row['tgl_masuk']."' title='View'><i class='fa fa-eye text-orange'></i></a>";
+                                echo "<a href = 'laporan-pelanggan-detail.php?tgl_masuk=".$row['tgl_masuk']."' title='View'><i class='fa fa-eye text-orange'></i></a>";
                                 echo "</td>";
                                 echo " </tr> ";
                             } 

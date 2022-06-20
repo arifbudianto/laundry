@@ -12,8 +12,7 @@ require('sidebar.php');
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item"><a href="prediksi-form.php">Laporan Parfum</a></li>
-                    <li class="breadcrumb-item active">Laporan</li>
+                    <li class="breadcrumb-item active">Laporan Parfum</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -22,50 +21,13 @@ require('sidebar.php');
 <!-- /.content-header -->
 
 <!-- Main content -->
+<?php
+$tgl_masuk =date('Y-m', strtotime($_GET["tgl_masuk"]));
+$tgl_concate = $tgl_masuk."-00";
+?>
 <div class="content">
     <div class="container-fluid">
-    <?php
-    if(isset($_POST['tampil'])){
-        $tgl_awal = $_POST['tgl_awal'];
-        $tgl_akhir = $_POST['tgl_akhir'];
-        
-        $dataValid = "YA";
-
-        $err_tgl_awal='';
-        $err_tgl_akhir='';
-        $err_valid='';
-
-        if (strlen(trim($tgl_awal))==0){
-            $err_tgl_awal= "Tanggal Awal Harap di Isi !<br/>";
-            $dataValid ="TIDAK";
-        }
-        if (strlen(trim($tgl_akhir))==0){
-            $err_tgl_akhir= "Tanggal Masuk Harap di Isi !<br/>";
-            $dataValid ="TIDAK";
-        }
-        if ($dataValid=="TIDAK"){
-            $err_valid= "Masih ada kesalahan, silahkan perbaiki !<br/>";
-            
-        }
-    }
-
-        if(strlen(trim($tgl_awal))==0 || strlen(trim($tgl_akhir))==0 || $dataValid=="TIDAK"){
-
-            ?>
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <?php
-                    echo $err_tgl_awal;
-                    echo $err_tgl_akhir;
-                    echo $err_valid;       
-                ?>
-            </div>
-            <a href="laporan-parfum-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-angle-left"></i> Kembali</a>
-        <?php
-        exit;
-        }
-    ?>
-        <a href="laporan-parfum-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-edit"></i> LAPORAN PARFUM</a>
+        <a href="laporan-parfum-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-edit"></i> Laporan Parfum</a>
         <div class="card card-default">
             <!-- /.card-header -->
             <div class="card-body ">
@@ -74,11 +36,9 @@ require('sidebar.php');
             </center>
             <table border = 0>
                 <tr>
-                    <td>Periode Laporan </td>
+                    <td>Bulan </td>
                     <td> : </td>
-                    <td> <?php echo $tgl_awal;?> </td>
-                    <td class="col-sm-2 text-center"> s/d </td>
-                    <td> <?php echo $tgl_akhir;?> </td>
+                    <td> <?php echo date('F', strtotime($tgl_masuk));?> </td>
                 </tr>
             </table>
                 <table class="table table-bordered">
@@ -88,20 +48,14 @@ require('sidebar.php');
                         <th>PARFUM</th>
                         <th>JUMLAH PARFUM KELUAR</th>
                         <th>JUMLAH PEMINAT PARFUM</th>
-                        <!-- <th>Total (Rp)</th> -->
-                        <!-- <th>Berat (Kg)</th> -->
-                        <!-- <th>Paket</th>
-                        <th>Jenis Parfum</th> -->
-                        <!-- <th>Total Bayar (Rp)</th> -->
                     </tr>
                     <?php
                     include "koneksi.php";
                     $no = 1;
-                    $sql = "SELECT parfum.id_parfum,parfum.jenis_parfum, SUM(berat) AS JP, COUNT(parfum.jenis_parfum)
-                            AS PK FROM transaksi JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE
-                            tgl_masuk between '$tgl_awal' and '$tgl_akhir' GROUP BY jenis_parfum;";
-                    $hasil = mysqli_query ($kon,$sql);
-                    $row = mysqli_fetch_array($hasil);
+                    $sql ="SELECT parfum.id_parfum, parfum.jenis_parfum, SUM(berat) AS JP, COUNT(parfum.jenis_parfum)
+                            AS PK FROM transaksi JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum
+                            WHERE DATE_FORMAT(tgl_masuk, '%M-%Y') = DATE_FORMAT('$tgl_concate', '%M-%Y') GROUP BY id_parfum;";
+                    $hasil = mysqli_query ($kon,$sql);               
                     while ($row = mysqli_fetch_array($hasil)){
                         $JP = $row['JP'];
                         $Par = $JP / 25;
@@ -111,13 +65,27 @@ require('sidebar.php');
                         echo " <td> ".$row['jenis_parfum']."</td>";
                         echo " <td> ".$Par."</td>";
                         echo " <td> ".$row['PK']."</td>";
-                        // echo " <td> ".$row['Jumlah']."</td>";
-                        // echo " <td> ".$row['berat']."</td>";
-                        // echo " <td> ".$row['nama_paket']."</td>";
-                        // echo " <td> ".$row['jenis_parfum']."</td>";
-                        // echo " <td> ".$row['total_bayar']."</td>";
-                        // echo " <td class='text-center'>";
-                 } 
+                    }
+                    $sql2 ="SELECT parfum.id_parfum, parfum.jenis_parfum, SUM(berat) AS JP, COUNT(parfum.jenis_parfum)
+                    AS PK FROM transaksi JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum
+                    WHERE DATE_FORMAT(tgl_masuk, '%M-%Y') = DATE_FORMAT('$tgl_concate', '%M-%Y');";
+                            
+                            $hasil2 = mysqli_query($kon,$sql2);
+
+                            if(!$hasil2){
+                                die(mysqli_error($kon));
+                            }
+
+                            $row2 = mysqli_fetch_assoc($hasil2);
+                            $JP2 = $row2['JP'];
+                            $Par2 = $JP2/25; 
+                            if( $row2['PK'] && $Par2){
+                                echo "<tr>";
+                                echo "<th class='text-center' colspan='3'>Total</th>";
+                                echo "<th class='text-right'>".$Par2."</th>";
+                                echo "<th class='text-right'>".$row2['PK']."</th>";
+                                echo "</tr>"; 
+                            }
                 ?>
                 </table>
                 
@@ -126,9 +94,9 @@ require('sidebar.php');
         
     </div>
 </div>
-<script>
+<!-- <script>
     window.print();
-</script>
+</script> -->
 <?php    
 require('footer.php');
 ?>

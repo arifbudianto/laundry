@@ -94,10 +94,10 @@ require('sidebar.php');
                             echo " <td> ".$row['tgl_keluar']."</td>";
                             echo " <td> ".$row['nohp']."</td>";
                             echo " <td> ".$row['nama']."</td>";
-                            echo " <td> ".$row['berat']."</td>";
+                            echo " <td> ".round($row['berat'],3)."</td>";
                             echo " <td> ".$row['nama_paket']."</td>";
                             echo " <td> ".$row['jenis_parfum']."</td>";
-                            echo " <td> ".$row['total_bayar']."</td>";
+                            echo " <td> ".number_format($row['total_bayar'],0,',','.')."</td>";
                             echo " <td class='text-center'>";
                             if ($row['tgl_keluar'] == NULL || $row['tgl_keluar'] == ''){
                                 echo " <a href = 'trans-proses-konfir.php?id_transaksi=".$row['id_transaksi']."' title='Konfirmasi Data'><i class='fa fa-check text-success'></i> </a>";

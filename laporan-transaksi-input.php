@@ -146,6 +146,7 @@ require('koneksi.php');
                         <tr>
                             <th class="text-center">No.</th>
                             <th class="text-center">Periode Bulan</th>
+                            <th class="text-center">Total Transaksi</th>
                             <th class="text-center">Total Berat (Kg)</th>
                             <th class="text-center">Total Bayar (Rp)</th>
                             <th class="text-center">Operasi</th>
@@ -154,9 +155,9 @@ require('koneksi.php');
                         <?php
 
                         if($_POST['tgl_akhir'] == ''){
-                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') =  DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_x', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
+                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(COUNT(id_transaksi),'') AS transaksi, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') =  DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_x', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
                         }else{
-                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
+                            $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(COUNT(id_transaksi),'') AS transaksi, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
                                
                         }
 
@@ -174,6 +175,7 @@ require('koneksi.php');
                                 echo " <tr> ";
                                 echo " <td> ".$no++."</td>";
                                 echo " <td> ".date('F Y', strtotime($row['tgl_masuk']))."</td>";
+                                echo " <td> ".$row['transaksi']."</td>";
                                 echo " <td class='text-right'> ".round($row['berat'],3)."</td>";
                                 echo " <td class='text-right'> ".number_format($row['total_bayar'],2,',','.')."</td>";
                                 echo " <td class='text-center'>";
@@ -187,7 +189,7 @@ require('koneksi.php');
                         }
 
                         if($_POST['tgl_akhir'] != ''){
-                            $sql2 ="SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m')";
+                            $sql2 ="SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, COALESCE(COUNT(id_transaksi),'') AS transaksi, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m')";
                             
                             $hasil2 = mysqli_query($kon,$sql2);
 
@@ -198,9 +200,10 @@ require('koneksi.php');
                             $row2 = mysqli_fetch_assoc($hasil2);
                             
 
-                            if( $row2['berat'] && $row2['total_bayar']){
+                            if( $row2['transaksi'] && $row2['berat'] && $row2['total_bayar']){
                                 echo "<tr>";
                                 echo "<th class='text-center' colspan='2'>Total</th>";
+                                echo "<th class='text-right'>".$row2['transaksi']."</th>";
                                 echo "<th class='text-right'>".round($row2['berat'],3)."</th>";
                                 echo "<th class='text-right'>".number_format($row2['total_bayar'],2,',','.')."</th>";
                                 echo "</tr>";

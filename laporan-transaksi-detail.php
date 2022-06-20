@@ -39,7 +39,6 @@ $tgl_concate = $tgl_masuk."-00";
             $no = 1;
             $sql = "SELECT COALESCE(SUM(berat),'') AS berat, COALESCE(SUM(total_bayar),'') AS total_bayar FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%M-%Y') = DATE_FORMAT('$tgl_concate', '%M-%Y')";
             $hasil = mysqli_query ($kon,$sql);
-            echo $sql;
             $data = mysqli_fetch_array($hasil);
             $berat = $data['berat'];
             $pend = $data['total_bayar'];
@@ -48,17 +47,17 @@ $tgl_concate = $tgl_masuk."-00";
                 <tr>
                     <td>Bulan </td>
                     <td> : </td>
-                    <td> <?php echo $tgl_masuk;?> </td>
+                    <td> <?php echo date('F', strtotime($tgl_masuk));?> </td>
                 </tr>
                 <tr>
                     <td>Total Laundry Masuk </td>
                     <td> : </td>
-                    <td> <?php echo $berat;?> </td>
+                    <td> <?php echo round($berat,3);?> </td>
                 </tr>
                 <tr>
                     <td>Total Pendapatan </td>
                     <td> : </td>
-                    <td> <?php echo "Rp.".$pend;?> </td>
+                    <td> <?php echo "Rp.".number_format($pend,2,',','.');?> </td>
                 </tr>
             </table>
                 <table class="table table-bordered">
@@ -82,7 +81,7 @@ $tgl_concate = $tgl_masuk."-00";
                     FROM transaksi
                     JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
                     JOIN paket ON transaksi.id_paket = paket.id_paket
-                    JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE DATE_FORMAT(tgl_masuk, '%M-%Y') = DATE_FORMAT('$tgl_concate', '%M-%Y') GROUP BY tgl_masuk";
+                    JOIN parfum ON transaksi.jenis_parfum = parfum.jenis_parfum WHERE DATE_FORMAT(tgl_masuk, '%M-%Y') = DATE_FORMAT('$tgl_concate', '%M-%Y') GROUP BY id_transaksi";
                     $hasil = mysqli_query ($kon,$sql);
                     while ($row = mysqli_fetch_array($hasil)){
                         echo " <tr> ";
