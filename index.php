@@ -55,6 +55,7 @@ if(!$data3){
 $row3 =mysqli_fetch_assoc($data3);
 $total_transaksi =$row3['id_transaksi'];
 
+
 ?>
 
 <!-- Main content -->
@@ -101,250 +102,50 @@ $total_transaksi =$row3['id_transaksi'];
                     </div>
                 </div>
             </div>
-            
         </div>
+        
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-header border-0">
-                    <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Online Store Visitors</h3>
-                        <a href="javascript:void(0);">View Report</a>
-                    </div>
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title">Transaksi Bulanan</h3>
+                            <!-- <a href="javascript:void(0);">View Report</a> -->
+                        </div>
                     </div>
                     <div class="card-body">
-                    <div class="d-flex">
-                        <p class="d-flex flex-column">
-                        <span class="text-bold text-lg">820</span>
-                        <span>Visitors Over Time</span>
-                        </p>
-                        <p class="ml-auto d-flex flex-column text-right">
-                        <span class="text-success">
-                            <i class="fas fa-arrow-up"></i> 12.5%
-                        </span>
-                        <span class="text-muted">Since last week</span>
-                        </p>
-                    </div>
-                    <!-- /.d-flex -->
+                        <div class="d-flex">
+                            <!-- <p class="d-flex flex-column">
+                                <span class="text-bold text-lg">$18,230.00</span>
+                                <span>Sales Over Time</span>
+                            </p> -->
+                            <!-- <p class="ml-auto d-flex flex-column text-right">
+                                <span class="text-success">
+                                    <i class="fas fa-arrow-up"></i> 33.1%
+                                </span>
+                                <span class="text-muted">Since last month</span>
+                            </p> -->
+                        </div>
+                        <!-- /.d-flex -->
 
-                    <div class="position-relative mb-4">
-                        <canvas id="visitors-chart" height="200"></canvas>
-                    </div>
+                        <div class="position-relative mb-4">
+                            <canvas id="transaksi-chart" height="200"></canvas>
+                        </div>
 
-                    <div class="d-flex flex-row justify-content-end">
-                        <span class="mr-2">
-                        <i class="fas fa-square text-primary"></i> This Week
-                        </span>
+                        <!-- <div class="d-flex flex-row justify-content-end">
+                            <span class="mr-2">
+                            <i class="fas fa-square text-primary"></i> Tahun ini
+                            </span>
 
-                        <span>
-                        <i class="fas fa-square text-gray"></i> Last Week
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                <!-- /.card -->
-
-                <div class="card">
-                    <div class="card-header border-0">
-                    <h3 class="card-title">Products</h3>
-                    <div class="card-tools">
-                        <a href="#" class="btn btn-tool btn-sm">
-                        <i class="fas fa-download"></i>
-                        </a>
-                        <a href="#" class="btn btn-tool btn-sm">
-                        <i class="fas fa-bars"></i>
-                        </a>
-                    </div>
-                    </div>
-                    <div class="card-body table-responsive p-0">
-                    <table class="table table-striped table-valign-middle">
-                        <thead>
-                        <tr>
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Sales</th>
-                        <th>More</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                        <td>
-                            <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                            Some Product
-                        </td>
-                        <td>$13 USD</td>
-                        <td>
-                            <small class="text-success mr-1">
-                            <i class="fas fa-arrow-up"></i>
-                            12%
-                            </small>
-                            12,000 Sold
-                        </td>
-                        <td>
-                            <a href="#" class="text-muted">
-                            <i class="fas fa-search"></i>
-                            </a>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                            Another Product
-                        </td>
-                        <td>$29 USD</td>
-                        <td>
-                            <small class="text-warning mr-1">
-                            <i class="fas fa-arrow-down"></i>
-                            0.5%
-                            </small>
-                            123,234 Sold
-                        </td>
-                        <td>
-                            <a href="#" class="text-muted">
-                            <i class="fas fa-search"></i>
-                            </a>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                            Amazing Product
-                        </td>
-                        <td>$1,230 USD</td>
-                        <td>
-                            <small class="text-danger mr-1">
-                            <i class="fas fa-arrow-down"></i>
-                            3%
-                            </small>
-                            198 Sold
-                        </td>
-                        <td>
-                            <a href="#" class="text-muted">
-                            <i class="fas fa-search"></i>
-                            </a>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td>
-                            <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2">
-                            Perfect Item
-                            <span class="badge bg-danger">NEW</span>
-                        </td>
-                        <td>$199 USD</td>
-                        <td>
-                            <small class="text-success mr-1">
-                            <i class="fas fa-arrow-up"></i>
-                            63%
-                            </small>
-                            87 Sold
-                        </td>
-                        <td>
-                            <a href="#" class="text-muted">
-                            <i class="fas fa-search"></i>
-                            </a>
-                        </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    </div>
-                </div>
-                <!-- /.card -->
-            </div>
-            <!-- /.col-md-6 -->
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header border-0">
-                    <div class="d-flex justify-content-between">
-                        <h3 class="card-title">Sales</h3>
-                        <a href="javascript:void(0);">View Report</a>
-                    </div>
-                    </div>
-                    <div class="card-body">
-                    <div class="d-flex">
-                        <p class="d-flex flex-column">
-                        <span class="text-bold text-lg">$18,230.00</span>
-                        <span>Sales Over Time</span>
-                        </p>
-                        <p class="ml-auto d-flex flex-column text-right">
-                        <span class="text-success">
-                            <i class="fas fa-arrow-up"></i> 33.1%
-                        </span>
-                        <span class="text-muted">Since last month</span>
-                        </p>
-                    </div>
-                    <!-- /.d-flex -->
-
-                    <div class="position-relative mb-4">
-                        <canvas id="sales-chart" height="200"></canvas>
-                    </div>
-
-                    <div class="d-flex flex-row justify-content-end">
-                        <span class="mr-2">
-                        <i class="fas fa-square text-primary"></i> This year
-                        </span>
-
-                        <span>
-                        <i class="fas fa-square text-gray"></i> Last year
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                <!-- /.card -->
-
-                <div class="card">
-                    <div class="card-header border-0">
-                    <h3 class="card-title">Online Store Overview</h3>
-                    <div class="card-tools">
-                        <a href="#" class="btn btn-sm btn-tool">
-                        <i class="fas fa-download"></i>
-                        </a>
-                        <a href="#" class="btn btn-sm btn-tool">
-                        <i class="fas fa-bars"></i>
-                        </a>
-                    </div>
-                    </div>
-                    <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                        <p class="text-success text-xl">
-                        <i class="ion ion-ios-refresh-empty"></i>
-                        </p>
-                        <p class="d-flex flex-column text-right">
-                        <span class="font-weight-bold">
-                            <i class="ion ion-android-arrow-up text-success"></i> 12%
-                        </span>
-                        <span class="text-muted">CONVERSION RATE</span>
-                        </p>
-                    </div>
-                    <!-- /.d-flex -->
-                    <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                        <p class="text-warning text-xl">
-                        <i class="ion ion-ios-cart-outline"></i>
-                        </p>
-                        <p class="d-flex flex-column text-right">
-                        <span class="font-weight-bold">
-                            <i class="ion ion-android-arrow-up text-warning"></i> 0.8%
-                        </span>
-                        <span class="text-muted">SALES RATE</span>
-                        </p>
-                    </div>
-                    <!-- /.d-flex -->
-                    <div class="d-flex justify-content-between align-items-center mb-0">
-                        <p class="text-danger text-xl">
-                        <i class="ion ion-ios-people-outline"></i>
-                        </p>
-                        <p class="d-flex flex-column text-right">
-                        <span class="font-weight-bold">
-                            <i class="ion ion-android-arrow-down text-danger"></i> 1%
-                        </span>
-                        <span class="text-muted">REGISTRATION RATE</span>
-                        </p>
-                    </div>
-                    <!-- /.d-flex -->
+                            <span>
+                            <i class="fas fa-square text-gray"></i> Tahun Lalu
+                            </span>
+                        </div> -->
                     </div>
                 </div>
             </div>
-            <!-- /.col-md-6 -->
         </div>
+        
         <!-- /.row -->
     </div>
     <!-- /.container-fluid -->
@@ -354,3 +155,163 @@ $total_transaksi =$row3['id_transaksi'];
 <?php
 require('footer.php');
 ?>
+
+<script>
+    $(function () {
+  'use strict'
+
+  var ticksStyle = {
+    fontColor: '#495057',
+    fontStyle: 'bold'
+  }
+
+  var mode = 'index'
+  var intersect = true
+
+  // get data with ajax
+  $.ajax({
+    url:"data_json.php",
+    dataType: "json",
+    method:"GET",
+    success:function(data){
+
+      var count = data.structure.data_result;
+
+      var get_periode = [];
+      var data_bulan = [];
+      var get_data = [];
+      var data_tahun = [];
+      var data_parse = [];
+
+      var total_tahun_lalu = [];
+      var total_tahun_ini = [];
+      var data_bulan_az= [];
+
+      for(var x=0; x<count.length; x++){
+
+        // ambil data bulan
+        get_periode[x] = data.structure.data_result[x].data_tgl_periode;
+        get_data[x] = get_periode[x].split("-");
+        data_bulan[x] = get_data[x][1];
+        
+        // ambil data tahun
+        data_tahun[x] = get_data[x][0];
+        data_parse[x] = parseInt(data_tahun[x]);
+
+        var tahun_max = Math.max.apply(Math,data_parse);
+        var tahun_min = Math.min.apply(Math,data_parse);
+
+
+        // membuat bulan numeric ke alfabet
+        var data_bulan_x = new Date( data_tahun[x], data_bulan[x], 0);
+        data_bulan_az[x] = data_bulan_x.toLocaleString('en-us', { month: 'short' });
+
+        // membuat bulan agar tidak duplicate
+        var data_bulan_unique = data_bulan_az.filter(function(item, i, data_bulan_az){
+          return i == data_bulan_az.indexOf(item);
+        })
+      }
+
+      var count_data_tahun = data_tahun.length;
+      for( var y=0; y<count_data_tahun; y++){
+        // check jika data sma dengan tahun max
+        if(tahun_max == data_tahun[y]){
+          total_tahun_ini[y] = data.structure.data_result[y].data_total_bayar;
+
+          // menghilangkan value array null
+          var total_tahun_ini_x = total_tahun_ini.filter(item => item);
+        }else{
+          total_tahun_lalu[y] = data.structure.data_result[y].data_total_bayar;
+          var total_tahun_lalu_x = total_tahun_lalu.filter(item => item);
+        }
+      }
+
+      // total bayar 
+      var data_total_bayar_a =[];
+      for(var yx=0; yx<total_tahun_ini_x.length; yx++){
+        data_total_bayar_a[yx] = total_tahun_ini_x[yx];
+      }
+
+      var data_total_bayar_b =[];
+      for(var yx=0; yx<total_tahun_lalu_x.length; yx++){
+        data_total_bayar_b[yx] = total_tahun_lalu_x[yx];
+      }
+   
+      var $salesChart = $('#transaksi-chart')
+
+      // eslint-disable-next-line no-unused-vars
+      var salesChart = new Chart($salesChart, {
+        type: 'bar',
+        data: {
+          labels: data_bulan_unique,
+          datasets: [
+            {
+              label: 'Data Tahun '+tahun_max,
+              backgroundColor: '#007bff',
+              borderColor: '#007bff',
+              data : data_total_bayar_a
+              // data: [1000, 2000, 3000, 2500, 2700, 2500, 3000]
+            },
+            {
+              label: 'Data Tahun '+tahun_min,
+              backgroundColor: '#ced4da',
+              borderColor: '#ced4da',
+              data : data_total_bayar_b
+              // data: [700, 1700, 2700, 2000, 1800, 1500, 2000]
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          tooltips: {
+            mode: mode,
+            intersect: intersect
+          },
+          hover: {
+            mode: mode,
+            intersect: intersect
+          },
+          legend: {
+            display: true
+          },
+          scales: {
+            yAxes: [{
+              // display: true,
+              gridLines: {
+                display: true,
+                // lineWidth: '4px',
+                // color: 'rgba(0, 0, 0, .2)',
+                // zeroLineColor: 'solid'
+              }
+              ,
+              ticks: $.extend({
+                beginAtZero: true,
+
+                // Include a dollar sign in the ticks
+                callback: function (value) {
+                  if (value >= 1) {
+                    value /= 1
+                  }
+
+                  return 'Rp.' + value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                }
+              }, ticksStyle)
+            }],
+            xAxes: [{
+              // display: true,
+              gridLines: {
+                display: true
+              },
+              ticks: ticksStyle
+            }]
+          }
+        }
+      })
+    },
+    error:function(data){
+      console.log(data);
+    }
+  });
+})
+</script>

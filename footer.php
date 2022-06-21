@@ -61,7 +61,7 @@
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard3.js"></script>
+<!-- <script src="dist/js/pages/dashboard3.js"></script> -->
 <script src="js/jquery.table2excel.min.js"></script>
 
 
