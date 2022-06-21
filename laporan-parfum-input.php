@@ -8,12 +8,12 @@ require('koneksi.php');
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Laporan Transaksi</h1>
+                <h1 class="m-0">Laporan Parfum</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item active">Laporan Transaksi</li>
+                    <li class="breadcrumb-item active">Laporan Parfum</li>
                 </ol>
             </div>
         </div>
@@ -175,7 +175,7 @@ require('koneksi.php');
                                 echo " <td> ".date('F', strtotime($row['tgl_masuk']))."</td>";
                                 echo " <td class='text-right'> ".round($row['berat']/25,3)."</td>";
                                 echo " <td class='text-center'>";
-                                echo "<a href = 'laporan-transaksi-detail.php?tgl_masuk=".$row['tgl_masuk']."' title='View'><i class='fa fa-eye text-orange'></i></a>";
+                                echo "<a href = 'laporan-parfum-detail.php?tgl_masuk=".$row['tgl_masuk']."' title='View'><i class='fa fa-eye text-orange'></i></a>";
                                 echo "</td>";
                                 echo " </tr> ";
                             } 
