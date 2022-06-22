@@ -160,7 +160,7 @@ require('footer.php');
 ?>
 
 <script>
-    $(function () {
+  $(function () {
   'use strict'
 
   var ticksStyle = {
@@ -204,6 +204,10 @@ require('footer.php');
         var tahun_max = Math.max.apply(Math,data_parse);
         var tahun_min = Math.min.apply(Math,data_parse);
 
+        if(tahun_max == tahun_min){
+          tahun_min = tahun_max-1;
+        }
+
 
         // membuat bulan numeric ke alfabet
         var data_bulan_x = new Date( data_tahun[x], data_bulan[x], 0);
@@ -245,11 +249,16 @@ require('footer.php');
 
       var data_total_bayar_b =[];
       var grand_total_y =0;
-      for(var yx=0; yx<total_tahun_lalu_x.length; yx++){
-        data_total_bayar_b[yx] = total_tahun_lalu_x[yx];
-        // grand total tahun ini
-        grand_total_y += parseInt(total_tahun_lalu_x[yx]);
+
+      
+      if(total_tahun_lalu_x != undefined){
+        for(var yx=0; yx<total_tahun_lalu_x.length; yx++){
+          data_total_bayar_b[yx] = total_tahun_lalu_x[yx];
+          // grand total tahun ini
+          grand_total_y += parseInt(total_tahun_lalu_x[yx]);
+        }
       }
+      
 
       $("#grand_total_y").text('Rp. '+grand_total_y.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
       $("#label_grand_total_y").html('Grand Total <b>'+tahun_min+'</b>');
@@ -307,11 +316,11 @@ require('footer.php');
 
                 // Include a dollar sign in the ticks
                 callback: function (value) {
-                  if (value >= 1000000) {
-                    value /= 1000000
+                  if (value >= 1) {
+                    value /= 1
                   }
 
-                  return 'Rp.' + value+' jt'
+                  return 'Rp.' + value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                 }
               }, ticksStyle)
             }],

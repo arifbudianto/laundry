@@ -230,3 +230,6 @@ require('sidebar.php');
         ?>
     </div>
 </div>
+<?php
+require('footer.php');
+?>

@@ -72,7 +72,7 @@ require('koneksi.php');
             <div class="card card-default">
                 <div class="card-header">
                     <button class="btn btn-default btn-md btn-sm " id="btnPrint" ><i class="fa fa-print"></i> Print Data</button>
-                    <button class="btn btn-default btn-md btn-sm " id="btnGrafik" ><i class="fa fa-chart"></i> Grafik</button>
+                    <button class="btn btn-default btn-md btn-sm " name="grafik" ><i class="fa fa-chart-bar"></i> Grafik Data</button>
                 </div>
                 <div class="card-body " id="printData">
                     <style>
