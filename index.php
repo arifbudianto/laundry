@@ -109,27 +109,30 @@ $total_transaksi =$row3['id_transaksi'];
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Transaksi Bulanan</h3>
+                            <h3 class="card-title"><i class="fas fa-chart-bar"></i> Grafik Transaksi Periode Bulanan dalam 1 Tahun</h3>
                             <!-- <a href="javascript:void(0);">View Report</a> -->
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="d-flex">
-                            <!-- <p class="d-flex flex-column">
-                                <span class="text-bold text-lg">$18,230.00</span>
-                                <span>Sales Over Time</span>
-                            </p> -->
-                            <!-- <p class="ml-auto d-flex flex-column text-right">
-                                <span class="text-success">
+                            <p class="d-flex flex-column">
+                              <span class="text-bold text-lg text-success" id="grand_total_x"></span>
+                              <span id="label_grand_total_x" class="text-muted"></span>
+                            </p>
+                            
+                            <p class="ml-5 d-flex flex-column">
+                              <span class="text-bold text-lg text-success" id="grand_total_y"></span>
+                              <span id="label_grand_total_y" class="text-muted"></span>
+                                <!-- <span class="text-success">
                                     <i class="fas fa-arrow-up"></i> 33.1%
                                 </span>
-                                <span class="text-muted">Since last month</span>
-                            </p> -->
+                                <span class="text-muted">Since last month</span> -->
+                            </p>
                         </div>
                         <!-- /.d-flex -->
 
                         <div class="position-relative mb-4">
-                            <canvas id="transaksi-chart" height="200"></canvas>
+                            <canvas id="transaksi-chart" height="300"></canvas>
                         </div>
 
                         <!-- <div class="d-flex flex-row justify-content-end">
@@ -228,14 +231,28 @@ require('footer.php');
 
       // total bayar 
       var data_total_bayar_a =[];
+      var grand_total_x =0;
       for(var yx=0; yx<total_tahun_ini_x.length; yx++){
         data_total_bayar_a[yx] = total_tahun_ini_x[yx];
+
+        // grand total tahun ini
+        grand_total_x += parseInt(total_tahun_ini_x[yx]);
       }
 
+      // tampilkan ke DOM
+      $("#grand_total_x").text('Rp. '+grand_total_x.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+      $("#label_grand_total_x").html('Grand Total <b>'+tahun_max+'</b>');
+
       var data_total_bayar_b =[];
+      var grand_total_y =0;
       for(var yx=0; yx<total_tahun_lalu_x.length; yx++){
         data_total_bayar_b[yx] = total_tahun_lalu_x[yx];
+        // grand total tahun ini
+        grand_total_y += parseInt(total_tahun_lalu_x[yx]);
       }
+
+      $("#grand_total_y").text('Rp. '+grand_total_y.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+      $("#label_grand_total_y").html('Grand Total <b>'+tahun_min+'</b>');
    
       var $salesChart = $('#transaksi-chart')
 
@@ -290,11 +307,11 @@ require('footer.php');
 
                 // Include a dollar sign in the ticks
                 callback: function (value) {
-                  if (value >= 1) {
-                    value /= 1
+                  if (value >= 1000000) {
+                    value /= 1000000
                   }
 
-                  return 'Rp.' + value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                  return 'Rp.' + value+' jt'
                 }
               }, ticksStyle)
             }],
