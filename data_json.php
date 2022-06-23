@@ -48,11 +48,28 @@ while($row2 = mysqli_fetch_assoc($data2)){
     );
 }
 
+// parfum
+// $sql3 = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%m') as tgl_masuk, COALESCE(SUM(berat),'') AS berat FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tahun_lalu', '%Y-%m') and DATE_FORMAT('$tahun_ini', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
+
+// $data3 = mysqli_query($kon,$sql3);
+// if(!$data3){
+//     die(mysqli_error($kon));
+// }
+
+// $result3=[];
+// while($row2 = mysqli_fetch_assoc($data3)){
+//     $result3[] = array(
+//         "data_tgl_periode" => $row3['tgl_masuk'],
+//         "total_parfum_liter" => round($row3['berat']/25,3)
+//     );
+// }
+
 echo json_encode([
     "status" => "success",
     "structure" => [
         "data_result_transaksi" => $result,
         "data_result_pelanggan" => $result2
+        // "data_result_parfum" => $result3
     ]
 ]);
 

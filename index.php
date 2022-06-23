@@ -108,10 +108,12 @@ $total_transaksi =$row3['id_transaksi'];
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title"><i class="fas fa-chart-bar"></i> Grafik Transaksi Periode Bulanan dalam 1 Tahun</h3>
-                            <!-- <a href="javascript:void(0);">View Report</a> -->
-                        </div>
+                      <h3 class="card-title"><i class="fas fa-chart-bar"></i> Grafik Transaksi Periode Bulanan dalam 1 Tahun</h3>
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                          <i class="fas fa-minus"></i>
+                        </button>
+                      </div>
                     </div>
                     <div class="card-body">
                         <div class="d-flex">
@@ -123,27 +125,11 @@ $total_transaksi =$row3['id_transaksi'];
                             <p class="ml-5 d-flex flex-column">
                               <span class="text-bold text-lg text-success" id="grand_total_y"></span>
                               <span id="label_grand_total_y" class="text-muted"></span>
-                                <!-- <span class="text-success">
-                                    <i class="fas fa-arrow-up"></i> 33.1%
-                                </span>
-                                <span class="text-muted">Since last month</span> -->
                             </p>
                         </div>
-                        <!-- /.d-flex -->
-
                         <div class="position-relative mb-4">
                             <canvas id="transaksi-chart" height="300"></canvas>
                         </div>
-
-                        <!-- <div class="d-flex flex-row justify-content-end">
-                            <span class="mr-2">
-                            <i class="fas fa-square text-primary"></i> Tahun ini
-                            </span>
-
-                            <span>
-                            <i class="fas fa-square text-gray"></i> Tahun Lalu
-                            </span>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -153,46 +139,65 @@ $total_transaksi =$row3['id_transaksi'];
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title"><i class="fas fa-chart-bar"></i> Grafik Customer Periode Bulanan dalam 1 Tahun</h3>
-                            <!-- <a href="javascript:void(0);">View Report</a> -->
-                        </div>
+                      <h3 class="card-title"><i class="fas fa-chart-bar"></i> Grafik Customer Periode Bulanan dalam 1 Tahun</h3>
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                          <i class="fas fa-minus"></i>
+                        </button>
+                      </div>
                     </div>
                     <div class="card-body">
-                        <div class="d-flex">
-                            <p class="d-flex flex-column">
-                              <span class="text-bold text-lg text-success" id="total_customer_all_x"></span>
-                              <span id="label_total_customer_all_x" class="text-muted"></span>
-                            </p>
-                            
-                            <p class="ml-5 d-flex flex-column">
-                              <span class="text-bold text-lg text-success" id="total_customer_all_y"></span>
-                              <span id="label_total_customer_all_y" class="text-muted"></span>
-                                <!-- <span class="text-success">
-                                    <i class="fas fa-arrow-up"></i> 33.1%
-                                </span>
-                                <span class="text-muted">Since last month</span> -->
-                            </p>
-                        </div>
-                        <!-- /.d-flex -->
-
-                        <div class="position-relative mb-4">
-                            <canvas id="pelanggan-chart" height="300"></canvas>
-                        </div>
-
-                        <!-- <div class="d-flex flex-row justify-content-end">
-                            <span class="mr-2">
-                            <i class="fas fa-square text-primary"></i> Tahun ini
-                            </span>
-
-                            <span>
-                            <i class="fas fa-square text-gray"></i> Tahun Lalu
-                            </span>
-                        </div> -->
+                      <div class="d-flex">
+                          <p class="d-flex flex-column">
+                            <span class="text-bold text-lg text-success" id="total_customer_all_x"></span>
+                            <span id="label_total_customer_all_x" class="text-muted"></span>
+                          </p>
+                          
+                          <p class="ml-5 d-flex flex-column">
+                            <span class="text-bold text-lg text-success" id="total_customer_all_y"></span>
+                            <span id="label_total_customer_all_y" class="text-muted"></span>
+                              
+                          </p>
+                      </div>
+                      <div class="position-relative mb-4">
+                          <canvas id="pelanggan-chart" height="300"></canvas>
+                      </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                      <h3 class="card-title"><i class="fas fa-chart-bar"></i> Grafik Parfum Periode Bulanan dalam 1 Tahun</h3>
+                      <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                          <i class="fas fa-minus"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <p class="d-flex flex-column">
+                              <span class="text-bold text-lg text-success" id="total_liter_parfum_x"></span>
+                              <span id="label_total_liter_parfum_x" class="text-muted"></span>
+                            </p>
+                            
+                            <p class="ml-5 d-flex flex-column">
+                              <span class="text-bold text-lg text-success" id="total_liter_parfum_y"></span>
+                              <span id="label_total_liter_parfum_y" class="text-muted"></span>
+                            </p>
+                        </div>
+
+                        <div class="position-relative mb-4">
+                            <canvas id="parfum-chart" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
         
         <!-- /.row -->
     </div>
@@ -438,7 +443,6 @@ require('footer.php');
       })
 
 
-
       // chart pelanggan
       var $pelangganChart = $('#pelanggan-chart')
 
@@ -509,6 +513,78 @@ require('footer.php');
           }
         }
       })
+
+
+      // chart parfum
+      // var $parfumChart = $('#parfum-chart')
+
+      // // eslint-disable-next-line no-unused-vars
+      // var parfumChart = new Chart($parfumChart, {
+      //   type: 'bar',
+      //   data: {
+      //     labels: data_bulan_unique,
+      //     datasets: [
+      //       {
+      //         label: 'Data Tahun '+tahun_max,
+      //         backgroundColor: '#17a2b8',
+      //         borderColor: '#17a2b8',
+      //         data : total_pelanggan_x
+      //       },
+      //       {
+      //         label: 'Data Tahun '+tahun_min,
+      //         backgroundColor: '#9e9e9e',
+      //         borderColor: '#9e9e9e',
+      //         data : total_pelanggan_y
+      //       }
+      //     ]
+      //   },
+      //   options: {
+      //     maintainAspectRatio: false,
+      //     responsive: true,
+      //     tooltips: {
+      //       mode: mode,
+      //       intersect: intersect
+      //     },
+      //     hover: {
+      //       mode: mode,
+      //       intersect: intersect
+      //     },
+      //     legend: {
+      //       display: true
+      //     },
+      //     scales: {
+      //       yAxes: [{
+      //         // display: true,
+      //         gridLines: {
+      //           display: true,
+      //           // lineWidth: '4px',
+      //           // color: 'rgba(0, 0, 0, .2)',
+      //           // zeroLineColor: 'solid'
+      //         }
+      //         ,
+      //         ticks: $.extend({
+      //           beginAtZero: true,
+
+      //           // Include a dollar sign in the ticks
+      //           callback: function (value) {
+      //             if (value >= 1) {
+      //               value /= 1
+      //             }
+
+      //             return value.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
+      //           }
+      //         }, ticksStyle)
+      //       }],
+      //       xAxes: [{
+      //         // display: true,
+      //         gridLines: {
+      //           display: true
+      //         },
+      //         ticks: ticksStyle
+      //       }]
+      //     }
+      //   }
+      // })
     },
     error:function(data){
       console.log(data);
