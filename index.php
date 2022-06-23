@@ -148,6 +148,51 @@ $total_transaksi =$row3['id_transaksi'];
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <h3 class="card-title"><i class="fas fa-chart-bar"></i> Grafik Customer Periode Bulanan dalam 1 Tahun</h3>
+                            <!-- <a href="javascript:void(0);">View Report</a> -->
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <p class="d-flex flex-column">
+                              <span class="text-bold text-lg text-success" id="total_customer_all_x"></span>
+                              <span id="label_total_customer_all_x" class="text-muted"></span>
+                            </p>
+                            
+                            <p class="ml-5 d-flex flex-column">
+                              <span class="text-bold text-lg text-success" id="total_customer_all_y"></span>
+                              <span id="label_total_customer_all_y" class="text-muted"></span>
+                                <!-- <span class="text-success">
+                                    <i class="fas fa-arrow-up"></i> 33.1%
+                                </span>
+                                <span class="text-muted">Since last month</span> -->
+                            </p>
+                        </div>
+                        <!-- /.d-flex -->
+
+                        <div class="position-relative mb-4">
+                            <canvas id="pelanggan-chart" height="300"></canvas>
+                        </div>
+
+                        <!-- <div class="d-flex flex-row justify-content-end">
+                            <span class="mr-2">
+                            <i class="fas fa-square text-primary"></i> Tahun ini
+                            </span>
+
+                            <span>
+                            <i class="fas fa-square text-gray"></i> Tahun Lalu
+                            </span>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <!-- /.row -->
     </div>
@@ -178,7 +223,7 @@ require('footer.php');
     method:"GET",
     success:function(data){
 
-      var count = data.structure.data_result;
+      var count = data.structure.data_result_transaksi;
 
       var get_periode = [];
       var data_bulan = [];
@@ -188,12 +233,14 @@ require('footer.php');
 
       var total_tahun_lalu = [];
       var total_tahun_ini = [];
+      var total_tahun_lalu2 = [];
+      var total_tahun_ini2 = [];
       var data_bulan_az= [];
 
       for(var x=0; x<count.length; x++){
 
         // ambil data bulan
-        get_periode[x] = data.structure.data_result[x].data_tgl_periode;
+        get_periode[x] = data.structure.data_result_transaksi[x].data_tgl_periode;
         get_data[x] = get_periode[x].split("-");
         data_bulan[x] = get_data[x][1];
         
@@ -221,15 +268,41 @@ require('footer.php');
 
       var count_data_tahun = data_tahun.length;
       for( var y=0; y<count_data_tahun; y++){
-        // check jika data sma dengan tahun max
+        // check jika data sama dengan tahun max
         if(tahun_max == data_tahun[y]){
-          total_tahun_ini[y] = data.structure.data_result[y].data_total_bayar;
+
+          // total transaksi per bulan tahun ini
+          // transaksi
+          total_tahun_ini[y] = data.structure.data_result_transaksi[y].data_total_bayar;
+
+          // pelanggan per bulan tahun ini
+          // pelanggan
+          total_tahun_ini2[y] = data.structure.data_result_pelanggan[y].total_pelanggan;
+          
 
           // menghilangkan value array null
+          // transaksi
           var total_tahun_ini_x = total_tahun_ini.filter(item => item);
+
+          // pelanggan
+          var total_tahun_ini_x2 = total_tahun_ini2.filter(item => item);
+
+
         }else{
-          total_tahun_lalu[y] = data.structure.data_result[y].data_total_bayar;
+          // total transaksi per bulan tahun lalu
+          // transaksi
+          total_tahun_lalu[y] = data.structure.data_result_transaksi[y].data_total_bayar;
+
+          // pelanggan per bulan tahun lalu
+          // pelanggan
+          total_tahun_lalu2[y] = data.structure.data_result_pelanggan[y].total_pelanggan;
+
+          // menghilangkan value array null
+          // transaksi
           var total_tahun_lalu_x = total_tahun_lalu.filter(item => item);
+
+          // pelanggan
+          var total_tahun_lalu_x2 = total_tahun_lalu2.filter(item => item);
         }
       }
 
@@ -243,14 +316,13 @@ require('footer.php');
         grand_total_x += parseInt(total_tahun_ini_x[yx]);
       }
 
-      // tampilkan ke DOM
+      // tampilkan ke DOM transaksi
       $("#grand_total_x").text('Rp. '+grand_total_x.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
       $("#label_grand_total_x").html('Grand Total <b>'+tahun_max+'</b>');
 
+  
       var data_total_bayar_b =[];
       var grand_total_y =0;
-
-      
       if(total_tahun_lalu_x != undefined){
         for(var yx=0; yx<total_tahun_lalu_x.length; yx++){
           data_total_bayar_b[yx] = total_tahun_lalu_x[yx];
@@ -259,14 +331,44 @@ require('footer.php');
         }
       }
       
-
       $("#grand_total_y").text('Rp. '+grand_total_y.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
       $("#label_grand_total_y").html('Grand Total <b>'+tahun_min+'</b>');
+
+
+      // total pelanggan
+      var total_pelanggan_x =[];
+      var total_pelanggan_all_x =0;
+      for(var yx=0; yx<total_tahun_ini_x2.length; yx++){
+        total_pelanggan_x[yx] = total_tahun_ini_x2[yx];
+
+        // total pelanggan tahun ini
+        total_pelanggan_all_x += parseInt(total_tahun_ini_x2[yx]);
+      }
+
+      // tampilkan ke DOM pelanggan
+      $("#total_customer_all_x").text(total_pelanggan_all_x.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+      $("#label_total_customer_all_x").html('Total Customer <b>'+tahun_max+'</b>');
+
+
+      var total_pelanggan_y =[];
+      var total_pelanggan_all_y =0;
+      if(total_tahun_lalu_x2 != undefined){
+        for(var yx=0; yx<total_tahun_lalu_x2.length; yx++){
+          total_pelanggan_y[yx] = total_tahun_lalu_x2[yx];
+          
+          // total pelanggan tahun ini
+          total_pelanggan_all_y += parseInt(total_tahun_lalu_x2[yx]);
+        }
+      }
+
+      $("#total_customer_all_y").text(total_pelanggan_all_y.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1."));
+      $("#label_total_customer_all_y").html('Total Customer <b>'+tahun_min+'</b>');
    
-      var $salesChart = $('#transaksi-chart')
+      // chart transaksi
+      var $transaksiChart = $('#transaksi-chart')
 
       // eslint-disable-next-line no-unused-vars
-      var salesChart = new Chart($salesChart, {
+      var transaksiChart = new Chart($transaksiChart, {
         type: 'bar',
         data: {
           labels: data_bulan_unique,
@@ -321,6 +423,79 @@ require('footer.php');
                   }
 
                   return 'Rp.' + value.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                }
+              }, ticksStyle)
+            }],
+            xAxes: [{
+              // display: true,
+              gridLines: {
+                display: true
+              },
+              ticks: ticksStyle
+            }]
+          }
+        }
+      })
+
+
+
+      // chart pelanggan
+      var $pelangganChart = $('#pelanggan-chart')
+
+      // eslint-disable-next-line no-unused-vars
+      var pelangganChart = new Chart($pelangganChart, {
+        type: 'bar',
+        data: {
+          labels: data_bulan_unique,
+          datasets: [
+            {
+              label: 'Data Tahun '+tahun_max,
+              backgroundColor: '#17a2b8',
+              borderColor: '#17a2b8',
+              data : total_pelanggan_x
+            },
+            {
+              label: 'Data Tahun '+tahun_min,
+              backgroundColor: '#9e9e9e',
+              borderColor: '#9e9e9e',
+              data : total_pelanggan_y
+            }
+          ]
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          tooltips: {
+            mode: mode,
+            intersect: intersect
+          },
+          hover: {
+            mode: mode,
+            intersect: intersect
+          },
+          legend: {
+            display: true
+          },
+          scales: {
+            yAxes: [{
+              // display: true,
+              gridLines: {
+                display: true,
+                // lineWidth: '4px',
+                // color: 'rgba(0, 0, 0, .2)',
+                // zeroLineColor: 'solid'
+              }
+              ,
+              ticks: $.extend({
+                beginAtZero: true,
+
+                // Include a dollar sign in the ticks
+                callback: function (value) {
+                  if (value >= 1) {
+                    value /= 1
+                  }
+
+                  return value.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
                 }
               }, ticksStyle)
             }],
