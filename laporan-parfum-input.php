@@ -72,7 +72,7 @@ require('koneksi.php');
             <div class="card card-default">
                 <div class="card-header">
                     <button class="btn btn-default btn-md btn-sm " id="btnPrint" ><i class="fa fa-print"></i> Print Data</button>
-                    <button class="btn btn-default btn-md btn-sm " id="btnGrafik" ><i class="fa fa-chart"></i> Grafik</button>
+                    <!-- <button class="btn btn-default btn-md btn-sm " id="btnGrafik" ><i class="fa fa-chart"></i> Grafik</button> -->
                 </div>
                 <div class="card-body " id="printData">
                     <style>
@@ -172,10 +172,10 @@ require('koneksi.php');
                             while ($row = mysqli_fetch_assoc($hasil)){
                                 echo " <tr> ";
                                 echo " <td> ".$no++."</td>";
-                                echo " <td> ".date('F', strtotime($row['tgl_masuk']))."</td>";
+                                echo " <td> ".date('F Y', strtotime($row['tgl_masuk']))."</td>";
                                 echo " <td class='text-right'> ".round($row['berat']/25,3)."</td>";
                                 echo " <td class='text-center'>";
-                                echo "<a href = 'laporan-parfum-detail.php?tgl_masuk=".$row['tgl_masuk']."' title='View'><i class='fa fa-eye text-orange'></i></a>";
+                                echo "<a href = 'laporan-parfum-detail.php?tgl_masuk=".$row['tgl_masuk']."' title='View'><i class='fa fa-eye text-info'></i></a>";
                                 echo "</td>";
                                 echo " </tr> ";
                             } 

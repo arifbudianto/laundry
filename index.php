@@ -167,11 +167,11 @@ $total_transaksi =$row3['id_transaksi'];
             </div>
         </div>
 
-        <!-- <div class="row">
-            <div class="col-lg-12">
+        <div class="row">
+            <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                      <h3 class="card-title"><i class="fas fa-chart-bar"></i> Grafik Parfum Periode Bulanan dalam 1 Tahun</h3>
+                      <h3 class="card-title"><i class="fas fa-chart-pie"></i> Grafik Parfum</h3>
                       <div class="card-tools">
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                           <i class="fas fa-minus"></i>
@@ -179,25 +179,50 @@ $total_transaksi =$row3['id_transaksi'];
                       </div>
                     </div>
                     <div class="card-body">
-                        <div class="d-flex">
-                            <p class="d-flex flex-column">
-                              <span class="text-bold text-lg text-success" id="total_liter_parfum_x"></span>
-                              <span id="label_total_liter_parfum_x" class="text-muted"></span>
-                            </p>
-                            
-                            <p class="ml-5 d-flex flex-column">
-                              <span class="text-bold text-lg text-success" id="total_liter_parfum_y"></span>
-                              <span id="label_total_liter_parfum_y" class="text-muted"></span>
-                            </p>
+                      <div class="col-sm-12">
+                        <div class="form-inline mb-3" style="justify-content: center;">
+                          <label class="col-form-label">Bulan <i class="text-danger">*</i></label>
+                          &nbsp;
+                          <div class="form-group">
+                              <input type ="month" name ="tgl_awal" id="tgl_awal" class="form-control" required><br/>
+                          </div>
+                          <div class="form-group">
+                              <label>&nbsp; s/d &nbsp;</label>
+                              <input type="month" class="form-control" name="tgl_akhir" id="tgl_akhir">
+                          </div>
+                          &nbsp;
+                          <div class="form-group">
+                              <button class="btn btn-info" id="btn-search" title="Cari"><i class="fa fa-search"></i></button>
+                          </div>
                         </div>
-
-                        <div class="position-relative mb-4">
-                            <canvas id="parfum-chart" height="300"></canvas>
+                      </div>
+                      <p class="text-center"><small class="required-tgl_awal text-danger"></small></p>
+                      <p class="text-muted text-center"><i class="fa fa-calendar"></i> <span id="info-periode"></span></p>
+                      <div class="row">
+                        <div class="col-md-12"><hr/></div>
+                        <div class="col-md-6">
+                          <p class="text-center"><b>Grafik Parfum Keluar(Liter)</b></p>
+                          <div class="chart-kondisi" style="display:none">
+                            <canvas id="parfum-chart" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                          </div>
+                          <div class="chart-notkondisi">
+                            <canvas id="parfum-chart2" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                          </div>
                         </div>
+                        <div class="col-md-6">
+                        <p class="text-center"><b>Grafik Parfum Jumlah Peminat</b></p>
+                          <div class="chart-kondisi" style="display:none">
+                            <canvas id="parfum-peminat-chart" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                          </div>
+                          <div class="chart-notkondisi">
+                            <canvas id="parfum-peminat-chart2" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
         
         <!-- /.row -->
     </div>
@@ -380,7 +405,7 @@ require('footer.php');
           datasets: [
             {
               label: 'Data Tahun '+tahun_max,
-              backgroundColor: '#007bff',
+              backgroundColor: '#28a745',
               borderColor: '#007bff',
               data : data_total_bayar_a
               // data: [1000, 2000, 3000, 2500, 2700, 2500, 3000]
@@ -514,77 +539,174 @@ require('footer.php');
         }
       })
 
-
+      // =================================================
       // chart parfum
-      // var $parfumChart = $('#parfum-chart')
+      var data_all = data.structure.data_result_parfum;
 
-      // // eslint-disable-next-line no-unused-vars
-      // var parfumChart = new Chart($parfumChart, {
-      //   type: 'bar',
-      //   data: {
-      //     labels: data_bulan_unique,
-      //     datasets: [
-      //       {
-      //         label: 'Data Tahun '+tahun_max,
-      //         backgroundColor: '#17a2b8',
-      //         borderColor: '#17a2b8',
-      //         data : total_pelanggan_x
-      //       },
-      //       {
-      //         label: 'Data Tahun '+tahun_min,
-      //         backgroundColor: '#9e9e9e',
-      //         borderColor: '#9e9e9e',
-      //         data : total_pelanggan_y
-      //       }
-      //     ]
-      //   },
-      //   options: {
-      //     maintainAspectRatio: false,
-      //     responsive: true,
-      //     tooltips: {
-      //       mode: mode,
-      //       intersect: intersect
-      //     },
-      //     hover: {
-      //       mode: mode,
-      //       intersect: intersect
-      //     },
-      //     legend: {
-      //       display: true
-      //     },
-      //     scales: {
-      //       yAxes: [{
-      //         // display: true,
-      //         gridLines: {
-      //           display: true,
-      //           // lineWidth: '4px',
-      //           // color: 'rgba(0, 0, 0, .2)',
-      //           // zeroLineColor: 'solid'
-      //         }
-      //         ,
-      //         ticks: $.extend({
-      //           beginAtZero: true,
+      var parfum_liter = [];
+      var jenis_parfum = [];
+      for(var e=0; e<data_all.length; e++){
+        parfum_liter[e] = data.structure.data_result_parfum[e].total_parfum_liter;
+        jenis_parfum[e] = data.structure.data_result_parfum[e].jenis_parfum;  
+      }
+      
+      var periode = data.structure.data_result_parfum[0].data_tgl_periode;
+      periode = periode.split("-");
+      var periode_x = new Date( periode[0],periode[1], 0);
+      periode_x = periode_x.toLocaleString('en-us', { month: 'long' })+' '+ periode[0];
 
-      //           // Include a dollar sign in the ticks
-      //           callback: function (value) {
-      //             if (value >= 1) {
-      //               value /= 1
-      //             }
+      $("#info-periode").html("Periode Data : <b>"+periode_x+"</b>");
 
-      //             return value.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1.");
-      //           }
-      //         }, ticksStyle)
-      //       }],
-      //       xAxes: [{
-      //         // display: true,
-      //         gridLines: {
-      //           display: true
-      //         },
-      //         ticks: ticksStyle
-      //       }]
-      //     }
-      //   }
-      // })
+      // chart parfum not filter
+      
+      var parfumChartCanvas = $('#parfum-chart2').get(0).getContext('2d')
+      var parfumData        = {
+        labels: jenis_parfum,
+        datasets: [
+          {
+            data: parfum_liter,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+          }
+        ]
+      }
+      var parfumOptions     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      new Chart(parfumChartCanvas, {
+        type: 'doughnut',
+        data: parfumData,
+        options: parfumOptions
+      })
+
+
+      // chart parfum peminat not filter
+      var data_all2 = data.structure.data_result_parfum_peminat;
+      var parfum_peminat = [];
+      for(var f=0; f<data_all2.length; f++){
+        parfum_peminat[f] = data.structure.data_result_parfum_peminat[f].total_parfum_peminat;
+      }
+      var parfumPeminatChartCanvas = $('#parfum-peminat-chart2').get(0).getContext('2d')
+      var parfumPeminatData        = {
+        labels: jenis_parfum,
+        datasets: [
+          {
+            data: parfum_peminat,
+            backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+          }
+        ]
+      }
+      var parfumPeminatOptions     = {
+        maintainAspectRatio : false,
+        responsive : true,
+      }
+      new Chart(parfumPeminatChartCanvas, {
+        type: 'doughnut',
+        data: parfumPeminatData,
+        options: parfumPeminatOptions
+      })
+      
+      $("#btn-search").click(function(){
+
+        $(".chart-kondisi").css("display","block");
+        $(".chart-notkondisi").css("display","none");
+
+        // get value form 
+        var tgl_awal = $("#tgl_awal").val();
+        var tgl_akhir = $("#tgl_akhir").val();
+
+        $.ajax({
+          url:"data_json.php",
+          dataType:"json",
+          method:"GET",
+          data:{"tgl_awal":tgl_awal,"tgl_akhir":tgl_akhir},
+          success:function(data_parfum){
+            var data_all = data_parfum.structure.data_result_parfum;
+
+            var parfum_liter = [];
+            var jenis_parfum = [];
+            for(var e=0; e<data_all.length; e++){
+              parfum_liter[e] = data_parfum.structure.data_result_parfum[e].total_parfum_liter;
+              jenis_parfum[e] = data_parfum.structure.data_result_parfum[e].jenis_parfum;
+            }
+            
+            tgl_awal = tgl_awal.split("-");
+            var tgl_awal_x = new Date(tgl_awal[0],tgl_awal[1] , 0);
+            tgl_awal_x = tgl_awal_x.toLocaleString('en-us', { month: 'long' })+' '+ tgl_awal[0];
+
+            tgl_akhir = tgl_akhir.split("-");
+            var tgl_akhir_x = new Date(tgl_akhir[0],tgl_akhir[1] , 0);
+            tgl_akhir_x = tgl_akhir_x.toLocaleString('en-us', { month: 'long' })+' '+ tgl_akhir[0];
+
+            // label periode data
+            $(".required-tgl_awal").html("");
+            if(tgl_awal =='' && tgl_akhir !=''){
+              $(".required-tgl_awal").html("Form Awal Wajib Diisi ..!");
+            }else if(tgl_akhir !=''){
+              $("#info-periode").html("Periode Data : <b>"+tgl_awal_x +" - "+ tgl_akhir_x+"</b>");
+            }else if(tgl_awal =='' && tgl_akhir ==''){
+              $("#info-periode").html("Periode Data : <b>"+periode_x +"</b>");
+            }else{
+              $("#info-periode").html("Periode Data : <b>"+tgl_awal_x +"</b>");
+            }
+            
+            // clear form filter
+            tgl_awal = $("#tgl_awal").val('');
+            tgl_akhir = $("#tgl_akhir").val(''); 
+
+            // function chart parfum
+            var parfumChartCanvas = $('#parfum-chart').get(0).getContext('2d')
+            var parfumData        = {
+              labels: jenis_parfum,
+              datasets: [
+                {
+                  data: parfum_liter,
+                  backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+                }
+              ]
+            }
+            var parfumOptions     = {
+              maintainAspectRatio : false,
+              responsive : true,
+            }
+            new Chart(parfumChartCanvas, {
+              type: 'doughnut',
+              data: parfumData,
+              options: parfumOptions
+            })
+
+            // function chart parfum peminat
+            var data_all2 = data_parfum.structure.data_result_parfum_peminat;
+            var parfum_peminat = [];
+            for(var f=0; f<data_all2.length; f++){
+              parfum_peminat[f] = data_parfum.structure.data_result_parfum_peminat[f].total_parfum_peminat;
+            }
+            var parfumPeminatChartCanvas = $('#parfum-peminat-chart').get(0).getContext('2d')
+            var parfumPeminatData        = {
+              labels: jenis_parfum,
+              datasets: [
+                {
+                  data: parfum_peminat,
+                  backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc'],
+                }
+              ]
+            }
+            var parfumPeminatOptions     = {
+              maintainAspectRatio : false,
+              responsive : true,
+            }
+            new Chart(parfumPeminatChartCanvas, {
+              type: 'doughnut',
+              data: parfumPeminatData,
+              options: parfumPeminatOptions
+            })
+          },
+          error:function(e){
+            console.log(e);
+          }
+        })
+        
+      });
     },
     error:function(data){
       console.log(data);

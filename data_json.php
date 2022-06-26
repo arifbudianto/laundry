@@ -49,27 +49,82 @@ while($row2 = mysqli_fetch_assoc($data2)){
 }
 
 // parfum
-// $sql3 = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%m') as tgl_masuk, COALESCE(SUM(berat),'') AS berat FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tahun_lalu', '%Y-%m') and DATE_FORMAT('$tahun_ini', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
+$bulan_start =!empty($_GET['tgl_awal'])?$_GET['tgl_awal']:'';
+$bulan_end =!empty($_GET['tgl_akhir'])?$_GET['tgl_akhir']:'';
 
-// $data3 = mysqli_query($kon,$sql3);
-// if(!$data3){
-//     die(mysqli_error($kon));
-// }
+$sql4 ="SELECT MAX(tgl_masuk) AS periode_max FROM transaksi";
+$data4 = mysqli_query($kon,$sql4);
 
-// $result3=[];
-// while($row2 = mysqli_fetch_assoc($data3)){
-//     $result3[] = array(
-//         "data_tgl_periode" => $row3['tgl_masuk'],
-//         "total_parfum_liter" => round($row3['berat']/25,3)
-//     );
-// }
+if(!$data4){
+    die(mysqli_error($kon));
+}
+$row4 = mysqli_fetch_assoc($data4);
+
+$periode_max = $row4['periode_max'];
+
+
+if($bulan_start !='' && $bulan_end !=''){
+    $bulan_start = $bulan_start."-00";
+    $bulan_end = $bulan_end."-00";
+
+    $sql3 = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%m') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, jenis_parfum FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$bulan_start', '%Y-%m') and DATE_FORMAT('$bulan_end', '%Y-%m') GROUP BY  jenis_parfum";
+
+    $sql33 = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%m') as tgl_masuk, COALESCE(COUNT(jenis_parfum),'') AS jumlah_peminat FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$bulan_start', '%Y-%m') and DATE_FORMAT('$bulan_end', '%Y-%m') GROUP BY jenis_parfum";
+}else if($bulan_start !='' && $bulan_end ==''){
+    $bulan_start = $bulan_start."-00";
+    $sql3 = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%m') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, jenis_parfum FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') = DATE_FORMAT('$bulan_start', '%Y-%m') GROUP BY DATE_FORMAT(tgl_masuk, '%Y-%m'), jenis_parfum";
+
+    $sql33 = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%m') as tgl_masuk, COALESCE(COUNT(jenis_parfum),'') AS jumlah_peminat FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') = DATE_FORMAT('$bulan_start', '%Y-%m') GROUP BY DATE_FORMAT(tgl_masuk, '%Y-%m'), jenis_parfum";
+}
+else{
+    
+    $sql3 = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%m') as tgl_masuk, COALESCE(SUM(berat),'') AS berat, jenis_parfum FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') = DATE_FORMAT('$periode_max', '%Y-%m') GROUP BY DATE_FORMAT(tgl_masuk, '%Y-%m'), jenis_parfum";
+
+    $sql33 = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%m') as tgl_masuk, COALESCE(COUNT(jenis_parfum),'') AS jumlah_peminat FROM transaksi WHERE DATE_FORMAT(tgl_masuk, '%Y-%m') = DATE_FORMAT('$periode_max', '%Y-%m') GROUP BY DATE_FORMAT(tgl_masuk, '%Y-%m'), jenis_parfum";
+}
+
+// echo $sql33;
+
+$data3 = mysqli_query($kon,$sql3);
+if(!$data3){
+    die(mysqli_error($kon));
+}
+
+$result3=[];
+while($row3 = mysqli_fetch_assoc($data3)){
+    $liter_parfum = round($row3['berat']/25,3);
+    $result3[] = array(
+        "data_tgl_periode" => $row3['tgl_masuk'],
+        "total_parfum_liter" => $liter_parfum,
+        "jenis_parfum" => $row3['jenis_parfum']
+    );
+}
+
+
+$data33 = mysqli_query($kon,$sql33);
+if(!$data33){
+    die(mysqli_error($kon));
+}
+
+$result33=[];
+while($row33 = mysqli_fetch_assoc($data33)){
+    $result33[] = array(
+        "data_tgl_periode" => $row33['tgl_masuk'],
+        "total_parfum_peminat" => $row33['jumlah_peminat']
+        // "jenis_parfum" => $row3['jenis_parfum']
+    );
+}
+
+// peminat parfum
+
 
 echo json_encode([
     "status" => "success",
     "structure" => [
         "data_result_transaksi" => $result,
-        "data_result_pelanggan" => $result2
-        // "data_result_parfum" => $result3
+        "data_result_pelanggan" => $result2,
+        "data_result_parfum" => $result3,
+        "data_result_parfum_peminat" => $result33
     ]
 ]);
 

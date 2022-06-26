@@ -1,24 +1,24 @@
 <?php
 require('header.php');
 require('sidebar.php');
+require('koneksi.php');
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Laporan Customer</h1>
-            </div><!-- /.col -->
+                <h1 class="m-0">Laporan Detail Customer</h1>
+            </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item active">Laporan</li>
+                    <li class="breadcrumb-item active">Laporan Detail Customer</li>
                 </ol>
-            </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+            </div>
+        </div>
+    </div>
 </div>
-<!-- /.content-header -->
 
 <!-- Main content -->
 <?php
@@ -27,35 +27,73 @@ $tgl_concate = $tgl_masuk."-00";
 ?>
 <div class="content">
     <div class="container-fluid">
-        <a href="laporan-pelanggan-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-edit"></i> Laporan Customer</a>
+        <a href="laporan-pelanggan-input.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-angle-left"></i> Kembali</a>
         <div class="card card-default">
-            <!-- /.card-header -->
-            <div class="card-body ">
-            <center>
-                <h1>LAPORAN CUSTOMER ATHAYA LAUNDRY</h1>
-            </center>
-            <table border = 0>
-                <tr>
-                    <td>Bulan </td>
-                    <td> : </td>
-                    <td> <?php echo date('F', strtotime($tgl_masuk));?> </td>
-                </tr>
-            </table>
-                <table class="table table-bordered">
+            <div class="card-header">
+                <button class="btn btn-default btn-md btn-sm " id="btnPrint" ><i class="fa fa-print"></i> Print Data</button>
+            </div>
+            <div class="card-body " id="printData">
+                <style>
+                    @media print {
+                        table {
+                            font-family:arial;
+                            border-collapse:collapse;
+                            width:100%;
+                        }
+                        table.table{
+                            font-size:12px;
+                        }
+                        table.table , table.table td, table.table th{
+                            border:1px solid;
+                        }
+                        .text-center{
+                            text-align:center;
+                        }
+                        .mb-0{
+                            margin-bottom:0;
+                        }
+                        .pb-1{
+                            padding-bottom:10px;
+                        }
+                        .text-right{
+                            text-align:right;
+                        }
+                        .sub-judul{
+                            font-size:12px;
+                        }
+                    }
+                    table{
+                        width:100%;
+                    }
+                    .mb-0{
+                        margin-bottom:0;
+                    }
+                    .pb-1{
+                        padding-bottom:10px;
+                    }
+                </style>
+                <table border=0>
                     <tr>
-                        <th>No.</th>
-                        <th>N0. HP</th>
-                        <th>Nama</th>
-                        <th>Jumlah Transaksi</th>
-                        <th>Total Berat (Kg)</th>
-                        <th>Total Bayar (Rp.)</th>
+                        <td class="text-center"><h3 class="mb-0">Laporan Detail Customer Athaya Laundry</h3></td>
+                    </tr>
+                    <tr>
+                        <td class="text-center pb-1 sub-judul">Periode :  <b><?php echo date('F Y', strtotime($tgl_masuk));?> </b></td>
+                    </tr>
+                </table>
+                <table class="table table-bordered" cellspacing=0 cellpadding=5>
+                    <tr>
+                        <th class="text-center">No.</th>
+                        <th class="text-center">No. HP</th>
+                        <th class="text-center">Nama</th>
+                        <th class="text-center">Jumlah Transaksi</th>
+                        <th class="text-center">Total Berat (Kg)</th>
+                        <th class="text-center">Total Bayar (Rp.)</th>
                         <!-- <th>Berat (Kg)</th> -->
                         <!-- <th>Paket</th>
                         <th>Jenis Parfum</th> -->
                         <!-- <th>Total Bayar (Rp)</th> -->
                     </tr>
                     <?php
-                    include "koneksi.php";
                     $no = 1;
                     $sql = "SELECT pelanggan.nohp, pelanggan.nama, COUNT(pelanggan.nohp) AS JN, SUM(transaksi.berat) AS TB, 
                     SUM(transaksi.total_bayar) AS Jumlah FROM transaksi JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
@@ -66,9 +104,9 @@ $tgl_concate = $tgl_masuk."-00";
                         echo " <td> ".$no++."</td>";
                         echo " <td> ".$row['nohp']."</td>";
                         echo " <td> ".$row['nama']."</td>";
-                        echo " <td> ".$row['JN']."</td>";
-                        echo " <td> ".$row['TB']."</td>";
-                        echo " <td> ".$row['Jumlah']."</td>";
+                        echo " <td class='text-right'> ".$row['JN']."</td>";
+                        echo " <td class='text-right'> ".$row['TB']."</td>";
+                        echo " <td class='text-right'> ".number_format($row['Jumlah'],2,',','.')."</td>";
                         // echo " <td> ".$row['nama_paket']."</td>";
                         // echo " <td> ".$row['jenis_parfum']."</td>";
                         // echo " <td> ".$row['total_bayar']."</td>";
@@ -82,9 +120,21 @@ $tgl_concate = $tgl_masuk."-00";
         
     </div>
 </div>
-<!-- <script>
-    window.print();
-</script> -->
+<iframe name="print_frame" width="0" height="0" frameborder="0" src="about:blank"></iframe>
+
 <?php    
 require('footer.php');
 ?>
+
+<script>
+    function printData()
+    {
+        window.frames["print_frame"].document.body.innerHTML = document.getElementById("printData").innerHTML;
+        window.frames["print_frame"].window.focus();
+        window.frames["print_frame"].window.print();
+    }
+    
+    $('#btnPrint').on('click',function(){
+        printData();
+    });
+</script>

@@ -72,7 +72,7 @@ require('koneksi.php');
             <div class="card card-default">
                 <div class="card-header">
                     <button class="btn btn-default btn-md btn-sm " id="btnPrint" ><i class="fa fa-print"></i> Print Data</button>
-                    <button class="btn btn-default btn-md btn-sm " id="btnGrafik" ><i class="fa fa-chart"></i> Grafik</button>
+                    <!-- <button class="btn btn-default btn-md btn-sm " id="btnGrafik" ><i class="fa fa-chart"></i> Grafik</button> -->
                 </div>
                 <div class="card-body " id="printData">
                     <style>
@@ -177,7 +177,7 @@ require('koneksi.php');
                                 echo " <td class='text-right'> ".$row['paket']."</td>";
                                 echo " <td class='text-right'> ".number_format($row['biaya'],2,',','.')."</td>";
                                 echo " <td class='text-center'>";
-                                echo "<a href = 'laporan-paket.php?tgl_masuk=".$row['tgl_masuk']."' title='View'><i class='fa fa-eye text-orange'></i></a>";
+                                echo "<a href = 'laporan-paket.php?tgl_masuk=".$row['tgl_masuk']."' title='View'><i class='fa fa-eye text-info'></i></a>";
                                 echo "</td>";
                                 echo " </tr> ";
                             } 
