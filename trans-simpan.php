@@ -194,7 +194,8 @@ require('sidebar.php');
                     <i class="fa fa-check"></i> Data Berhasil Disimpan!
                 </div>
                 <a href="trans-tampil.php" class="mb-3 btn btn-info btn-md"><i class="fas fa-angle-left"></i> Kembali</a>
-                <a href="nota-cetak.php" class="mb-3 btn btn-info btn-md"><i class="fa fa-print"></i></break> Cetak Nota</a>
+                <!-- <a href = 'trans-proses-konfir.php?id_transaksi=".$['id_transaksi']."' title='Konfirmasi Data'><i class='fa fa-check text-success'></i> </a>" -->
+                <!-- <a href = 'nota-cetak.php?id_transaksi=".$row['id_transaksi']."' class="mb-3 btn btn-info btn-md"><i class="fa fa-print"></i></break> Cetak Nota</a> -->
                 <?php
             }else {
                 ?>

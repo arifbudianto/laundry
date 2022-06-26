@@ -114,7 +114,7 @@ require('sidebar.php');
                             echo "<td>".$data['nohp']."</td>";
                             echo "<td>".$data['jenis_parfum']."</td>";
                             echo "<td>".$data['id_parfum']."</td>";
-                            echo "<td>".$data['berat']."</td>";
+                            echo "<td>".round($data['berat'],2)."</td>";
                             echo "<td>".($xx = ($data['id_parfum'] * $data['id_parfum']))."</td>";
                             echo "<td>".($xy = ($data['id_parfum'] * $data['berat']))."</td>";
                             echo "</tr>";
@@ -124,7 +124,6 @@ require('sidebar.php');
                             $jumxy = $jumxy + $xy;
                             $ratax = $jumx / $no;
                             $ratay = $jumy / $no;
- 
                         }
                         
                         try{
@@ -134,15 +133,15 @@ require('sidebar.php');
 
                         echo "<tr>";
                         echo "<td colspan = 5>Jumlah</td>";
-                        echo "<td>".$jumx."</td>";
-                        echo "<td>".$jumy."</td>";
-                        echo "<td>".$jumxx."</td>";
-                        echo "<td>".$jumxy."</td>";
+                        echo "<td>".round($jumx,3)."</td>";
+                        echo "<td>".round($jumy,3)."</td>";
+                        echo "<td>".round($jumxx,3)."</td>";
+                        echo "<td>".round($jumxy,3)."</td>";
                         echo "</tr>";
                         echo "<tr>";
                         echo "<td colspan = 5>Rata - Rata</td>";
-                        echo "<td>".$ratax."</td>";
-                        echo "<td>".$ratay."</td>";
+                        echo "<td>".round($ratax,3)."</td>";
+                        echo "<td>".round($ratay,3)."</td>";
                         echo "<td colspan = 2></td>";
                         echo "</tr>";
                         echo "<tr>";
@@ -151,16 +150,16 @@ require('sidebar.php');
                             $b = (($no * $jumxy) - ($jumx * $jumy))/(($no * $jumxx) - ($jumx * $jumx));
                             $a = ($jumy - ($b * $jumx)) / $no;
                             echo "<td colspan = 5>Koefisien b</td>";
-                            echo "<td>".$b." </td>";
+                            echo "<td>".round($b,3)." </td>";
                             echo "</tr> ";
                             echo "<tr>";
                             echo "<td colspan = 5>Konstanta a </td>";
                                 if (is_numeric($b)){
-                                    echo "<td>". $a ."</td>";
+                                    echo "<td>". round($a,3) ."</td>";
                                 }
                             echo "</tr>";
                             $persamaan_reg_y="Persamaan Regresi :<br/> Y = a + bX <br/>";
-                            $persamaan_reg_y2="Y = ".$a." + ".$b."X <br/>";
+                            $persamaan_reg_y2="Y = ".round($a,3)." + ".round($b,3)."X <br/>";
                         }else {
                             $a = ($jumy - ($b * $jumx)) / $no;
                             echo "<td colspan = 5>Koefisien b</td>";
@@ -169,11 +168,11 @@ require('sidebar.php');
                             echo "<tr>";
                             echo "<td colspan = 5>Konstanta a </td>";
                             if (is_numeric($b)){
-                                echo "<td>". $a ."</td>";
+                                echo "<td>". round($a,3) ."</td>";
                             }
                             echo "</tr>";
                             $persamaan_reg_y="Persamaan Regresi : <br/> Y = a + bX <br/>";
-                            $persamaan_reg_y2="Y = ".$a." + 0 X <br/>";
+                            $persamaan_reg_y2="Y = ".round($a,3)." + 0 X <br/>";
                         }
 
                         ?>
@@ -195,22 +194,22 @@ require('sidebar.php');
                                 // echo $id_parfum;
                                 echo $persamaan_reg_y;
                                 echo $persamaan_reg_y2;
-                                echo "Y = ".$a." + ".$b. "(".$id_parfum.") <br/>" ;  
-                                echo "<p>Y = ".$a + ($b * $id_parfum)."</p>" ;
+                                echo "Y = ".round($a,3)." + ".round($b,3). "(".$id_parfum.") <br/>" ;  
+                                echo "<p>Y = ".round(($a + ($b * $id_parfum)),3)."</p>" ;
                                 if (is_numeric($b) && is_numeric($a)){
                                     $prediksi = $a + ($b * $id_parfum);
                                 }
-                                echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> dengan <b>ID ".$id_parfum."</b> adalah <b>".$prediksi."</b>. </p>";
+                                echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> dengan <b>ID ".$id_parfum."</b> adalah <b>".round($prediksi,3)."</b>. </p>";
                                 $jumparfuml = $prediksi / 25;
                                 $jumparfumml = $jumparfuml * 1000;
-                                echo "Jumlah parfum = Y / 25 <br/>";
-                                echo "Jumlah parfum = ".$prediksi." / 25 </p> ";
-                                echo "<p>Parfum yang dibutuhkan selanjutnya yaitu <b>".$jumparfuml." liter</b> atau <b>".$jumparfumml." ml</b>.</p>";
+                                $bulan_x = date('F', strtotime('+1 month', strtotime($tgl_akhir)));
+                                echo "Jumlah parfum = Prediksi Parfum / 25 <br/>";
+                                echo "Jumlah parfum = ".round($prediksi,3)." / 25 </p> ";
+                                echo "<p>Parfum yang dibutuhkan untuk bulan ".$bulan_x." yaitu <b>".round($jumparfuml,3)." liter</b> atau <b>".round($jumparfumml,3)." ml</b>.</p>";
                                 ?>
                             </div>
                         </div>
                         <?php
-                            
                     }else{
                         echo "<tr><td colspan = 9 class='text-center'>Tidak ada data</td></tr>"; 
                     }

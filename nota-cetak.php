@@ -29,8 +29,8 @@ $id_transaksi 		=  $_GET['id_transaksi'];
 		<tr>
 			<td style="width:50%">
 				<h3 style="margin:0">Athaya Laundry</h3>
-				<p style="margin:0;font-size:12px">Jl. Janti</p>
-				<p style="margin:0;font-size:12px">Hp : 087 822 555 784</p>
+				<p style="margin:0;font-size:12px">Jl. Janti Kanoman No. 11 B RT/RW 06/20 Depan Asrama PMII (Selatan Kampus UTDI)</p>
+				<p style="margin:0;font-size:12px">Hp : 0882 3225 1535</p>
 			</td>
 			<td style="display:flex;border:0;justify-content:flex-end">
 				<h3 style="margin:0">Invoice</h3>
@@ -51,14 +51,15 @@ $id_transaksi 		=  $_GET['id_transaksi'];
 	while ($hasil) {
 		$id_paket = $hasil['id_paket'];
 		$tgl1 = date('d-m-Y',strtotime($hasil['tgl_masuk']));// pendefinisian tanggal awal
-		if ($id_paket == "K1" || $id_paket == "S1"){
-			$tgl2 = date('d-m-Y', strtotime('+2 days', strtotime($tgl1)));
+		if ($id_paket == "K03" || $id_paket == "K04"  || $id_paket == "CK4" || $id_paket == "CB4"){
+			$tgl2 = date('d-m-Y', strtotime($tgl1));
 		}
-		elseif($id_paket == "K2" || $id_paket == "S2"){
+		elseif($id_paket == "K02" || $id_paket == "S02"){
 			$tgl2 = date('d-m-Y', strtotime('+1 days', strtotime($tgl1)));
 		}
 		else {
-			$tgl2 = date('d-m-Y', strtotime($tgl1));
+			
+			$tgl2 = date('d-m-Y', strtotime('+2 days', strtotime($tgl1)));
 		}
 	?>
 
@@ -86,7 +87,7 @@ $id_transaksi 		=  $_GET['id_transaksi'];
 						<td><?php echo $tgl1; ?></td>
 					</tr>
 					<tr>
-						<td style="text-align:right;padding-right:15px"><b>Tgl. Keluar</b></td>
+						<td style="text-align:right;padding-right:15px"><b>Tgl. Selesai</b></td>
 						<td><?php echo $tgl2; ?></td>
 					</tr>
 					<tr>
@@ -108,7 +109,7 @@ $id_transaksi 		=  $_GET['id_transaksi'];
 <div class="col-sm-6 col-xs-6">
   <p >Tgl Masuk : <?php echo $tgl1; ?>
     <br>
-    Tgl Keluar   : <?php echo $tgl2; ?>
+    Tgl Selesai   : <?php echo $tgl2; ?>
 	<br>
 	Jenis Parfum : <?php echo $hasil['jenis_parfum']; ?>
   </p>
@@ -139,9 +140,9 @@ $id_transaksi 		=  $_GET['id_transaksi'];
      ?>
       	<tr>
 			<td><?php echo $hasil['nama_paket']; ?></td>
-			<td><?php echo $hasil['berat']; ?></td>
-			<td><?php echo $hasil['harga']; ?></td>
-			<td><?php echo $hasil['total_bayar']; ?></td>
+			<td><?php echo round($hasil['berat'],3); ?></td>
+			<td><?php echo number_format($hasil['harga'],0,',','.'); ?></td>
+			<td><?php echo number_format($hasil['total_bayar'],0,',','.'); ?></td>
       	</tr>
       <?php
     }
