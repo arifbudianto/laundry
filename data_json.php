@@ -49,8 +49,8 @@ while($row2 = mysqli_fetch_assoc($data2)){
 }
 
 // parfum
-$bulan_start =!empty($_GET['tgl_awal'])?$_GET['tgl_awal']:'';
-$bulan_end =!empty($_GET['tgl_akhir'])?$_GET['tgl_akhir']:'';
+$bulan_start =!empty($_POST['tgl_awal'])?$_POST['tgl_awal']:'';
+$bulan_end =!empty($_POST['tgl_akhir'])?$_POST['tgl_akhir']:'';
 
 $sql4 ="SELECT MAX(tgl_masuk) AS periode_max FROM transaksi";
 $data4 = mysqli_query($kon,$sql4);

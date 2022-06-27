@@ -202,20 +202,14 @@ $total_transaksi =$row3['id_transaksi'];
                         <div class="col-md-12"><hr/></div>
                         <div class="col-md-6">
                           <p class="text-center"><b>Grafik Parfum Keluar(Liter)</b></p>
-                          <div class="chart-kondisi" style="display:none">
-                            <canvas id="parfum-chart" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
-                          </div>
-                          <div class="chart-notkondisi">
-                            <canvas id="parfum-chart2" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                          <div class="chart-parfum" >
+                            <canvas id="parfum-chart"  style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
                           </div>
                         </div>
                         <div class="col-md-6">
-                        <p class="text-center"><b>Grafik Parfum Jumlah Peminat</b></p>
-                          <div class="chart-kondisi" style="display:none">
+                          <p class="text-center"><b>Grafik Parfum Jumlah Peminat</b></p>
+                          <div class="chart-parfum-peminat" >
                             <canvas id="parfum-peminat-chart" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
-                          </div>
-                          <div class="chart-notkondisi">
-                            <canvas id="parfum-peminat-chart2" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
                           </div>
                         </div>
                       </div>
@@ -559,7 +553,7 @@ require('footer.php');
 
       // chart parfum not filter
       
-      var parfumChartCanvas = $('#parfum-chart2').get(0).getContext('2d')
+      var parfumChartCanvas = $('#parfum-chart').get(0).getContext('2d')
       var parfumData        = {
         labels: jenis_parfum,
         datasets: [
@@ -586,7 +580,7 @@ require('footer.php');
       for(var f=0; f<data_all2.length; f++){
         parfum_peminat[f] = data.structure.data_result_parfum_peminat[f].total_parfum_peminat;
       }
-      var parfumPeminatChartCanvas = $('#parfum-peminat-chart2').get(0).getContext('2d')
+      var parfumPeminatChartCanvas = $('#parfum-peminat-chart').get(0).getContext('2d')
       var parfumPeminatData        = {
         labels: jenis_parfum,
         datasets: [
@@ -608,19 +602,19 @@ require('footer.php');
       
       $("#btn-search").click(function(){
 
-        $(".chart-kondisi").css("display","block");
-        $(".chart-notkondisi").css("display","none");
-
-        // get value form 
         var tgl_awal = $("#tgl_awal").val();
         var tgl_akhir = $("#tgl_akhir").val();
 
         $.ajax({
           url:"data_json.php",
           dataType:"json",
-          method:"GET",
+          method:"POST",
           data:{"tgl_awal":tgl_awal,"tgl_akhir":tgl_akhir},
           success:function(data_parfum){
+            // replace html canvas
+            $(".chart-parfum").html(`<canvas id="parfum-chart" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>`);
+            $(".chart-parfum-peminat").html(`<canvas id="parfum-peminat-chart" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>`);
+
             var data_all = data_parfum.structure.data_result_parfum;
 
             var parfum_liter = [];
@@ -629,7 +623,7 @@ require('footer.php');
               parfum_liter[e] = data_parfum.structure.data_result_parfum[e].total_parfum_liter;
               jenis_parfum[e] = data_parfum.structure.data_result_parfum[e].jenis_parfum;
             }
-            
+
             tgl_awal = tgl_awal.split("-");
             var tgl_awal_x = new Date(tgl_awal[0],tgl_awal[1] , 0);
             tgl_awal_x = tgl_awal_x.toLocaleString('en-us', { month: 'long' })+' '+ tgl_awal[0];
@@ -700,6 +694,7 @@ require('footer.php');
               data: parfumPeminatData,
               options: parfumPeminatOptions
             })
+            
           },
           error:function(e){
             console.log(e);
