@@ -134,7 +134,7 @@ require('koneksi.php');
 
                     <table border=0>
                         <tr>
-                            <td class="text-center"><h3 class="mb-0">Laporan Transaksi Athaya Laundry</h3></td>
+                            <td class="text-center"><h3 class="mb-0">Laporan Paket Athaya Laundry</h3></td>
                         </tr>
                         <tr>
                             <td class="text-center pb-1 sub-judul">Periode :  <b><?php echo $bulan_x . $bulan_y;?> </b></td>
@@ -173,7 +173,7 @@ require('koneksi.php');
                             while ($row = mysqli_fetch_assoc($hasil)){
                                 echo " <tr> ";
                                 echo " <td> ".$no++."</td>";
-                                echo " <td> ".date('F', strtotime($row['tgl_masuk']))."</td>";
+                                echo " <td> ".date('F Y', strtotime($row['tgl_masuk']))."</td>";
                                 echo " <td class='text-right'> ".$row['paket']."</td>";
                                 echo " <td class='text-right'> ".number_format($row['biaya'],2,',','.')."</td>";
                                 echo " <td class='text-center'>";
@@ -223,12 +223,6 @@ require('footer.php');
 <script>
     function printData()
     {
-        // var divToPrint=document.getElementById("printData");
-        // newWin= window.open("");
-        // newWin.document.write(divToPrint.outerHTML);
-        // newWin.print();
-        // newWin.close();
-
         window.frames["print_frame"].document.body.innerHTML = document.getElementById("printData").innerHTML;
         window.frames["print_frame"].window.focus();
         window.frames["print_frame"].window.print();
