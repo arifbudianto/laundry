@@ -197,19 +197,19 @@ $total_transaksi =$row3['id_transaksi'];
                         </div>
                       </div>
                       <p class="text-center"><small class="required-tgl_awal text-danger"></small></p>
-                      <p class="text-muted text-center"><i class="fa fa-calendar"></i> <span id="info-periode"></span></p>
+                      <p class="text-muted text-center mb-0"><i class="fa fa-calendar"></i> <span id="info-periode"></span></p>
                       <div class="row">
                         <div class="col-md-12"><hr/></div>
                         <div class="col-md-6">
-                          <p class="text-center"><b>Grafik Parfum Keluar(Liter)</b></p>
+                          <p class="text-center"><b>Grafik Parfum Keluar (Liter)</b></p>
                           <div class="chart-parfum" >
-                            <canvas id="parfum-chart"  style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                            <canvas id="parfum-chart"  style="min-height: 250px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
                           </div>
                         </div>
                         <div class="col-md-6">
                           <p class="text-center"><b>Grafik Parfum Jumlah Peminat</b></p>
                           <div class="chart-parfum-peminat" >
-                            <canvas id="parfum-peminat-chart" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>
+                            <canvas id="parfum-peminat-chart" style="min-height: 250px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
                           </div>
                         </div>
                       </div>
@@ -612,8 +612,8 @@ require('footer.php');
           data:{"tgl_awal":tgl_awal,"tgl_akhir":tgl_akhir},
           success:function(data_parfum){
             // replace html canvas
-            $(".chart-parfum").html(`<canvas id="parfum-chart" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>`);
-            $(".chart-parfum-peminat").html(`<canvas id="parfum-peminat-chart" style="min-height: 250px; height: 350px; max-height: 350px; max-width: 100%;"></canvas>`);
+            $(".chart-parfum").html(`<canvas id="parfum-chart" style="min-height: 250px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>`);
+            $(".chart-parfum-peminat").html(`<canvas id="parfum-peminat-chart" style="min-height: 250px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>`);
 
             var data_all = data_parfum.structure.data_result_parfum;
 
