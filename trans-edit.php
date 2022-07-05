@@ -16,6 +16,7 @@ $nohp           = $data["nohp"];
 $berat          = $data["berat"];
 $id_paket    = $data["id_paket"];
 $jenis_parfum      = $data["jenis_parfum"];
+$status = $data["status"];
 
 ?>
 
@@ -111,6 +112,18 @@ $jenis_parfum      = $data["jenis_parfum"];
                                         <option value = "Sakura" <?= ($jenis_parfum == "Sakura" ) ? 'selected' : ''?>>Sakura</option>        
                                         <option value = "Lili" <?= ($jenis_parfum == "Lili" ) ? 'selected' : ''?>>Lili</option>  
                                         <option value = "Vanila" <?= ($jenis_parfum == "Vanila" ) ? 'selected' : ''?>>Vanila</option>  
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="berat" class="col-sm-4 col-form-label">Status <i class="text-danger">*</i></label>
+                                <div class="col-sm-8">
+                                    <select name="status" class="form-control" value = "<?php echo $status;?>" id="status">
+                                        <option value = "Baru" <?= ($status == "Baru" ) ? 'selected' : ''?>>Baru</option>
+                                        <option value = "Pencucian" <?= ($status == "Pencucian" ) ? 'selected' : ''?>>Pencucian</option>
+                                        <option value = "Setrika" <?= ($status == "Setrika" ) ? 'selected' : ''?>>Setrika</option>        
+                                        <option value = "Lipat" <?= ($status == "Lipat" ) ? 'selected' : ''?>>Lipat</option>  
+                                        <option value = "Selesai" <?= ($status == "Selesai" ) ? 'selected' : ''?>>Selesai</option>  
                                     </select>
                                 </div>
                             </div>

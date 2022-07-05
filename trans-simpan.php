@@ -31,6 +31,7 @@ require('sidebar.php');
         $id_paket       = $_POST['id_paket'];
         $jenis_parfum   = $_POST['jenis_parfum'];
         $berat          = $_POST['berat'];
+        $status          = $_POST['status'];
 
 
         if (isset($_POST['id_transaksi'])){
@@ -50,6 +51,7 @@ require('sidebar.php');
         $err_berat='';
         $err_id_paket='';
         $err_jenis_parfum='';
+        $err_status='';
         $err_valid='';
 
         if (strlen(trim($tgl_masuk))==0){
@@ -70,6 +72,10 @@ require('sidebar.php');
         }
         if (strlen(trim($jenis_parfum))==0){
             $err_jenis_parfum= "Jenis parfum harus diisi !<br/>";
+            $dataValid ="TIDAK";
+        }
+        if (strlen(trim($status))==0){
+            $status= "Status harus diisi !<br/>";
             $dataValid ="TIDAK";
         }
         if ($dataValid=="TIDAK"){
@@ -102,7 +108,7 @@ require('sidebar.php');
             <?php
         }
 
-        if(strlen(trim($tgl_masuk))==0 || strlen(trim($nohp))==0 || strlen(trim($berat))==0 || strlen(trim($id_paket))==0 || strlen(trim($jenis_parfum))==0 || $dataValid=="TIDAK"){
+        if(strlen(trim($tgl_masuk))==0 || strlen(trim($nohp))==0 || strlen(trim($berat))==0 || strlen(trim($id_paket))==0 || strlen(trim($jenis_parfum))==0 || strlen(trim($status))==0 || $dataValid=="TIDAK"){
 
             ?>
             <div class="alert alert-danger alert-dismissible">
@@ -113,6 +119,7 @@ require('sidebar.php');
                     echo $err_berat;
                     echo $err_id_paket;
                     echo $err_jenis_parfum;
+                    echo $err_status;
                     echo $err_valid;  
                 ?>
             </div>
@@ -170,7 +177,8 @@ require('sidebar.php');
                     berat       = $berat,
                     id_paket = '$id_paket',
                     jenis_parfum = '$jenis_parfum',
-                    total_bayar = $total_bayar
+                    total_bayar = $total_bayar,
+                    status = '$status'
                     WHERE id_transaksi = '$id_transaksi'";
 
             }
@@ -180,9 +188,9 @@ require('sidebar.php');
                 $id_transaksi = $tglid . sprintf("%03s", $urutan);
 
                 $sql = "insert into transaksi
-                (id_transaksi, nohp, tgl_masuk, tgl_keluar, berat, id_paket, jenis_parfum, total_bayar, kd_status)
+                (id_transaksi, nohp, tgl_masuk, tgl_keluar, berat, id_paket, jenis_parfum, total_bayar, status)
                     values
-                ('$id_transaksi','$nohp',  '$tgl_masuk', NULL ,$berat, '$id_paket', '$jenis_parfum', $total_bayar, '01')";
+                ('$id_transaksi','$nohp',  '$tgl_masuk', NULL ,$berat, '$id_paket', '$jenis_parfum', $total_bayar, 'Baru')";
             }
             
             $hasil = mysqli_query($kon, $sql);

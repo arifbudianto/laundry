@@ -1,26 +1,25 @@
 <?php
 require('header.php');
 require('sidebar.php');
+require('koneksi.php');
 ?>
 
-<!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
     <div class="row mb-2">
         <div class="col-sm-6">
         <h1 class="m-0">Transaksi Laundry</h1>
-        </div><!-- /.col -->
+        </div>
         <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
             <li class="breadcrumb-item"><a href="trans-tampil.php">Daftar Transaksi</a></li>
             <li class="breadcrumb-item active">Form Data Transaksi</li>
         </ol>
-        </div><!-- /.col -->
-    </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+        </div>
+    </div>
+    </div>
 </div>
-<!-- /.content-header -->
 <!-- Main content -->
 <div class="content">
     <div class="container-fluid">
@@ -59,7 +58,6 @@ require('sidebar.php');
                                     <select name="id_paket" class="form-control" required>
                                         <option disabled selected>--Pilih Paket--</option>
                                         <?php
-                                        include "koneksi.php";
                                         $query = "SELECT * FROM paket ORDER BY id_paket";
                                         $sql = mysqli_query ($kon,$query);
                                         while ($data = mysqli_fetch_array($sql)){
@@ -80,7 +78,6 @@ require('sidebar.php');
                                     <select name="jenis_parfum" class="form-control" required>
                                         <option disabled selected>--Jenis Parfum--</option> 
                                         <?php
-                                        include "koneksi.php";
                                         $query = "SELECT * FROM parfum ORDER BY jenis_parfum";
                                         $sql = mysqli_query ($kon,$query);
                                         while ($data = mysqli_fetch_array($sql)){
