@@ -39,7 +39,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="prediksi-form.php" class="nav-link">
+                    <a href="prediksi-proses.php" class="nav-link">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>
                             Prediksi Kebutuhan Parfum

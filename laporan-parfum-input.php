@@ -134,7 +134,7 @@ require('koneksi.php');
 
                     <table border=0>
                         <tr>
-                            <td class="text-center"><h3 class="mb-0">Laporan Transaksi Athaya Laundry</h3></td>
+                            <td class="text-center"><h3 class="mb-0">Laporan Parfum Athaya Laundry</h3></td>
                         </tr>
                         <tr>
                             <td class="text-center pb-1 sub-judul">Periode :  <b><?php echo $bulan_x . $bulan_y;?> </b></td>

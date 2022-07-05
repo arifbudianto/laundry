@@ -105,7 +105,7 @@ $total_transaksi =$row3['id_transaksi'];
         </div>
         
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                       <h3 class="card-title"><i class="fas fa-chart-bar"></i> Grafik Transaksi Periode Bulanan dalam 1 Tahun</h3>
@@ -128,15 +128,12 @@ $total_transaksi =$row3['id_transaksi'];
                             </p> -->
                         </div>
                         <div class="position-relative mb-4">
-                            <canvas id="transaksi-chart" height="300"></canvas>
+                            <canvas id="transaksi-chart" height="300" width="500"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
                       <h3 class="card-title"><i class="fas fa-chart-bar"></i> Grafik Customer Periode Bulanan dalam 1 Tahun</h3>

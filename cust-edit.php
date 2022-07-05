@@ -9,7 +9,6 @@ $hasil = mysqli_query($kon, $sql);
 if (!$hasil) die ("Gagal Query...");
 
 $data = mysqli_fetch_array($hasil);
-$id_member = $data["id_member"];
 $nohp   = $data["nohp"];
 $nama   = $data["nama"];
 // $alamat = $data["alamat"];
@@ -43,7 +42,7 @@ $nama   = $data["nama"];
                     <!-- /.card-header -->
                     <!-- form start -->
                     <form action = "cust-simpan2.php" method = "post" enctype = "multipart/form-data" method="post" class="form-horizontal">
-                        <input type = "hidden" name = "id_member" value = "<?php echo $id_member;?>"/>
+                        <input type = "hidden" name = "nohp" value = "<?php echo $nohp;?>"/>
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="nohp" class="col-sm-4 col-form-label">No. HP <i class="text-danger">*</i></label>

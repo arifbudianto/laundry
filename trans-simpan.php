@@ -180,22 +180,24 @@ require('sidebar.php');
                 $id_transaksi = $tglid . sprintf("%03s", $urutan);
 
                 $sql = "insert into transaksi
-                (id_transaksi, nohp, tgl_masuk, tgl_keluar, berat, id_paket, jenis_parfum, total_bayar)
+                (id_transaksi, nohp, tgl_masuk, tgl_keluar, berat, id_paket, jenis_parfum, total_bayar, kd_status)
                     values
-                ('$id_transaksi','$nohp',  '$tgl_masuk', NULL ,$berat, '$id_paket', '$jenis_parfum', $total_bayar)";
+                ('$id_transaksi','$nohp',  '$tgl_masuk', NULL ,$berat, '$id_paket', '$jenis_parfum', $total_bayar, '01')";
             }
             
             $hasil = mysqli_query($kon, $sql);
             if($hasil){
+                $sql = "SELECT id_transaksi FROM transaksi WHERE id_transaksi = '$id_transaksi'";
+                $hasilll = mysqli_query($kon, $sql);
+                $row = mysqli_fetch_array ($hasilll);
+                $id_transaksi = $row['id_transaksi'];
                 ?>
-
                 <div class="alert alert-success alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                     <i class="fa fa-check"></i> Data Berhasil Disimpan!
                 </div>
                 <a href="trans-tampil.php" class="mb-3 btn btn-info btn-md"><i class="fas fa-angle-left"></i> Kembali</a>
-                <!-- <a href = 'trans-proses-konfir.php?id_transaksi=".$['id_transaksi']."' title='Konfirmasi Data'><i class='fa fa-check text-success'></i> </a>" -->
-                <!-- <a href = 'nota-cetak.php?id_transaksi=".$row['id_transaksi']."' class="mb-3 btn btn-info btn-md"><i class="fa fa-print"></i></break> Cetak Nota</a> -->
+                <a href = 'nota-cetak.php?id_transaksi=<?php echo $id_transaksi?>' class="mb-3 btn btn-info btn-md"><i class='fa fa-print'></i> Cetak</a>
                 <?php
             }else {
                 ?>

@@ -130,3 +130,6 @@ require('koneksi.php');
         ?>
     </div>
 </div>
+<?php
+require('footer.php');
+?>

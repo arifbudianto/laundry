@@ -61,18 +61,12 @@ require('sidebar.php');
                                 <label for="jenis_parfum" class="col-sm-4 col-form-label">Jenis Parfum <i class="text-danger">*</i></label>
                                 <div class="col-sm-8">
                                     <select name="jenis_parfum" class="form-control" required>
-                                        <option disabled selected>--Jenis Parfum--</option> 
-                                        <?php
-                                        include "koneksi.php";
-                                        $query = "SELECT * FROM parfum ORDER BY jenis_parfum";
-                                        $sql = mysqli_query ($kon,$query);
-                                        while ($data = mysqli_fetch_array($sql)){
-                                        $jenis_parfum = $data['jenis_parfum'];                                 
-                                        ?>
-                                        <option value = "<?=$jenis_parfum;?>"><?=$jenis_parfum;?></option>
-                                        <?php    
-                                        }
-                                        ?> 
+                                        <option value = "">--Jenis Parfum--</option>    
+                                        <option value = "fresh">Fresh</option>
+                                        <option value = "aqua">Aqua</option>
+                                        <option value = "sakura">Sakura</option>        
+                                        <option value = "lili">Lili</option>  
+                                        <option value = "vanila">Vanila</option>
                                     </select>
                                 </div>
                             </div>

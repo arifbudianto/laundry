@@ -146,7 +146,7 @@ require('koneksi.php');
                         <tr>
                             <th class="text-center">No.</th>
                             <th class="text-center">Periode Bulan</th>
-                            <th class="text-center">Total Transaksi</th>
+                            <th class="text-center">Total Customer</th>
                             <th class="text-center">Operasi</th>
                         </tr>
             

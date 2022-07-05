@@ -41,8 +41,8 @@ require('sidebar.php');
             $nohp = $_POST["nohp"];
 
         include "koneksi.php";
-        $sql = "SELECT * FROM pelanggan where nohp like '%".$nohp."%'
-                order by nohp desc";
+        $sql = "SELECT pelanggan.nohp, nama, COUNT(pelanggan.nohp) as Jumlah FROM pelanggan JOIN transaksi ON  pelanggan.nohp = transaksi.nohp where pelanggan.nohp like '%".$nohp."%'
+                group by pelanggan.nohp order by Jumlah desc";
         $hasil = mysqli_query($kon, $sql);
 
         if (!$hasil)
@@ -62,7 +62,7 @@ require('sidebar.php');
                             <th>No.</th>
                             <th>No. HP</th>
                             <th>Nama </th>
-                            <!-- <th>Alamat </th> -->
+                            <th>Jumlah Transaksi </th>
                             <th class='text-center'>Operasi</th>
                         </tr>
                     </thead>
@@ -74,7 +74,7 @@ require('sidebar.php');
                             echo " <td> ".$no++."</td>";
                             echo " <td> ".$row['nohp']."</td>";
                             echo " <td> ".$row['nama']."</td>";
-                            // echo " <td> ".$row['alamat']."</td>";
+                            echo " <td> ".$row['Jumlah']."</td>";
                             echo " <td class='text-center'> ";
                             echo "<a href = 'cust-edit.php?nohp=".$row['nohp']."' title='Edit Data'><i class='fa fa-edit text-orange'></i></a>";
                             // echo "&nbsp;&nbsp;";
