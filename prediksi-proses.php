@@ -8,18 +8,19 @@ require('koneksi.php');
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Laporan Transaksi</h1>
+                <h1 class="m-0">Prediksi Kebutuhan Parfum</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                    <li class="breadcrumb-item active">Laporan Transaksi</li>
+                    <li class="breadcrumb-item active">Prediksi</li>
                 </ol>
             </div>
         </div>
     </div>
 </div>
-
+<?php
+$jenis_prediksi = $_POST['jenis_prediksi'];?>
 <div class="content">
     <form action = "" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="container-fluid">  
@@ -29,64 +30,39 @@ require('koneksi.php');
                         <div class="card-header">
                             <h5 class="card-title">Filter</h5>
                         </div>
-                        <div class="card-body">
-                            <div class="form-group row">
-                                <label for="tgl_awal" class="col-sm-3 col-form-label">Dari Bulan <i class="text-danger">*</i></label>
-                                <div class="col-sm-9">
-                                    <div class="form-inline mb-3">
-                                        <div class="form-group">
-                                            <input type = "month" name ="tgl_awal" id="tgl_awal" class="form-control" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>&nbsp; s/d &nbsp;</label>
-                                            <input type="month" class="form-control" name="tgl_akhir" id="tgl_akhir">
-                                        </div>
-                                    </div>
+                        <?php
+                        if ($jenis_prediksi == "Berat"){?>
+                            <div class="card-body">
+                                <div class="form-group row">
+                                <label for="berat_prediksi" class="col-sm-5 col-form-label">Berat laundry yang akan diprediksi (Kg)<i class="text-danger">*</i></label>
+                                <div class="col-sm-6">
+                                    <input name = "berat_prediksi" type = "text" class="form-control" id="berat_prediksi" required>
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="jenis_parfum" class="col-sm-3 col-form-label">Jenis Parfum <i class="text-danger">*</i></label>
+                        <?php } else {?>
+                            <div class="card-body">
+                                <div class="form-group row">
+                                <label for="berat_prediksi" class="col-sm-4 col-form-label">Berat Parfum yang akan diprediksi (L)<i class="text-danger">*</i></label>
                                 <div class="col-sm-8">
-                                    <select name="jenis_parfum" class="form-control" required>
-                                        <option disabled selected>--Jenis Parfum--</option> 
-                                        <?php
-                                        include "koneksi.php";
-                                        $query = "SELECT * FROM parfum ORDER BY jenis_parfum";
-                                        $sql = mysqli_query ($kon,$query);
-                                        while ($data = mysqli_fetch_array($sql)){
-                                        $jenis_parfum = $data['jenis_parfum'];                                 
-                                        ?>
-                                        <option value = "<?=$jenis_parfum;?>"><?=$jenis_parfum;?></option>
-                                        <?php    
-                                        }
-                                        ?> 
-                                    </select>
+                                    <input name = "berat_prediksi" type = "text" class="form-control" id="berat_prediksi" required> 
                                 </div>
+                                
                             </div>
+                        <?php } ?>
                         </div>
                         <div class="card-footer">
-                            <input type = "submit" value="Tampilkan" name = "tampil" class="btn btn-info" />
+                            <input type = "submit" value="Prediksi" name = "tampil" class="btn btn-info" />
                             <input type = "reset" value="Reset" name = "reset" class="btn btn-default" />
                         </div>
                     </div>
                 </div>
             </div>   
         </div>
+    </form>
+</div>
         <div class="container-fluid">
         <?php
-        if(isset($_POST['tampil']) && isset($_POST['tgl_awal'])){
-            $tgl_awal = $_POST['tgl_awal'];
-            $tgl_concate_x = $tgl_awal."-00";
-            $jenis_parfum = $_POST['jenis_parfum'];
-
-            if($_POST['tgl_akhir'] != ''){
-                $tgl_akhir = $_POST['tgl_akhir'];
-                $tgl_concate_y = $tgl_akhir."-00";
-
-            }else{
-                $tgl_akhir = '';
-                $tgl_concate_y = '';
-            }
+        
             
         ?>
             <div class="card card-default">
@@ -304,11 +280,7 @@ require('koneksi.php');
                                     }
                                     $bulan_y = date('F', strtotime('+1 month', strtotime($tgl_akhir)));
                                     echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> pada bulan <b> ".$bulan_y."</b> adalah <b>".round($prediksi,3)."liter</b> atau <b>".round($prediksi*1000,3)." ml</b>.</p>";
-                                    // $jumparfuml = $prediksi / 25;
-                                    // $jumparfumml = $jumparfuml * 1000;
-                                    // echo "Jumlah parfum = Prediksi Parfum / 25 <br/>";
-                                    // echo "Jumlah parfum = ".round($prediksi,3)." / 25 </p> ";
-                                    // echo "<p>Parfum yang dibutuhkan untuk bulan ".$bulan_y." yaitu <b>".round($jumparfuml,3)." liter</b> atau <b>".round($jumparfumml,3)." ml</b>.</p>";
+                                   
                                     ?>
                                 </div>
                             </div>

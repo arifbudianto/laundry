@@ -39,7 +39,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="prediksi-proses.php" class="nav-link">
+                    <a href="prediksi-form.php" class="nav-link">
                         <i class="nav-icon fas fa-edit"></i>
                         <p>
                             Prediksi Kebutuhan Parfum
@@ -60,29 +60,6 @@
                         <p>Daftar Harga Paket</p>
                     </a>
                 </li>
-                <!-- <li class="nav-item sub ">
-                    <a href="#" class="nav-link">
-                    <i class="nav-icon far fa-money-bill-alt"></i>
-                    <p>
-                        Daftar Harga
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item" >
-                            <a href="paket-tampil.php" class="nav-link " >
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Daftar Harga Per Estimasi</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="barang-tampil.php" class="nav-link ">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Daftar Harga Per Barang</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li> -->
                 <li class="nav-item sub ">
                     <a href="#" class="nav-link">
                         <i class="nav-icon far fa-money-bill-alt"></i>

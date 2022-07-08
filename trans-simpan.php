@@ -31,7 +31,6 @@ require('sidebar.php');
         $id_paket       = $_POST['id_paket'];
         $jenis_parfum   = $_POST['jenis_parfum'];
         $berat          = $_POST['berat'];
-        $status          = $_POST['status'];
 
 
         if (isset($_POST['id_transaksi'])){
@@ -74,10 +73,6 @@ require('sidebar.php');
             $err_jenis_parfum= "Jenis parfum harus diisi !<br/>";
             $dataValid ="TIDAK";
         }
-        if (strlen(trim($status))==0){
-            $status= "Status harus diisi !<br/>";
-            $dataValid ="TIDAK";
-        }
         if ($dataValid=="TIDAK"){
             $err_valid= "Masih ada kesalahan, silahkan perbaiki!<br/>";
            
@@ -108,7 +103,7 @@ require('sidebar.php');
             <?php
         }
 
-        if(strlen(trim($tgl_masuk))==0 || strlen(trim($nohp))==0 || strlen(trim($berat))==0 || strlen(trim($id_paket))==0 || strlen(trim($jenis_parfum))==0 || strlen(trim($status))==0 || $dataValid=="TIDAK"){
+        if(strlen(trim($tgl_masuk))==0 || strlen(trim($nohp))==0 || strlen(trim($berat))==0 || strlen(trim($id_paket))==0 || strlen(trim($jenis_parfum))==0 || $dataValid=="TIDAK"){
 
             ?>
             <div class="alert alert-danger alert-dismissible">
@@ -119,7 +114,6 @@ require('sidebar.php');
                     echo $err_berat;
                     echo $err_id_paket;
                     echo $err_jenis_parfum;
-                    echo $err_status;
                     echo $err_valid;  
                 ?>
             </div>
