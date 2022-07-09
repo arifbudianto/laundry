@@ -121,11 +121,10 @@ $total_transaksi =$row3['id_transaksi'];
                               <span class="text-bold text-lg text-success" id="grand_total_x"></span>
                               <span id="label_grand_total_x" class="text-muted"></span>
                             </p>
-                            
-                            <!-- <p class="ml-5 d-flex flex-column">
+                            <p class="ml-5 d-flex flex-column">
                               <span class="text-bold text-lg text-success" id="grand_total_y"></span>
                               <span id="label_grand_total_y" class="text-muted"></span>
-                            </p> -->
+                            </p>
                         </div>
                         <div class="position-relative mb-4">
                             <canvas id="transaksi-chart" height="300" width="500"></canvas>
@@ -149,12 +148,11 @@ $total_transaksi =$row3['id_transaksi'];
                             <span class="text-bold text-lg text-success" id="total_customer_all_x"></span>
                             <span id="label_total_customer_all_x" class="text-muted"></span>
                           </p>
-                          
-                          <!-- <p class="ml-5 d-flex flex-column">
+                          <p class="ml-5 d-flex flex-column">
                             <span class="text-bold text-lg text-success" id="total_customer_all_y"></span>
                             <span id="label_total_customer_all_y" class="text-muted"></span>
                               
-                          </p> -->
+                          </p>
                       </div>
                       <div class="position-relative mb-4">
                           <canvas id="pelanggan-chart" height="300"></canvas>
@@ -401,13 +399,13 @@ require('footer.php');
               data : data_total_bayar_a
               // data: [1000, 2000, 3000, 2500, 2700, 2500, 3000]
             },
-            // {
-            //   label: 'Data Tahun '+tahun_min,
-            //   backgroundColor: '#ced4da',
-            //   borderColor: '#ced4da',
-            //   data : data_total_bayar_b
-            //   // data: [700, 1700, 2700, 2000, 1800, 1500, 2000]
-            // }
+            {
+              label: 'Data Tahun '+tahun_min,
+              backgroundColor: '#ced4da',
+              borderColor: '#ced4da',
+              data : data_total_bayar_b
+              // data: [700, 1700, 2700, 2000, 1800, 1500, 2000]
+            }
           ]
         },
         options: {
@@ -474,12 +472,12 @@ require('footer.php');
               borderColor: '#17a2b8',
               data : total_pelanggan_x
             },
-            // {
-            //   label: 'Data Tahun '+tahun_min,
-            //   backgroundColor: '#9e9e9e',
-            //   borderColor: '#9e9e9e',
-            //   data : total_pelanggan_y
-            // }
+            {
+              label: 'Data Tahun '+tahun_min,
+              backgroundColor: '#9e9e9e',
+              borderColor: '#9e9e9e',
+              data : total_pelanggan_y
+            }
           ]
         },
         options: {

@@ -47,7 +47,7 @@ require('sidebar.php');
         $data = mysqli_fetch_array($hasil);
         $nohp = $data['nohp'];
 
-        $sql = "SELECT id_transaksi, tgl_masuk, tgl_keluar, pelanggan.nohp, pelanggan.nama,
+        $sql = "SELECT id_transaksi, tgl_masuk, tgl_keluar, pelanggan.nohp, pelanggan.nama, paket.id_paket,
                 paket.nama_paket, parfum.id_parfum, parfum.jenis_parfum, berat, total_bayar, status
                 FROM transaksi
                 JOIN pelanggan ON transaksi.nohp = pelanggan.nohp
@@ -100,43 +100,64 @@ require('sidebar.php');
                             echo " <td> ".$row['jenis_parfum']."</td>";
                             echo " <td> ".number_format($row['total_bayar'],0,',','.')."</td>";
                             echo " <td>";
-                                if ($row['status'] == "Baru"){?>
-                                    <select name = "status" class="badge badge-danger status">
-                                        <option value ="<?= $row['id_transaksi']?>_Baru" selected> Baru</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Pencucian"> Pencucian</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Setrika"> Setrika</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Lipat"> Lipat</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
-                                    </select>
-                                <?php } else if($row['status']=="Pencucian"){?>
-                                    <select name = "status" class="badge badge-warning status" >
-                                        <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Pencucian" selected> Pencucian</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Setrika"> Setrika</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Lipat"> Lipat</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
-                                    </select>
-                                <?php } else if($row['status']=="Setrika"){?>
+                                if($row['id_paket'] == 'S01' && $row['id_paket'] == 'S02'){
+                                    if ($row['status'] == "Baru"){?>
+                                        <select name = "status" class="badge badge-danger status">
+                                            <option value ="<?= $row['id_transaksi']?>_Baru" selected> Baru</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Setrika"> Setrika</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
+                                        </select>
+                                    <?php } else if($row['status']=="Setrika"){?>
                                     <select name = "status" class="badge badge-info status" >
                                         <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Pencucian"> Pencucian</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Setrika" selected> Setrika</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Lipat"> Lipat</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
-                                    </select>
-                                <?php } else if($row['status']=="Lipat"){?>
-                                    <select name = "status" class="badge badge-secondary status" >
-                                        <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Pencucian"> Pencucian</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Setrika"> Setrika</option>
-                                        <option value ="<?= $row['id_transaksi']?>_Lipat" selected> Lipat</option>
+                                        <option value ="<?= $row['id_transaksi']?>_Setrika" selected> Setrika</optin>
                                         <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
                                     </select>
                                 <?php } else{ ?>
                                     <button class ="btn btn-success btn-sm dropdown-toggle">Selesai</button>
                                 <?php }
-                        
-                               
+                                } elseif ($row['id_paket'] == 'CB4' && $row['id_paket'] == 'CK4'){
+                                    if ($row['status'] == "Baru"){?>
+                                        <select name = "status" class="badge badge-danger status">
+                                            <option value ="<?= $row['id_transaksi']?>_Baru" selected> Baru</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Pencucian"> Pencucian</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
+                                        </select>
+                                    <?php } else if($row['status']=="Pencucian"){?>
+                                        <select name = "status" class="badge badge-warning status" >
+                                            <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Pencucian" selected> Pencucian</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
+                                        </select>
+                                        <?php } else{ ?>
+                                    <button class ="btn btn-success btn-sm dropdown-toggle">Selesai</button>
+                                <?php }
+                                } else {
+                                    if ($row['status'] == "Baru"){?>
+                                        <select name = "status" class="badge badge-danger status">
+                                            <option value ="<?= $row['id_transaksi']?>_Baru" selected> Baru</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Pencucian"> Pencucian</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Setrika"> Setrika</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
+                                        </select>
+                                    <?php } else if($row['status']=="Pencucian"){?>
+                                        <select name = "status" class="badge badge-warning status" >
+                                            <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Pencucian" selected> Pencucian</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Setrika"> Setrika</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
+                                        </select>
+                                    <?php } else if($row['status']=="Setrika"){?>
+                                        <select name = "status" class="badge badge-info status" >
+                                            <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Pencucian"> Pencucian</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Setrika" selected> Setrika</option>
+                                            <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
+                                        </select>
+                                    <?php } else{ ?>
+                                        <button class ="btn btn-success btn-sm dropdown-toggle">Selesai</button>
+                                    <?php }
+                                    }
                             echo "</td>";
                             echo " <td class='text-center'>";
                             if ($row['tgl_keluar'] == NULL || $row['tgl_keluar'] == ''){
@@ -145,10 +166,8 @@ require('sidebar.php');
                                 echo " <a href = 'trans-batal-konfir.php?id_transaksi=".$row['id_transaksi']."' title='Batal Konfirmasi Data'><i class='fa fa-times text-dark'></i></a>";
                             }
                             echo "&nbsp;&nbsp;";
-                            echo "<a href = 'trans-edit.php?id_transaksi=".$row['id_transaksi']."' title='Edit Status'><i class='fa fa-edit text-orange'></i></a>";
+                            echo "<a href = 'trans-edit.php?id_transaksi=".$row['id_transaksi']."' title='Edit Transaksi'><i class='fa fa-edit text-orange'></i></a>";
                             echo "&nbsp;&nbsp;";
-                            // echo "<a href = 'trans-status.php?id_transaksi=".$row['id_transaksi']."' title='Status'><i class='fa fa-eye text-danger'></i></a>";
-                            // echo "&nbsp;&nbsp;";
                             echo "<a href = 'nota-cetak.php?id_transaksi=".$row['id_transaksi']."' title='Cetak'><i class='fa fa-print'></i></a>";
                             echo " </td>";
                             echo "</tr>";

@@ -24,7 +24,9 @@ require('sidebar.php');
 <div class="content">
     <div class="container-fluid">
         <div class="card card-default">
-            <!-- /.card-header -->
+            <div class="card-header">
+                <a href="parfum-input.php" class="btn btn-success btn-md btn-sm"><i class="fa fa-plus"></i> Tambah Data </a>
+            </div>
             <div class="card-body ">
                 <?php
                     $jenis_parfum = "";
@@ -46,7 +48,6 @@ require('sidebar.php');
                             <th>No.</th>
                             <th>ID Parfum</th>
                             <th>Jenis Parfum</th>
-                            <th class='text-center'>Operasi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -57,9 +58,6 @@ require('sidebar.php');
                             echo " <td> ".$no++."</td>";
                             echo " <td> ".$row['id_parfum']."</td>";
                             echo " <td> ".$row['jenis_parfum']."</td>";
-                            echo " <td class='text-center'>";
-                            echo "<a href = 'parfum-edit.php?jenis_parfum=".$row['jenis_parfum']."' title='Edit Data'><i class='fa fa-edit text-orange'></i></a>";
-                            echo "</td>";
                             echo " </tr> ";
                         }
                         ?>

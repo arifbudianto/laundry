@@ -34,15 +34,15 @@ $jenis_prediksi = $_POST['jenis_prediksi'];?>
                         if ($jenis_prediksi == "Berat"){?>
                             <div class="card-body">
                                 <div class="form-group row">
-                                <label for="berat_prediksi" class="col-sm-5 col-form-label">Berat laundry yang akan diprediksi (Kg)<i class="text-danger">*</i></label>
+                                <label for="parfum_prediksi" class="col-sm-5 col-form-label">Berat parfum yang akan diprediksi (Kg)<i class="text-danger">*</i></label>
                                 <div class="col-sm-6">
-                                    <input name = "berat_prediksi" type = "text" class="form-control" id="berat_prediksi" required>
+                                    <input name = "parfum_prediksi" type = "text" class="form-control" id="parfum_prediksi" required>
                                 </div>
                             </div>
                         <?php } else {?>
                             <div class="card-body">
                                 <div class="form-group row">
-                                <label for="berat_prediksi" class="col-sm-4 col-form-label">Berat Parfum yang akan diprediksi (L)<i class="text-danger">*</i></label>
+                                <label for="berat_prediksi" class="col-sm-4 col-form-label">Berat Laundry yang akan diprediksi (L)<i class="text-danger">*</i></label>
                                 <div class="col-sm-8">
                                     <input name = "berat_prediksi" type = "text" class="form-control" id="berat_prediksi" required> 
                                 </div>
@@ -130,7 +130,7 @@ $jenis_prediksi = $_POST['jenis_prediksi'];?>
                         </tr>
                     </table>
                 
-                    
+                    <!-- Menampilkan Tabel Prediksi -->
                     <table class="table table-bordered" cellspacing=0 cellpadding=5>
                         <tr>
                             <th class="text-center">No.</th>
@@ -141,14 +141,12 @@ $jenis_prediksi = $_POST['jenis_prediksi'];?>
                         </tr>
             
                         <?php
-
                         if($_POST['tgl_akhir'] == ''){
                             $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat FROM transaksi WHERE jenis_parfum = '$jenis_parfum' AND DATE_FORMAT(tgl_masuk, '%Y-%m') =  DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_x', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
                         }else{
                             $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat FROM transaksi WHERE jenis_parfum = '$jenis_parfum' AND DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
                                
                         }
-
                         $hasil = mysqli_query ($kon,$sql);
 
                         if(!$hasil){
@@ -181,7 +179,7 @@ $jenis_prediksi = $_POST['jenis_prediksi'];?>
                                 $jumxx = $jumxx + ($row['berat'] * $row['berat']);
                                 $jumxy = $jumxy + ($row['berat'] * $row['berat']/25);
                             } 
-                       
+                            // Menampilkan nilai a dan b
                         if($_POST['tgl_akhir'] != ''){
                             $sql2 ="SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat FROM transaksi WHERE jenis_parfum = '$jenis_parfum' AND DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m')";
                             
@@ -270,16 +268,32 @@ $jenis_prediksi = $_POST['jenis_prediksi'];?>
                                     $hasil = mysqli_query ($kon,$sql);
                                     $data = mysqli_fetch_array($hasil);
                                     $bulan = date('n', strtotime('+1 month', strtotime($tgl_akhir)));
-                                    $berat = round($data['berat'],3);
-                                    echo $persamaan_reg_y;
-                                    echo $persamaan_reg_y2;
-                                    echo "Y = ".round($a,3)." + ".round($b,3). "(".$berat.") <br/>" ;  
-                                    echo "<p>Y = ".round(($a + ($b * $bulan)),3)."</p>" ;
-                                    if (is_numeric($b) && is_numeric($a)){
-                                        $prediksi = $a + ($b * $berat);
+
+                                    // Perhitungan jenis prediksi 'parfum'
+                                    if ($jenis_prediksi == 'Parfum'){
+                                        echo $persamaan_reg_y;
+                                        echo $persamaan_reg_y2;
+                                        echo "Y = ".round($a,3)." + ".round($b,3). "(".$berat_prediksi.") <br/>" ;  
+                                        echo "<p>Y = ".round(($a + ($b * $berat_prediksi)),3)."</p>" ;
+                                            if (is_numeric($b) && is_numeric($a)){
+                                                $prediksi = $a + ($b * $berat_prediksi);
+                                            }
+                                        $bulan_y = date('F', strtotime('+1 month', strtotime($tgl_akhir)));
+                                        echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> pada bulan <b> ".$bulan_y."</b> dengan berat laundry ".$berat_prediksi." kg adalah <b>".round($prediksi,3)."liter</b>";
                                     }
-                                    $bulan_y = date('F', strtotime('+1 month', strtotime($tgl_akhir)));
-                                    echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> pada bulan <b> ".$bulan_y."</b> adalah <b>".round($prediksi,3)."liter</b> atau <b>".round($prediksi*1000,3)." ml</b>.</p>";
+                                    // Perhitungan jenis prediksi 'berat'
+                                    else {
+                                        echo $persamaan_reg_y;
+                                        echo $persamaan_reg_y2;
+                                        echo "X = ".round($a,3)." - ".$parfum_prediksi."/".round($b,3)."<br/>" ;  
+                                        echo "<p>Y = ".round(($a - $parfum_prediksi / $b),3)."</p>" ;
+                                            if (is_numeric($b) && is_numeric($a)){
+                                                $prediksi = ($a - $parfum_prediksi / $b);
+                                            }
+                                        $bulan_y = date('F', strtotime('+1 month', strtotime($tgl_akhir)));
+                                        echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> pada bulan <b> ".$bulan_y."</b> dengan berat parfum ".$parfum_prediksi." liter adalah <b>".round($prediksi,3)."kg</b>";
+                                    }
+                                    
                                    
                                     ?>
                                 </div>

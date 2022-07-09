@@ -63,7 +63,6 @@ require('sidebar.php');
                             <th>No. HP</th>
                             <th>Nama </th>
                             <th>Jumlah Transaksi </th>
-                            <th class='text-center'>Operasi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,11 +74,6 @@ require('sidebar.php');
                             echo " <td> ".$row['nohp']."</td>";
                             echo " <td> ".$row['nama']."</td>";
                             echo " <td> ".$row['Jumlah']."</td>";
-                            echo " <td class='text-center'> ";
-                            echo "<a href = 'cust-edit.php?nohp=".$row['nohp']."' title='Edit Data'><i class='fa fa-edit text-orange'></i></a>";
-                            // echo "&nbsp;&nbsp;";
-                            // echo "<a href = 'cust-hapus.php?nohp=".$row['nohp']."' title='Hapus Data'> <i class='fa fa-trash text-danger'></i> </a>";
-                            echo " </td>";
                             echo " </tr> ";
                         }
                         ?>

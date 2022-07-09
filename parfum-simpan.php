@@ -23,20 +23,13 @@ require('sidebar.php');
 <div class="content">
     <div class="container-fluid">
         <?php
-        $id_parfum          =   $_POST['id_parfum'];
         $jenis_parfum       =   $_POST['jenis_parfum'];
-        $kode_parfum       =   $_POST['kode_parfum'];
 
         $dataValid = "YA";
 
-        $err_idparfum='';
         $err_jenis_parfum='';
         $err_valid='';
 
-        if (strlen(trim($id_parfum))==0){
-            $err_idparfum ="Harap isi ID Parfum !<br/>";
-            $dataValid ="TIDAK";
-        }
         if (strlen(trim($jenis_parfum))==0){
             $err_jenis_parfum="Harap isi Jenis Parfum !<br/>";
             $dataValid ="TIDAK";
@@ -46,13 +39,12 @@ require('sidebar.php');
             
         }
 
-        if(strlen(trim($id_parfum))==0 || strlen(trim($jenis_parfum))==0 || $dataValid=="TIDAK"){
+        if(strlen(trim($jenis_parfum))==0 || $dataValid=="TIDAK"){
 
             ?>
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <?php
-                    echo $err_idparfum;
                     echo $err_jenis_parfum;
                     echo $err_valid;
                 ?>
@@ -63,10 +55,10 @@ require('sidebar.php');
         }
         include "koneksi.php";
 
-        $sql = "update parfum set
-                id_parfum       =   '$id_parfum',
-                jenis_parfum    =   '$jenis_parfum'
-                where kode_parfum = '$kode_parfum'";
+        $sql = "insert into parfum
+                (jenis_parfum)
+                values
+                ('$jenis_parfum')";
         $hasil = mysqli_query($kon, $sql);
 
         if($hasil){

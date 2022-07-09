@@ -44,13 +44,6 @@ require('sidebar.php');
                                     <input type = "text" name="nama" class="form-control" id="nama" required>
                                 </div>
                             </div>
-                            <!-- <div class="form-group row">
-                                <label for="nama" class="col-sm-4 col-form-label">Alamat <i class="text-danger">*</i></label>
-                                <div class="col-sm-8">
-                                    <textarea name="alamat" class="form-control" rows="2"></textarea>
-                                </div>
-                            </div> -->
-                            <!-- /.card-body -->
                         </div>
                         <div class="card-footer">
                             <button type="submit" class="btn btn-info">Simpan</button>
