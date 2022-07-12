@@ -40,18 +40,18 @@ require('sidebar.php');
                 <div class="card">
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form action = "prediksi-proses.php" method="post" enctype="multipart/form-data" class="form-horizontal">
+                    <form action="prediksi-proses.php" method="post" enctype="multipart/form-data" class="form-horizontal">
                         <div class="card-body">
                             <div class="form-group row">
-                                <label for="tgl_awal" class="col-sm-4 col-form-label">Periode Tanggal dari <i class="text-danger">*</i></label>
+                                <label for="tgl_awal" class="col-sm-4 col-form-label">Periode Bulan dari <i class="text-danger">*</i></label>
                                 <div class="col-sm-8">
                                     <div class="form-inline">
                                         <div class="form-group">
-                                            <input type = "date" name = "tgl_awal" id="tgl_awal" class="form-control" required>
+                                            <input type = "month" name = "tgl_awal" id="tgl_awal" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <label>&nbsp; s/d &nbsp;</label>
-                                            <input type = "date" name = "tgl_akhir" id="tgl_akhir" class="form-control" required>
+                                            <input type = "month" name = "tgl_akhir" id="tgl_akhir" class="form-control" >
                                         </div>
                                     </div>
                                     
@@ -70,10 +70,32 @@ require('sidebar.php');
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <label for="jenis_prediksi" class="col-sm-4 col-form-label">Jenis Prediksi <i class="text-danger">*</i></label>
+                                <div class="col-sm-8">
+                                    <select name="jenis_prediksi" id="jenis_prediksi" class="form-control" required>
+                                        <option value = "">--Jenis Prediksi--</option>    
+                                        <option value = "prediksi_laundry">Prediksi Berat Laundry</option>
+                                        <option value = "prediksi_parfum">Prediksi Berat Parfum</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row" id="parfum_prediksi_1" style="display:none">
+                                <label for="parfum_prediksi" class="col-sm-4 col-form-label">Berat parfum (Kg) <i class="text-danger">*</i></label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="parfum_prediksi" id="parfum_prediksi" class="form-control" >
+                                </div>
+                            </div>
+                            <div class="form-group row" id="berat_prediksi_1" style="display:none">
+                                <label for="berat_prediksi" class="col-sm-4 col-form-label">Berat Laundry (L) <i class="text-danger">*</i></label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="berat_prediksi" id="berat_prediksi" class="form-control" >
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer">
-                            <input type = "submit" value="Prediksi" name = "prediksi" class="btn btn-info" />
-                            <input type = "reset" value="Reset" name = "reset" class="btn btn-default" />
+                            <input type ="submit" value="Prediksi" name="prediksi" class="btn btn-info" />
+                            <input type ="reset" value="Reset" name="reset" class="btn btn-default" />
                         </div>
                         <!-- /.card-footer -->
                     </form>
@@ -86,3 +108,17 @@ require('sidebar.php');
 <?php
 require('footer.php');
 ?>
+
+<script>
+    $("#jenis_prediksi").change(function(){
+        if($("#jenis_prediksi").val() == 'prediksi_laundry'){
+            $("#parfum_prediksi_1").css("display","flex");
+            $("#berat_prediksi_1").css("display","none");
+            console.log('1')
+        }else{
+            $("#berat_prediksi_1").css("display","flex");
+            $("#parfum_prediksi_1").css("display","none");
+            console.log('2')
+        }
+    });
+</script>
