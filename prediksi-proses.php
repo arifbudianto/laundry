@@ -237,8 +237,17 @@ require('koneksi.php');
                                     echo "</tr>";
                                 }
                                 try{
-                                    $b = (($no * $jumxy) - ($jumx * $jumy))/(($no * $jumxx) - ($jumx * $jumx));
+                                    if((($no * $jumxy) - ($jumx * $jumy)) !=0 && (($no * $jumxx) - ($jumx * $jumx)) !=0 ){
+                                        $b = (($no * $jumxy) - ($jumx * $jumy))/(($no * $jumxx) - ($jumx * $jumx));
+                                       
+                                    }else{
+                                        $b =0;
+                                    }
+
+                                    // echo '$b = (('.$no * $jumxy.') - ('.$jumx * $jumy.'))/(('.$no * $jumxx.') - ('.$jumx * $jumx.'))';
+                                   
                                 }catch(DivisionByZeroError $e){ 
+                                    echo $e;
                                 }
                                 if ($b != 0){
                                     $b = (($no * $jumxy) - ($jumx * $jumy))/(($no * $jumxx) - ($jumx * $jumx));
@@ -312,10 +321,19 @@ require('koneksi.php');
 
                                     echo $persamaan_reg_y;
                                     echo $persamaan_reg_y2;
-                                    echo "X = ".round($a,3)." - ".$parfum_prediksi."/".round($b,3)."<br/>" ;  
-                                    echo "Y = ".round(($a - $parfum_prediksi / $b),3)."<br/>" ;
+                                    echo "X = ".round($a,3)." - ".$parfum_prediksi."/".round($b,3)."<br/>" ; 
+                                    
+                                   
+                                    if($b != 0 && $parfum_prediksi !=0){
+                                        $xx = $parfum_prediksi / $b;
+                                    }else{
+                                        $xx = 0;
+                                    }
+                                    
+                                    
+                                    echo "Y = ".round(($a - $xx),3)."<br/>" ;
                                         if (is_numeric($b) && is_numeric($a)){
-                                            $prediksi = ($a - $parfum_prediksi / $b);
+                                            $prediksi = ($a - $xx);
                                         }
                                     $bulan_y = date('F', strtotime('+1 month', strtotime($tgl_akhir)));
                                     echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> pada bulan <b> ".$bulan_y."</b> dengan berat parfum <b>".$parfum_prediksi." liter</b> adalah <b>".round($prediksi,3)." kg</b>";

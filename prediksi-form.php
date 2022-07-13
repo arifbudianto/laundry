@@ -81,15 +81,15 @@ require('sidebar.php');
                                 </div>
                             </div>
                             <div class="form-group row" id="parfum_prediksi_1" style="display:none">
-                                <label for="parfum_prediksi" class="col-sm-4 col-form-label">Berat parfum (Kg) <i class="text-danger">*</i></label>
+                                <label for="parfum_prediksi" class="col-sm-4 col-form-label">Berat parfum (L) <i class="text-danger">*</i></label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="parfum_prediksi" id="parfum_prediksi" class="form-control" >
+                                    <input type="number" name="parfum_prediksi" id="parfum_prediksi" class="form-control" >
                                 </div>
                             </div>
                             <div class="form-group row" id="berat_prediksi_1" style="display:none">
-                                <label for="berat_prediksi" class="col-sm-4 col-form-label">Berat Laundry (L) <i class="text-danger">*</i></label>
+                                <label for="berat_prediksi" class="col-sm-4 col-form-label">Berat Laundry (Kg) <i class="text-danger">*</i></label>
                                 <div class="col-sm-8">
-                                    <input type="text" name="berat_prediksi" id="berat_prediksi" class="form-control" >
+                                    <input type="number" name="berat_prediksi" id="berat_prediksi" class="form-control" >
                                 </div>
                             </div>
                         </div>
@@ -112,13 +112,11 @@ require('footer.php');
 <script>
     $("#jenis_prediksi").change(function(){
         if($("#jenis_prediksi").val() == 'prediksi_laundry'){
-            $("#parfum_prediksi_1").css("display","flex");
             $("#berat_prediksi_1").css("display","none");
-            console.log('1')
+            $("#parfum_prediksi_1").css("display","flex");
         }else{
-            $("#berat_prediksi_1").css("display","flex");
             $("#parfum_prediksi_1").css("display","none");
-            console.log('2')
+            $("#berat_prediksi_1").css("display","flex");
         }
     });
 </script>
