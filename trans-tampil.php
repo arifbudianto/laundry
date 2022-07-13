@@ -125,7 +125,7 @@ require('sidebar.php');
                                 } elseif ($row['id_paket'] == 'CB4' || $row['id_paket'] == 'CK4'){
                                     if ($row['status'] == "Baru"){
                                     ?>
-                                        <select name = "status" class="badge badge-danger status">
+                                        <select name = "status" class="badge badge-danger status <?= 'badge'.$row['id_transaksi'] ?>">
                                             <option value ="<?= $row['id_transaksi']?>_Baru" selected> Baru</option>
                                             <option value ="<?= $row['id_transaksi']?>_Pencucian"> Pencucian</option>
                                             <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
@@ -133,7 +133,7 @@ require('sidebar.php');
                                     <?php 
                                     } else if($row['status']=="Pencucian"){
                                     ?>
-                                        <select name = "status" class="badge badge-warning status" >
+                                        <select name = "status" class="badge badge-warning status <?= 'badge'.$row['id_transaksi'] ?>" >
                                             <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
                                             <option value ="<?= $row['id_transaksi']?>_Pencucian" selected> Pencucian</option>
                                             <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
