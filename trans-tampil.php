@@ -103,7 +103,7 @@ require('sidebar.php');
                                 if($row['id_paket'] == 'S01' || $row['id_paket'] == 'S02'){
                                     if ($row['status'] == "Baru"){
                                     ?>
-                                        <select name = "status" class="badge badge-danger status">
+                                        <select name = "status" class="badge badge-danger status <?= 'badge'.$row['id_transaksi'] ?>">
                                             <option value ="<?= $row['id_transaksi']?>_Baru" selected> Baru</option>
                                             <option value ="<?= $row['id_transaksi']?>_Setrika"> Setrika</option>
                                             <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
@@ -111,7 +111,7 @@ require('sidebar.php');
                                     <?php 
                                     } else if($row['status']=="Setrika"){
                                     ?>
-                                        <select name = "status" class="badge badge-info status" >
+                                        <select name = "status" class="badge badge-info status <?= 'badge'.$row['id_transaksi'] ?>" >
                                             <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
                                             <option value ="<?= $row['id_transaksi']?>_Setrika" selected> Setrika</optin>
                                             <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
@@ -147,7 +147,7 @@ require('sidebar.php');
                                 } else {
                                     if ($row['status'] == "Baru"){
                                     ?>
-                                        <select name = "status" class="badge badge-danger status">
+                                        <select name = "status" class="badge badge-danger status <?= 'badge'.$row['id_transaksi'] ?>">
                                             <option value ="<?= $row['id_transaksi']?>_Baru" selected> Baru</option>
                                             <option value ="<?= $row['id_transaksi']?>_Pencucian"> Pencucian</option>
                                             <option value ="<?= $row['id_transaksi']?>_Setrika"> Setrika</option>
@@ -156,7 +156,7 @@ require('sidebar.php');
                                     <?php 
                                     } else if($row['status']=="Pencucian"){
                                     ?>
-                                        <select name = "status" class="badge badge-warning status" >
+                                        <select name = "status" class="badge badge-warning status <?= 'badge'.$row['id_transaksi'] ?>" >
                                             <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
                                             <option value ="<?= $row['id_transaksi']?>_Pencucian" selected> Pencucian</option>
                                             <option value ="<?= $row['id_transaksi']?>_Setrika"> Setrika</option>
@@ -165,7 +165,7 @@ require('sidebar.php');
                                     <?php 
                                     } else if($row['status']=="Setrika"){
                                     ?>
-                                        <select name = "status" class="badge badge-info status" >
+                                        <select name = "status" class="badge badge-info status <?= 'badge'.$row['id_transaksi'] ?>" >
                                             <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
                                             <option value ="<?= $row['id_transaksi']?>_Pencucian"> Pencucian</option>
                                             <option value ="<?= $row['id_transaksi']?>_Setrika" selected> Setrika</option>
@@ -174,7 +174,7 @@ require('sidebar.php');
                                     <?php 
                                     } else{ 
                                     ?>
-                                        <button class ="btn btn-success btn-sm dropdown-toggle">Selesai</button>
+                                        <label class ="btn btn-success btn-sm">Selesai</label>
                                     <?php 
                                         }
                                     }
@@ -222,6 +222,27 @@ require('footer.php');
                 
                 setTimeout(function(){
                     // window.location.reload();
+                    if(data_status == 'Baru'){
+                        $(".badge"+data_id_transaksi).removeClass('badge-info');
+                        $(".badge"+data_id_transaksi).removeClass('badge-warning');
+                        $(".badge"+data_id_transaksi).removeClass('badge-success');
+                        $(".badge"+data_id_transaksi).addClass('badge-danger');
+                    }else if(data_status == 'Setrika'){
+                        $(".badge"+data_id_transaksi).removeClass('badge-warning');
+                        $(".badge"+data_id_transaksi).removeClass('badge-success');
+                        $(".badge"+data_id_transaksi).removeClass('badge-danger');
+                        $(".badge"+data_id_transaksi).addClass('badge-info');
+                    }else if(data_status == 'Pencucian'){
+                        $(".badge"+data_id_transaksi).addClass('badge-warning');
+                        $(".badge"+data_id_transaksi).removeClass('badge-success');
+                        $(".badge"+data_id_transaksi).removeClass('badge-danger');
+                        $(".badge"+data_id_transaksi).removeClass('badge-info');
+                    }else{
+                        $(".badge"+data_id_transaksi).removeClass('badge-warning');
+                        $(".badge"+data_id_transaksi).addClass('badge-success');
+                        $(".badge"+data_id_transaksi).removeClass('badge-danger');
+                        $(".badge"+data_id_transaksi).removeClass('badge-info');
+                    }
                     $("#loading").addClass('hide');
                 }
                 , 250);
