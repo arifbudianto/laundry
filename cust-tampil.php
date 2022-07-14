@@ -62,7 +62,6 @@ require('sidebar.php');
                             <th>No.</th>
                             <th>No. HP</th>
                             <th>Nama </th>
-                            <th>Jumlah Transaksi </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,7 +72,6 @@ require('sidebar.php');
                             echo " <td> ".$no++."</td>";
                             echo " <td> ".$row['nohp']."</td>";
                             echo " <td> ".$row['nama']."</td>";
-                            echo " <td> ".$row['Jumlah']."</td>";
                             echo " </tr> ";
                         }
                         ?>

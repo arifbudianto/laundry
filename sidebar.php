@@ -93,6 +93,12 @@
                                 <p>Laporan Paket</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="laporan-status.php" class="nav-link ">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Laporan Status</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>

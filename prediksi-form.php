@@ -62,11 +62,11 @@ require('sidebar.php');
                                 <div class="col-sm-8">
                                     <select name="jenis_parfum" class="form-control" required>
                                         <option value = "">--Jenis Parfum--</option>    
-                                        <option value = "fresh">Fresh</option>
-                                        <option value = "aqua">Aqua</option>
-                                        <option value = "sakura">Sakura</option>        
-                                        <option value = "lili">Lili</option>  
-                                        <option value = "vanila">Vanila</option>
+                                        <option value = "Fresh">Fresh</option>
+                                        <option value = "Aqua">Aqua</option>
+                                        <option value = "Sakura">Sakura</option>        
+                                        <option value = "Lily">Lily</option>  
+                                        <option value = "Vanila">Vanila</option>
                                     </select>
                                 </div>
                             </div>
@@ -81,15 +81,15 @@ require('sidebar.php');
                                 </div>
                             </div>
                             <div class="form-group row" id="parfum_prediksi_1" style="display:none">
-                                <label for="parfum_prediksi" class="col-sm-4 col-form-label">Berat parfum (L) <i class="text-danger">*</i></label>
+                                <label for="parfum_prediksi" class="col-sm-4 col-form-label">Berat Parfum (L) <i class="text-danger">*</i></label>
                                 <div class="col-sm-8">
-                                    <input type="number" name="parfum_prediksi" id="parfum_prediksi" class="form-control" >
+                                    <input type="text" name="parfum_prediksi" id="parfum_prediksi" class="form-control" >
                                 </div>
                             </div>
                             <div class="form-group row" id="berat_prediksi_1" style="display:none">
                                 <label for="berat_prediksi" class="col-sm-4 col-form-label">Berat Laundry (Kg) <i class="text-danger">*</i></label>
                                 <div class="col-sm-8">
-                                    <input type="number" name="berat_prediksi" id="berat_prediksi" class="form-control" >
+                                    <input type="text" name="berat_prediksi" id="berat_prediksi" class="form-control" >
                                 </div>
                             </div>
                         </div>

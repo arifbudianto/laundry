@@ -171,8 +171,7 @@ require('sidebar.php');
                     berat       = $berat,
                     id_paket = '$id_paket',
                     jenis_parfum = '$jenis_parfum',
-                    total_bayar = $total_bayar,
-                    status = '$status'
+                    total_bayar = $total_bayar
                     WHERE id_transaksi = '$id_transaksi'";
 
             }

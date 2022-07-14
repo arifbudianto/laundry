@@ -21,44 +21,6 @@ require('koneksi.php');
 </div>
 
 <div class="content">
-    <!-- <form action = "" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="container-fluid">  
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Filter</h5>
-                        </div>
-                        <?php
-                        // if ($jenis_prediksi == "Berat"){?>
-                            <div class="card-body">
-                                <div class="form-group row">
-                                <label for="parfum_prediksi" class="col-sm-5 col-form-label">Berat parfum yang akan diprediksi (Kg)<i class="text-danger">*</i></label>
-                                <div class="col-sm-6">
-                                    <input name = "parfum_prediksi" type = "text" class="form-control" id="parfum_prediksi" required>
-                                </div>
-                            </div>
-                        <?php //} else {?>
-                            <div class="card-body">
-                                <div class="form-group row">
-                                <label for="berat_prediksi" class="col-sm-4 col-form-label">Berat Laundry yang akan diprediksi (L)<i class="text-danger">*</i></label>
-                                <div class="col-sm-8">
-                                    <input name = "berat_prediksi" type = "text" class="form-control" id="berat_prediksi" required> 
-                                </div>
-                                
-                            </div>
-                        <?php //} ?>
-                        </div>
-                        <div class="card-footer">
-                            <input type = "submit" value="Prediksi" name = "tampil" class="btn btn-info" />
-                            <input type = "reset" value="Reset" name = "reset" class="btn btn-default" />
-                        </div>
-                    </div>
-                </div>
-            </div>   
-        </div>
-    </form>
-</div> -->
         <?php
         if(isset($_POST['prediksi']) && isset($_POST['tgl_awal'])){
             $tgl_awal = $_POST['tgl_awal'];
@@ -132,14 +94,6 @@ require('koneksi.php');
                             }
                         </style>
                         <?php
-                            
-                            // $bulan_x = date('F Y', strtotime($tgl_awal));
-
-                            // if($tgl_akhir != ''){
-                            //     $bulan_y = ' - '.date('F Y', strtotime($tgl_akhir));
-                            // }else{
-                            //     $bulan_y ='';
-                            // }
 
                         ?>
 
@@ -201,17 +155,6 @@ require('koneksi.php');
                                     $jumxx = $jumxx + ($row['berat'] * $row['berat']);
                                     $jumxy = $jumxy + ($row['berat'] * $row['berat']/25);
                                 } 
-                                // Menampilkan nilai a dan b
-                                // if($_POST['tgl_akhir'] != ''){
-                                //     $sql2 ="SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat FROM transaksi WHERE jenis_parfum = '$jenis_parfum' AND DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m')";
-                                    
-                                //     $hasil2 = mysqli_query($kon,$sql2);
-
-                                //     if(!$hasil2){
-                                //         die(mysqli_error($kon));
-                                //     }
-                                //     $no = $no-1;
-                                //     $row2 = mysqli_fetch_assoc($hasil2);
                                 $no = $no-1;
                                 if($_POST['tgl_akhir'] == ''){
                                     $sql2 = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat FROM transaksi WHERE jenis_parfum = '$jenis_parfum' AND DATE_FORMAT(tgl_masuk, '%Y-%m') =  DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_x', '%Y-%m') group by DATE_FORMAT(tgl_masuk, '%Y-%m')";
@@ -244,8 +187,6 @@ require('koneksi.php');
                                         $b =0;
                                     }
 
-                                    // echo '$b = (('.$no * $jumxy.') - ('.$jumx * $jumy.'))/(('.$no * $jumxx.') - ('.$jumx * $jumx.'))';
-                                   
                                 }catch(DivisionByZeroError $e){ 
                                     echo $e;
                                 }
@@ -258,11 +199,9 @@ require('koneksi.php');
                                     echo "<tr>";
                                     echo "<th colspan = 4 class='text-left'>Konstanta a </th>";
                                         if (is_numeric($b)){
-                                            echo "<th class='text-right'>". round($a,3) ."</th>";
+                                            echo "<th class='text-right'>". round($a,4) ."</th>";
                                         }
                                     echo "</tr>";
-                                    $persamaan_reg_y="Persamaan Regresi :<br/> Y = a + bX <br/>";
-                                    $persamaan_reg_y2="Y = ".round($a,3)." + ".round($b,3)."X <br/>";
                                 }else {
                                     $a = ($jumy - ($b * $jumx)) / $no;
                                     echo "<th colspan = 4 class='text-left'>Koefisien b</th>";
@@ -274,74 +213,58 @@ require('koneksi.php');
                                         echo "<th class='text-right'>". round($a,3) ."</th>";
                                     }
                                     echo "</tr>";
-                                    $persamaan_reg_y="Persamaan Regresi : <br/> Y = a + bX <br/>";
-                                    $persamaan_reg_y2="Y = ".round($a,3)." + 0 X <br/>";
                                 }
                                 
                                 ?>
                                 
-                            <?php
-                                        
+                            <?php    
                             }else{
                                 echo "<tr><td colspan =5 class='text-center'>Tidak ada data</td></tr>"; 
                             }
                             ?>
-                        </table>
+                        
                         <div class="card card-default">
                             <!-- /.card-header -->
                             <div class="card-body ">
                             <?php
                                 
-                                // if($_POST['tgl_akhir'] == ''){
-                                //     $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat FROM transaksi WHERE jenis_parfum = '$jenis_parfum' AND DATE_FORMAT(tgl_masuk, '%Y-%m') =  DATE_FORMAT('$tgl_concate_x ', '%Y-%m') GROUP BY DATE_FORMAT(tgl_masuk, '%Y-%m')";
-                                // }else{
-                                //     $sql = "SELECT DATE_FORMAT(tgl_masuk, '%Y-%M') as tgl_masuk, COALESCE(SUM(berat),'') AS berat FROM transaksi WHERE jenis_parfum = '$jenis_parfum' AND DATE_FORMAT(tgl_masuk, '%Y-%m') BETWEEN DATE_FORMAT('$tgl_concate_x', '%Y-%m') and DATE_FORMAT('$tgl_concate_y', '%Y-%m') GROUP BY DATE_FORMAT(tgl_masuk, '%Y-%m')";
-                                    
-                                // }
-                                // $hasil = mysqli_query ($kon,$sql);
-                                // $data = mysqli_fetch_array($hasil);
-                                // $bulan = date('n', strtotime('+1 month', strtotime($tgl_akhir)));
-
-                                // Perhitungan jenis prediksi 'parfum'
                                 if ($_POST['berat_prediksi'] != ''){
                                     $berat_prediksi = $_POST['berat_prediksi'];
-                                    echo $persamaan_reg_y;
-                                    echo $persamaan_reg_y2;
+                                    echo "<p>X diambil dari berat laundry yang akan diprediksi sebesar <b>".$berat_prediksi." Kg</b>, maka persamaannya adalah :<br/>";
+                                    echo "Y = a + bX <br/>";
+                                    echo "Y = ".round($a,3)." + ".round($b,3). "(X) <br/>" ;  
                                     echo "Y = ".round($a,3)." + ".round($b,3). "(".$berat_prediksi.") <br/>" ;  
                                     echo "Y = ".round(($a + ($b * $berat_prediksi)),3)."<br/>" ;
                                         if (is_numeric($b) && is_numeric($a)){
                                             $prediksi = $a + ($b * $berat_prediksi);
                                         }
                                     $bulan_y = date('F', strtotime('+1 month', strtotime($tgl_akhir)));
-                                    echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> pada bulan <b> ".$bulan_y."</b> dengan berat laundry <b>".$berat_prediksi." kg</b> adalah <b>".round($prediksi,3)." liter</b>";
+                                    echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> pada bulan <b> ".$bulan_y."</b> dengan berat laundry <b>".$berat_prediksi." Kg</b> adalah <b>".round($prediksi,3)." Liter</b>";
                                 }
                                 // Perhitungan jenis prediksi 'berat'
                                 else {
                                     $parfum_prediksi = $_POST['parfum_prediksi'];
-
-                                    echo $persamaan_reg_y;
-                                    echo $persamaan_reg_y2;
-                                    echo "X = ".round($a,3)." - ".$parfum_prediksi."/".round($b,3)."<br/>" ; 
+                                    echo "<p>Y diambil dari berat parfum yang akan diprediksi sebesar <b>".$parfum_prediksi." Liter</b>, maka persamaannya adalah :<br/>";
+                                    echo "X = (Y - a) / b <br/>" ;
+                                    echo "X = (Y - ".round($a,4).") / ".round($b,3)."<br/>" ;
+                                    echo "X = (".$parfum_prediksi." - ".round($a,4).") / ".round($b,3)."<br/>" ;  
                                     
-                                   
                                     if($b != 0 && $parfum_prediksi !=0){
-                                        $xx = $parfum_prediksi / $b;
+                                        $xx = $parfum_prediksi - round($a,4);
                                     }else{
                                         $xx = 0;
                                     }
                                     
-                                    
-                                    echo "Y = ".round(($a - $xx),3)."<br/>" ;
+                                    echo "X = ".round(($xx / $b),3)."<br/> </p>" ;
                                         if (is_numeric($b) && is_numeric($a)){
-                                            $prediksi = ($a - $xx);
+                                            $prediksi = ($xx/$b);
                                         }
                                     $bulan_y = date('F', strtotime('+1 month', strtotime($tgl_akhir)));
-                                    echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> pada bulan <b> ".$bulan_y."</b> dengan berat parfum <b>".$parfum_prediksi." liter</b> adalah <b>".round($prediksi,3)." kg</b>";
+                                    echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> pada bulan <b> ".$bulan_y."</b> dengan berat parfum <b>".$parfum_prediksi." Liter</b> adalah <b>".round($prediksi,3)." kg</b>";
                                 }
-                                    
-                                
                                 ?>
-                            </div>
+                                </div>
+                            </table>
                         </div>
                     </div>
                 </div>

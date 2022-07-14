@@ -67,7 +67,7 @@ require('sidebar.php');
             <!-- /.card-header -->
             <div class="card-body ">
         
-                <table id="table" class="table table-bordered table-hover table-responsive">
+                <table id="table" class="table table-bordered table-hover ">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -113,7 +113,7 @@ require('sidebar.php');
                                     ?>
                                         <select name = "status" class="badge badge-info status <?= 'badge'.$row['id_transaksi'] ?>" >
                                             <option value ="<?= $row['id_transaksi']?>_Baru"> Baru</option>
-                                            <option value ="<?= $row['id_transaksi']?>_Setrika" selected> Setrika</optin>
+                                            <option value ="<?= $row['id_transaksi']?>_Setrika" selected> Setrika</option>
                                             <option value ="<?= $row['id_transaksi']?>_Selesai"> Selesai</option>
                                         </select>
                                     <?php 
