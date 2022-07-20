@@ -115,13 +115,6 @@ require('koneksi.php');
                         }
                     </style>
                     <?php
-                        
-                        // $no = 1;
-                        // $sql = "SELECT COALESCE(SUM(berat),'') AS TB, COALESCE(SUM(total_bayar),'') AS TP FROM transaksi where DATE_FORMAT(tgl_masuk, '%m') =  DATE_FORMAT('$tgl_concate_x', '%m') and DATE_FORMAT(tgl_masuk, '%Y') =  DATE_FORMAT('$tgl_concate_x', '%Y')";
-                        // $hasil = mysqli_query ($kon,$sql);
-                        // $data = mysqli_fetch_array($hasil);
-                        // $berat = $data['TB'];
-                        // $pend = $data['TP'];
                         $bulan_x = date('F Y', strtotime($tgl_awal));
 
                         if($tgl_akhir != ''){
@@ -144,12 +137,12 @@ require('koneksi.php');
                     
                     <table class="table table-bordered" cellspacing=0 cellpadding=5>
                         <tr>
-                            <th class="text-center">No.</th>
-                            <th class="text-center">Periode Bulan</th>
-                            <th class="text-center">Total Transaksi</th>
-                            <th class="text-center">Total Berat (Kg)</th>
-                            <th class="text-center">Total Bayar (Rp)</th>
-                            <th class="text-center">Operasi</th>
+                            <th class="text-center" width="1%">No.</th>
+                            <th class="text-center" width = "5%">Periode Bulan</th>
+                            <th class="text-center" width = "5%">Total Transaksi</th>
+                            <th class="text-center" width = "5%">Total Berat (Kg)</th>
+                            <th class="text-center" width = "5%">Total Bayar (Rp)</th>
+                            <th class="text-center" width = "5%">Operasi</th>
                         </tr>
             
                         <?php
@@ -175,7 +168,7 @@ require('koneksi.php');
                                 echo " <tr> ";
                                 echo " <td> ".$no++."</td>";
                                 echo " <td> ".date('F Y', strtotime($row['tgl_masuk']))."</td>";
-                                echo " <td> ".$row['transaksi']."</td>";
+                                echo " <td class='text-right'>".$row['transaksi']."</td>";
                                 echo " <td class='text-right'> ".round($row['berat'],3)."</td>";
                                 echo " <td class='text-right'> ".number_format($row['total_bayar'],2,',','.')."</td>";
                                 echo " <td class='text-center'>";

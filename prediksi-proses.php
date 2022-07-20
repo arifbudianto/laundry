@@ -256,9 +256,9 @@ require('koneksi.php');
                                     }
                                     
                                     echo "X = ".round(($xx / $b),3)."<br/> </p>" ;
-                                        if (is_numeric($b) && is_numeric($a)){
-                                            $prediksi = ($xx/$b);
-                                        }
+                                    if (is_numeric($b) && is_numeric($a)){
+                                        $prediksi = ($xx/$b);
+                                    }
                                     $bulan_y = date('F', strtotime('+1 month', strtotime($tgl_akhir)));
                                     echo "<p>Hasil prediksi untuk parfum <b>".$jenis_parfum."</b> pada bulan <b> ".$bulan_y."</b> dengan berat parfum <b>".$parfum_prediksi." Liter</b> adalah <b>".round($prediksi,3)." kg</b>";
                                 }

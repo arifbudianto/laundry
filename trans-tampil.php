@@ -221,7 +221,6 @@ require('footer.php');
             success : function(data){
                 
                 setTimeout(function(){
-                    // window.location.reload();
                     if(data_status == 'Baru'){
                         $(".badge"+data_id_transaksi).removeClass('badge-info');
                         $(".badge"+data_id_transaksi).removeClass('badge-warning');

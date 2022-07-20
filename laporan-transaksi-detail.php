@@ -136,8 +136,6 @@ $tgl_concate = $tgl_masuk."-00";
                         echo " <td> ".$row['nohp']."</td>";
                         echo " <td> ".$row['nama']."</td>";
                         echo " <td class='text-right'> ".$row['berat']."</td>";
-                        // echo " <td> ".$row['nama_paket']."</td>";
-                        // echo " <td> ".$row['jenis_parfum']."</td>";
                         echo " <td class='text-right'> ".number_format($row['total_bayar'],2,',','.')."</td>";
                         echo " </tr>";
                         
